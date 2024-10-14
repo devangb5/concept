@@ -101,52 +101,36 @@ header.scrolled {
   
 }
 
-.categories {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-}
-
-.category {
-  position: relative;
-  flex: 1 1 calc(50% - 10px); /* Two items per row with space */
-  box-sizing: border-box;
-  margin-bottom: 20px; /* Space between rows */
-  padding:10px;
-}
-
-.category-image {
-  max-width: 100%;
-  height: auto;
-}
-
-button {
-    position: absolute; /* Positioning the text on top */
-     /* Positioning from the bottom */
-    left:50%;/* Positioning from the left */
-    color: white; /* Text color */
-    transform: translate(-50%, 50%);
-    padding: 5px; /* Padding around the text */
-    border-radius: 5px; /* Optional: rounded corners */
-    font-size: 2em; 
-    background-color: transparent;
-    border: 2px solid #000000;
-    border-radius: 10px;
-}
-
-@media (max-width: 600px) {
-  .category {
-      flex: 1 1 100%; /* Full width on smaller screens */
-  }
-}
-
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .hamburger {
-      display: block; /* Show hamburger icon for mobile */
-    
-  }
+footer {
+  background-color: #333; /* Dark background color */
+  color: white; /* Text color */
+  text-align: center; /* Center text */
+  padding: 20px; /* Padding around the footer */
+  position: relative; /* Ensure it doesn't overlap with other content */
+  bottom: 0; /* Stick to the bottom */
   
-  
+}
+
+.footer-content {
+  max-width: 100%; /* Max width for larger screens */
+  margin: auto; /* Center the footer content */
+}
+
+.footer-links {
+  list-style: none; /* Remove bullet points */
+  padding: 0; /* Remove default padding */
+}
+
+.footer-links li {
+  display: inline; /* Display links inline */
+  margin: 0 10px; /* Spacing between links */
+}
+
+.footer-links a {
+  color: white; /* Link color */
+  text-decoration: none; /* Remove underline */
+}
+
+.footer-links a:hover {
+  text-decoration: underline; /* Underline on hover for clarity */
 }

@@ -1,0 +1,85 @@
+.categories {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  
+  .category {
+    position: relative;
+    flex: 1 1 calc(50% - 10px); /* Two items per row with space */
+    box-sizing: border-box;
+    margin-bottom: 20px; /* Space between rows */
+    padding:10px;
+  }
+  
+  .category-image {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  button {
+      position: absolute; /* Positioning the text on top */
+       /* Positioning from the bottom */
+      left:50%;/* Positioning from the left */
+      color: white; /* Text color */
+      transform: translate(-50%, 50%);
+      padding: 5px; /* Padding around the text */
+      border-radius: 5px; /* Optional: rounded corners */
+      font-size: 2em; 
+      background-color: transparent;
+      border: 2px solid #000000;
+      border-radius: 10px;
+  }
+  
+  @media (max-width: 600px) {
+    .category {
+        flex: 1 1 100%; /* Full width on smaller screens */
+    }
+  }
+  
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .hamburger {
+        display: block; /* Show hamburger icon for mobile */
+      
+    }
+    
+    
+  }
+  .recent-stories {
+    padding: 20px; /* Padding around the section */
+    background-color: #f9f9f9; /* Light background color */
+    text-align: center; /* Center the text */
+}
+
+.recent-stories h2 {
+    margin-bottom: 20px; /* Space below the heading */
+}
+
+.stories-grid {
+    display: grid; /* Use grid layout */
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Responsive columns */
+    gap: 20px; /* Space between grid items */
+}
+
+.story {
+    background-color: white; /* Background for story cards */
+    border: 1px solid #ddd; /* Border for story cards */
+    border-radius: 5px; /* Rounded corners */
+    padding: 15px; /* Padding inside story cards */
+}
+
+.story img {
+    width: 100%; /* Responsive image */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 5px 5px 0 0; /* Rounded top corners */
+}
+
+.story h3 {
+    margin: 10px 0; /* Space around the title */
+}
+
+.story p {
+    color: #666; /* Text color for description */
+}

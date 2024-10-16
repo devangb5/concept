@@ -83,3 +83,59 @@
 .story p {
     color: #666; /* Text color for description */
 }
+
+.image-container {
+    position: relative; /* Positioning for absolute child */
+    overflow: hidden; /* Hide overflow for marquee effect */
+}
+
+.marquee-text {
+    position: absolute;
+    top: 10px; /* Position the text near the bottom */
+    left: 100%; /* Start from outside the left side */
+    white-space: nowrap; /* Prevent text from wrapping */
+    animation: marquee 10s linear infinite; /* Animation properties */
+    color: white; /* Text color */
+    font-size: 5em; /* Text size */
+    font-weight:bolder;
+    
+}
+
+@keyframes marquee {
+    0% {
+        transform: translateX(0); /* Start position */
+    }
+    100% {
+        transform: translateX(-100%); /* End position */
+    }
+}
+
+
+.instagram-logo {
+    width: 10%; /* Set desired width */
+    height: auto; /* Maintain aspect ratio */
+    margin: 20px; /* Space below logo */
+}
+
+.instagram-section {
+    
+    text-align: center;
+    background-color: #f9f9f9; /* Light background color */
+}
+
+.instagram-grid{
+    display:flex;
+    flex-wrap: wrap;
+    
+}
+.instagram-grid a {
+    display: flex;
+    width:33.33%;
+}
+.instagram-grid img{
+    display: flex;
+    width:100%;
+    object-fit: cover;
+    aspect-ratio: 1;
+
+}

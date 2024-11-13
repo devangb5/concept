@@ -1,0 +1,76 @@
+/* Default: hide bottom nav */
+.bottom-nav {
+    display: none;
+}
+
+/* Show bottom nav on small screens */
+@media (max-width: 768px) {
+    .bottom-nav {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        padding: 0.5rem 0;
+        border-top: 1px solid #222;
+        background-color: rgba(0, 0, 0, 0.455);
+    }
+
+    .bottom-navbar {
+        display: flex;
+        justify-content: space-evenly;
+        width: 100%;
+    }
+
+    .bottom-navbar a {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .bottom-navbar a img {
+        filter: brightness(0) invert(1);
+        width: 24px;
+        height: 24px;
+    }
+}
+
+/* Overlay Menu Styles */
+.overlay-menu {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+}
+
+.overlay-menu .overlay-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.overlay-menu a {
+    color: #fff;
+    font-size: 1.5rem;
+    text-decoration: none;
+}
+
+.overlay-menu button {
+    margin-top: 2rem;
+    padding: 0.5rem 1rem;
+    color: #333;
+    background: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}

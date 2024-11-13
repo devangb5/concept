@@ -1,141 +1,110 @@
-.categories {
+
+.hero-image {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-  }
-  
-  .category {
-    position: relative;
-    flex: 1 1 calc(50% - 10px); /* Two items per row with space */
-    box-sizing: border-box;
-    margin-bottom: 20px; /* Space between rows */
-    padding:10px;
-  }
-  
-  .category-image {
-    max-width: 100%;
-    height: auto;
-  }
-  
-  button {
-      position: absolute; /* Positioning the text on top */
-       /* Positioning from the bottom */
-      left:50%;/* Positioning from the left */
-      color: white; /* Text color */
-      transform: translate(-50%, 50%);
-      padding: 5px; /* Padding around the text */
-      border-radius: 5px; /* Optional: rounded corners */
-      font-size: 2em; 
-      background-color: transparent;
-      border: 2px solid #000000;
-      border-radius: 10px;
-  }
-  
-  @media (max-width: 600px) {
-    .category {
-        flex: 1 1 100%; /* Full width on smaller screens */
-    }
-  }
-  
-  
-  /* Responsive adjustments */
-  @media (max-width: 768px) {
-    .hamburger {
-        display: block; /* Show hamburger icon for mobile */
-      
-    }
-    
-    
-  }
-  .recent-stories {
-    padding: 20px; /* Padding around the section */
-    background-color: #f9f9f9; /* Light background color */
-    text-align: center; /* Center the text */
-}
-
-.recent-stories h2 {
-    margin-bottom: 20px; /* Space below the heading */
-}
-
-.stories-grid {
-    display: grid; /* Use grid layout */
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Responsive columns */
-    gap: 20px; /* Space between grid items */
-}
-
-.story {
-    background-color: white; /* Background for story cards */
-    border: 1px solid #ddd; /* Border for story cards */
-    border-radius: 5px; /* Rounded corners */
-    padding: 15px; /* Padding inside story cards */
-}
-
-.story img {
-    width: 100%; /* Responsive image */
-    height: auto; /* Maintain aspect ratio */
-    border-radius: 5px 5px 0 0; /* Rounded top corners */
-}
-
-.story h3 {
-    margin: 10px 0; /* Space around the title */
-}
-
-.story p {
-    color: #666; /* Text color for description */
-}
-
-.image-container {
     position: relative; /* Positioning for absolute child */
     overflow: hidden; /* Hide overflow for marquee effect */
 }
 
-.marquee-text {
-    position: absolute;
-    top: 10px; /* Position the text near the bottom */
-    left: 100%; /* Start from outside the left side */
-    white-space: nowrap; /* Prevent text from wrapping */
-    animation: marquee 10s linear infinite; /* Animation properties */
-    color: white; /* Text color */
-    font-size: 5em; /* Text size */
-    font-weight:bolder;
-    
+
+/* Horizontal Scrolling Category Filter */
+.category-filter-container {
+    overflow: hidden;
+    padding: 1rem;
+    background-color: #000;
 }
 
-@keyframes marquee {
-    0% {
-        transform: translateX(0); /* Start position */
-    }
-    100% {
-        transform: translateX(-100%); /* End position */
-    }
+.scroll-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    display: flex;
+    padding-bottom: 1rem;
 }
 
-
-.instagram-logo {
-    width: 10%; /* Set desired width */
-    height: auto; /* Maintain aspect ratio */
-    margin: 20px; /* Space below logo */
+.category-list {
+    display: flex;
+    gap: 1rem;
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
 }
 
-.instagram-section {
-    
-    text-align: center;
-    background-color: #f9f9f9; /* Light background color */
+.category-item {
+    flex-shrink: 0;
+    color: #fff;
+    background-color: #333;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    white-space: nowrap;
+    opacity: 0.5;
+    font-size: 0.9rem;
+    transition: opacity 0.3s, background-color 0.3s;
 }
 
-.instagram-grid{
-    display:flex;
+.category-item.active,
+.category-item:hover {
+    opacity: 1;
+    cursor: pointer;
+    background-color: #444;
+}
+
+/* Hide scrollbar for webkit-based browsers */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+/* Content Container with Flexbox Layout */
+.content-container {
+    display: flex;
     flex-wrap: wrap;
+    gap: 1rem;
+    padding: 1rem;
+    justify-content: center;
+}
+
+.content-item {
+    position: relative;
+    background-color: #333;
+    border-radius: 10px;
+    overflow: hidden;
+    text-align: center;
+    flex: 1 1 40%; /* Full width on small screens */
+    max-width: 100%;
     
 }
-.instagram-grid a {
-    display: flex;
-    width:33.33%;
-}
-.instagram-grid img{
-    display: flex;
-    width:100%;
-    object-fit: cover;
-    aspect-ratio: 1;
 
+.content-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures the image fills the container, cropping if necessary */
+}
+
+.content-item h3 {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.3); /* Semi-transparent overlay for readability */
+    margin: 0;
+    color: #fff;
+    font-size: 1rem;
+    text-align: center;
+    padding: 0.5rem; /* Add padding for the text */
+}
+
+/* Responsive layout adjustments */
+@media (min-width: 768px) {
+    .content-item {
+        flex: 1 1 45%; /* Show 2 items per row on medium screens */
+    }
+}
+
+@media (min-width: 1024px) {
+    .content-item {
+        flex: 1 1 20%; /* Show 3 items per row on larger screens */
+    }
+}
+
+@media (min-width: 1440px) {
+    .content-item {
+        flex: 1 1 20%; /* Show 4 items per row on extra-large screens */
+    }
 }

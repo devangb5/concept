@@ -6,11 +6,12 @@
     <title>Around The Ville</title>
     <link rel="stylesheet" href="./styles/header.css">
     <link rel="stylesheet" href="./styles/body.css">
+    <link rel="stylesheet" href="./styles/nav.css">
 </head>
 <body>
-   <header>
+   <header class="nav">
         <div class="logo">
-            <img src="logo.png" alt="My Logo">
+            <img src="icons/logo.png" alt="My Logo">
         </div>
         
         <nav class="navbar">
@@ -22,94 +23,78 @@
                 <li><a href="#">About</a></li>
             </ul>
         </nav>
-        <div class="hamburger" id="hamburger">
-            &#9776;
-        </div>
+
     </header>
-    <div class="image-container">
+    
+  
+        <div class="hero-image">
         
         <img src="david.jpeg" style="width: 100%; height: auto;">
+        </div>
+ 
+<!------------------------------------------Recent container------------------------>>
+        <div class="category-filter-container no-scrollbar">
+            <div class="scroll-wrapper">
+                <ul class="category-list">
+                    <li class="category-item active" data-category="all">Recent</li>
+                    <li class="category-item" data-category="food-trucks">Food Trucks</li>
+                    <li class="category-item" data-category="restaurants">Restaurants</li>
+                    <li class="category-item" data-category="distillery">Distillery</li>
+                </ul>
+            </div>
+        </div>
         
-    </div>
-
-    <h1 style="text-align: center;color: #d26231;">EXPLORE LOUISVILLE</h1>
-    <div class="categories" >
-       
-        <div class="category">
-            <img src="food-truck.jpeg" alt="Food Trucks" class="category-image">
-            <button>Food Trucks</button>
+        <div class="content-container">
+            <div class="content-item" data-category="food-trucks">
+                <a href="https://aroundtheville.com/food-truck-blogs/ricenow/">
+                <img src="https://aroundtheville.com/food-truck-blogs/ricenow/Kate_Finn.webp" alt="Food Truck">
+                <h3>Rice Now</h3>
+                </a>
+            </div>
+            <div class="content-item" data-category="food-trucks">
+                <a href="https://aroundtheville.com/food-truck-blogs/red-top-dogs/">
+                <img src="https://aroundtheville.com/food-truck-blogs/red-top-dogs/atrium-food-truck.webp" alt="Food Truck">
+                <h3>Red Top</h3>
+                </a>
+            </div>
+            <div class="content-item" data-category="food-trucks">
+                <a href="https://aroundtheville.com/food-truck-blogs/smokncantina/">
+                <img src="https://aroundtheville.com/food-truck-blogs/smokncantina/owner-smokncantina.webp" alt="Food Truck">
+                <h3>Smok'n Cantina</h3>
+                </a>
+            </div>
+            <div class="content-item" data-category="food-trucks">
+                <a href="https://aroundtheville.com/restaurant-bar/restaurant/charcuterie-creations/">
+                <img src="https://aroundtheville.com/restaurant-bar/restaurant/charcuterie-creations/sarah-insta.JPG" alt="Food Truck">
+                <h3>Charcuterie creations</h3>
+                </a>
+            </div>
+  
         </div>
-        <div class="category">
-            <img src="restaurant.jpeg" alt="Restaurants" class="category-image">
-            <button>Restaurants</button>
-        </div>
-        <div class="category">
-            <img src="brewery.jpeg" alt="Brewery" class="category-image">
-            <button>Brewery</button>
-        </div>
-        <div class="category">
-            <img src="distillery.jpeg" alt="Distillery" class="category-image">
-            <button>Distillery</button>
-        </div>
-    </div>
-
-    <div class="image-container">
-        <div class="marquee-text">Explore Louisville</div>
-        <img src="horse.png" style="width: 100%; height: auto; background-color: black">
         
-    </div>
- <div class="recent-stories">
-    <h2>Recent Stories</h2>
-    <div class="stories-grid">
-        <div class="story">
-            <img src="https://aroundtheville.com/food-truck-blogs/smokncantina/noah-heather-yates.webp" alt="Story 1">
-            <h3>Story Title 1</h3>
-            <p>Short description of the story. This is a brief summary that captures the essence of the story.</p>
+        <div class="bottom-nav">
+            <nav class="bottom-navbar">
+                <a href="#"><img src="icons/home_icon.png" alt="Home"></a>
+                <a href="#"><img src="icons/blog.png" alt="Home"></a>
+                <a href="#"><img src="icons/instagram.svg" alt="Instagram"></a>
+                <a id="hamburger-icon"><img src="icons/hamburger.png" alt="Menu"></a>
+            </nav>
         </div>
-        <div class="story">
-            <img src="https://aroundtheville.com/restaurant-bar/restaurant/anko-sushi/anko-sushi-owner.webp" alt="Story 2">
-            <h3>Story Title 2</h3>
-            <p>Short description of the story. This is a brief summary that captures the essence of the story.</p>
+        
+        <!-- Overlay Menu -->
+        <div class="overlay-menu" id="overlayMenu">
+            <div class="overlay-content">
+                <a href="#">Home</a>
+                <a href="#">Blogs</a>
+                <a href="#">Images</a>
+                <a href="#">Contact</a>
+                <a href="#">About</a>
+                <button id="closeOverlay">Close</button>
+            </div>
         </div>
-        <div class="story">
-            <img src="https://aroundtheville.com/restaurant-bar/restaurant/sarap/owner.webp" alt="Story 3">
-            <h3>Story Title 3</h3>
-            <p>Short description of the story. This is a brief summary that captures the essence of the story.</p>
-        </div>
-        <div class="story">
-            <img src="https://aroundtheville.com/restaurant-bar/restaurant/sarap/owner.webp" alt="Story 3">
-            <h3>Story Title 3</h3>
-            <p>Short description of the story. This is a brief summary that captures the essence of the story.</p>
-        </div>
-    </div>
-</div>
+        
 
-<div class="instagram-section">
-    <a href="https://www.instagram.com/yourprofile" target="_blank">
-        <img src="black-instagram-logo-3497.svg" alt="Instagram Logo" class="instagram-logo">
-    </a>
-    <div class="instagram-grid">
-        <a href="https://aroundtheville.com/food-truck-blogs/smokncantina/" target="_blank" >
-            <img src="https://aroundtheville.com/food-truck-blogs/smokncantina/owner-smokncantina.webp" alt="Instagram Post 1"  >
-        </a>
-        <a href="https://www.instagram.com/post2" target="_blank">
-            <img src="https://aroundtheville.com/restaurant-bar/restaurant/river-road-bbq/krissy-davis.webp" alt="Instagram Post 2" >
-        </a>
-        <a href="https://www.instagram.com/post3" target="_blank">
-            <img src="https://aroundtheville.com/restaurant-bar/restaurant/mr-c-cheesecake/mr-c.webp" alt="Instagram Post 3" >
-        </a>
-        <a href="https://www.instagram.com/post4" target="_blank">
-            <img src="https://aroundtheville.com/restaurant-bar/restaurant/anko-sushi/anko-sushi-owner.webp" alt="Instagram Post 4" >
-        </a>
-        <a href="https://www.instagram.com/post4" target="_blank">
-            <img src="https://aroundtheville.com/food-truck-blogs/four-pegs/cover_chris_four_pegs.webp" alt="Instagram Post 4" >
-        </a>
-        <a href="https://www.instagram.com/post4" target="_blank">
-            <img src="https://aroundtheville.com/restaurant-bar/restaurant/charcuterie-creations/sarah-insta.JPG" alt="Instagram Post 4" >
-        </a>
-   
-    </div>
-</div>
+
 
 
  <footer>
@@ -122,6 +107,7 @@
         </ul>
     </div>
 </footer>
+
     <script src="script.js"></script>
 </body>
 </html>

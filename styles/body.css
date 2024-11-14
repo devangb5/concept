@@ -151,7 +151,7 @@
 }
 
 .blog-item {
-    background: #333; /* Dark background for blog items */
+   
     border: 1px solid #444;
     border-radius: 8px;
     overflow: hidden;
@@ -165,12 +165,15 @@
 
 .blog-item img {
     width: 100%; /* Keeps images responsive */
-    height: 60%; /* Fixed height for consistency */
-    object-fit: cover; /* Ensures all images are uniformly cropped */
+    height: 60%;
+    object-fit:cover; /* Ensures all images are uniformly cropped */
 }
 
 .blog-item h3 {
-    font-size: 1rem; /* Fixed font size for titles */
+    font-size: 1.5rem; /* Fixed font size for titles */
     color: #fff; /* White font color for title */
-    padding: 0.5rem;
+    padding: 0.2rem;
 }
+ .blog-item a{
+    text-decoration: none;
+ }

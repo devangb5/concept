@@ -43,18 +43,25 @@ document.addEventListener("DOMContentLoaded", function () {
       });
   });
 });
-document.getElementById('toggleBtn').addEventListener('click', function () {
-  // Select all content items
-  const contentItems = document.querySelectorAll('.content-container .content-item');
-  const isShowingMore = this.innerText === 'Show Less';
+    document.addEventListener("DOMContentLoaded", () => {
+        const images = [
+          
+            "assets/brewery.jpeg",
+            "assets/restaurant.jpeg",
+            "assets/distillery.jpeg"
+        ]; // Add paths to as many images as you want
 
-  // Toggle display based on the button state
-  contentItems.forEach((item, index) => {
-      if (index >= 6) {
-          item.style.display = isShowingMore ? 'none' : 'block';
-      }
-  });
+        const introImage = document.querySelector(".intro-image img");
+        let index = 0;
 
-  // Toggle button text
-  this.innerText = isShowingMore ? 'Show More' : 'Show Less';
-});
+        function changeImage() {
+            introImage.src = images[index];
+            index = (index + 1) % images.length; // Loop back to the first image
+        }
+
+        // Change image every 3 seconds (3000 ms)
+        setInterval(changeImage, 3000);
+    });
+
+
+

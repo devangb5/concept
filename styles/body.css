@@ -4,7 +4,15 @@
     position: relative; /* Positioning for absolute child */
     overflow: hidden; /* Hide overflow for marquee effect */
 }
-
+@media (min-width: 768px) {
+.hero-image img{
+    width: 50% !important;
+   }
+   .hero-image{
+    background-color: #d16233;
+   }
+    
+}
 
 /* Horizontal Scrolling Category Filter */
 .category-filter-container {
@@ -107,4 +115,62 @@
     .content-item {
         flex: 1 1 20%; /* Show 4 items per row on extra-large screens */
     }
+}
+
+
+/* Recent Blogs Section */
+.recent-blogs {
+    padding: 2rem;
+    background-color: #000; /* Black background */
+    color: #fff; /* White font color */
+    text-align: center;
+}
+
+.recent-blogs h2 {
+    font-size: 2rem;
+    color: #fff; /* White font color */
+    margin-bottom: 1.5rem;
+}
+
+.blog-grid {
+    display: grid;
+    gap: 1rem;
+}
+
+/* Responsive grid layout */
+@media (max-width: 768px) {
+    .blog-grid {
+        grid-template-columns: repeat(2, 1fr); /* Two columns on smaller screens */
+    }
+}
+
+@media (min-width: 769px) {
+    .blog-grid {
+        grid-template-columns: repeat(4, 1fr); /* Four columns on larger screens */
+    }
+}
+
+.blog-item {
+    background: #333; /* Dark background for blog items */
+    border: 1px solid #444;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.3s;
+    text-align: center;
+}
+
+.blog-item:hover {
+    transform: scale(1.05);
+}
+
+.blog-item img {
+    width: 100%; /* Keeps images responsive */
+    height: 60%; /* Fixed height for consistency */
+    object-fit: cover; /* Ensures all images are uniformly cropped */
+}
+
+.blog-item h3 {
+    font-size: 1rem; /* Fixed font size for titles */
+    color: #fff; /* White font color for title */
+    padding: 0.5rem;
 }

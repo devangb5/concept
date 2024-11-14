@@ -9,9 +9,9 @@
     <link rel="stylesheet" href="./styles/nav.css">
 </head>
 <body>
-   <header class="nav">
+   <header class="nav" style="position: fixed !important;">
         <div class="logo">
-            <img src="icons/logo.png" alt="My Logo">
+            <img src="assets/icons/logo.png" alt="My Logo">
         </div>
         
         <nav class="navbar">
@@ -19,21 +19,20 @@
                 <li><a href="#">Home</a></li>
                 <li><a href="#">Blogs</a></li>
                 <li><a href="#">Images</a></li>
-                <li><a href="#">Contact</a></li>
+                
                 <li><a href="#">About</a></li>
             </ul>
         </nav>
         <div class="hamburger" id="hamburger-icon">
-            <img src="icons/hamburger.png" alt="Menu">
+            <img src="assets/icons/hamburger.png" alt="Menu">
         </div>
 
                 <!-- Overlay Menu -->
                 <div class="overlay-menu" id="overlayMenu">
                     <div class="overlay-content">
                         <a href="#">Home</a>
-                        <a href="#">Blogs</a>
+                        <a href="./blogs/">Blogs</a>
                         <a href="#">Images</a>
-                        <a href="#">Contact</a>
                         <a href="#">About</a>
                         <button id="closeOverlay">Close</button>
                     </div>
@@ -42,50 +41,48 @@
     
   
         <div class="hero-image">
+            
+        <img src="assets/david.jpeg" style="width: 100%; height: auto;">
         
-        <img src="david.jpeg" style="width: 100%; height: auto;">
         </div>
- 
-<!------------------------------------------Recent container------------------------>>
-        <div class="category-filter-container no-scrollbar">
-            <div class="scroll-wrapper">
-                <ul class="category-list">
-                    <li class="category-item active" data-category="all">Recent</li>
-                    <li class="category-item" data-category="food-trucks">Food Trucks</li>
-                    <li class="category-item" data-category="restaurants">Restaurants</li>
-                    <li class="category-item" data-category="distillery">Distillery</li>
-                </ul>
-            </div>
-        </div>
-        
-        <div class="content-container">
-            <div class="content-item" data-category="food-trucks">
-                <a href="https://aroundtheville.com/food-truck-blogs/ricenow/">
-                <img src="https://aroundtheville.com/food-truck-blogs/ricenow/Kate_Finn.webp" alt="Food Truck">
+        <h1 style="display: none;">Around The Ville </h1>
+ <!-- Recent Blogs Section -->
+<div class="recent-blogs">
+    <h2>New Blogs</h2>
+    <div class="blog-grid">
+        <!-- Blog Item 1 -->
+        <div class="blog-item">
+            <a href="https://aroundtheville.com/food-truck-blogs/ricenow/">
+                <img src="https://aroundtheville.com/food-truck-blogs/ricenow/Kate_Finn.webp" alt="Rice Now">
                 <h3>Rice Now</h3>
-                </a>
-            </div>
-            <div class="content-item" data-category="food-trucks">
-                <a href="https://aroundtheville.com/food-truck-blogs/red-top-dogs/">
-                <img src="https://aroundtheville.com/food-truck-blogs/red-top-dogs/atrium-food-truck.webp" alt="Food Truck">
-                <h3>Red Top</h3>
-                </a>
-            </div>
-            <div class="content-item" data-category="food-trucks">
-                <a href="https://aroundtheville.com/food-truck-blogs/smokncantina/">
-                <img src="https://aroundtheville.com/food-truck-blogs/smokncantina/owner-smokncantina.webp" alt="Food Truck">
-                <h3>Smok'n Cantina</h3>
-                </a>
-            </div>
-            <div class="content-item" data-category="food-trucks">
-                <a href="https://aroundtheville.com/restaurant-bar/restaurant/charcuterie-creations/">
-                <img src="https://aroundtheville.com/restaurant-bar/restaurant/charcuterie-creations/sarah-insta.JPG" alt="Food Truck">
-                <h3>Charcuterie creations</h3>
-                </a>
-            </div>
-  
+            </a>
         </div>
-        
+        <!-- Blog Item 2 -->
+        <div class="blog-item">
+            <a href="https://aroundtheville.com/food-truck-blogs/red-top-dogs/">
+                <img src="https://aroundtheville.com/food-truck-blogs/red-top-dogs/atrium-food-truck.webp" alt="Red Top">
+                <h3>Red Top</h3>
+            </a>
+        </div>
+        <!-- Blog Item 3 -->
+        <div class="blog-item">
+            <a href="https://aroundtheville.com/food-truck-blogs/smokncantina/">
+                <img src="https://aroundtheville.com/food-truck-blogs/smokncantina/owner-smokncantina.webp" alt="Smok'n Cantina">
+                <h3>Smok'n Cantina</h3>
+            </a>
+        </div>
+        <!-- Blog Item 4 -->
+        <div class="blog-item">
+            <a href="https://aroundtheville.com/restaurant-bar/restaurant/charcuterie-creations/">
+                <img src="https://aroundtheville.com/restaurant-bar/restaurant/charcuterie-creations/sarah-insta.JPG" alt="Charcuterie Creations">
+                <h3>Charcuterie Creations</h3>
+            </a>
+        </div>
+        <!-- Add more blog items as needed -->
+    </div>
+</div>
+
+
 
         
 

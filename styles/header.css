@@ -10,9 +10,9 @@ body {
   align-items: center;
   padding: 15px 30px;
   /* Initial transparent background */
- 
+  position: sticky ;
   color: white;
-  position: fixed; /* Fix the header at the top */
+ 
   top: 0;
   left: 0;
   right: 0;
@@ -21,7 +21,7 @@ body {
 }
 
 .nav.scrolled {
-  background-color: rgba(51, 51, 51, 1); /* Solid color when scrolled */
+  background-color: rgba(0, 0, 0, 0.7); /* Solid color when scrolled */
 }
 
 .logo img {

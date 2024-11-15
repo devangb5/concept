@@ -152,7 +152,7 @@ footer {
   display: flex;
   flex-direction: column; /* Stack items vertically on mobile */
   align-items: center; /* Center items horizontally */
-  background-color: #333;
+
   color: white;
   text-align: center;
   padding: 20px;

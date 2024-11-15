@@ -118,105 +118,8 @@
 }
 
 
-/* Recent Blogs Section */
-.recent-blogs {
-    padding: 2rem;
-    background-color: #000; /* Black background */
-    color: #fff; /* White font color */
-    text-align: center;
-}
 
-.recent-blogs h2 {
-    font-size: 2rem;
-    color: #fff; /* White font color */
-    margin-bottom: 1.5rem;
-}
 
-.blog-grid {
-    display: grid;
-    gap: 1rem;
-}
-
-/* Responsive grid layout */
-@media (max-width: 768px) {
-    .blog-grid {
-        grid-template-columns: repeat(2, 1fr); /* Two columns on smaller screens */
-    }
-}
-
-@media (min-width: 769px) {
-    .blog-grid {
-        grid-template-columns: repeat(4, 1fr); /* Four columns on larger screens */
-    }
-}
-
-.blog-item {
-   
-    border: 1px solid #444;
-    border-radius: 8px;
-    overflow: hidden;
-    transition: transform 0.3s;
-    text-align: center;
-}
-
-.blog-item:hover {
-    transform: scale(1.05);
-}
-
-.blog-item img {
-    width: 100%; /* Keeps images responsive */
-    height: 60%;
-    object-fit:cover; /* Ensures all images are uniformly cropped */
-}
-
-.blog-item h3 {
-    font-size: 1rem; /* Fixed font size for titles */
-    color: white; /* White font color for title */
-    padding: 0.2rem;
-}
- .blog-item a{
-    text-decoration: none;
- }
-
- 
-
-/* Newsletter Signup Styling */
-.newsletter-signup {
-    text-align: center;
-    padding: 50px 20px;
-    background-color: #fafafa;
-}
-
-.newsletter-signup p {
-    font-size: 1.2em;
-}
-
-.signup-form {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-}
-
-.signup-form input {
-    padding: 10px;
-    font-size: 1em;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-.signup-form button {
-    padding: 10px 20px;
-    font-size: 1em;
-    border: none;
-    background-color: #333;
-    color: white;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.signup-form button:hover {
-    background-color: #555;
-}
 
 /* Split Section */
 .intro-split {
@@ -236,7 +139,7 @@
     text-align: center;
 }
 
-.intro-split h2 {
+.intro-split h1 {
     font-size: 2.5rem;
     margin-bottom: 20px;
     color: #fff;
@@ -257,8 +160,9 @@
 }
 
 .cta-button {
+    display: inline-block;
     background: #fff;
-    color: #333;
+    color: black;
     padding: 12px 30px;
     font-size: 1rem;
     border-radius: 25px;
@@ -321,4 +225,319 @@
     background-color: gray;
     margin: 40px auto;
     opacity: 0.5;
+}
+
+
+.social-feed {
+    padding: 40px 20px;
+   
+    color: #fff;
+    text-align: center;
+}
+.feed-grid {
+    display: flex;
+    flex-direction: row;
+    flex-wrap:wrap;
+    gap: 10px;
+    justify-content: center;
+}
+.feed-item img {
+    width: 120px;
+    height: 120px;
+    border-radius: 8px;
+}
+.social-follow-button {
+    display: inline-block;
+    padding: 12px 30px;
+    background: white;
+    color: black;
+    border-radius: 25px;
+    text-decoration: none;
+    
+    font-weight: bold;
+    font-size: 1rem;
+    margin-top: 20px;
+}
+
+.social-follow-button:hover {
+    background: #555;
+}
+
+
+ .icon {
+    width: 2rem;
+    height: 2rem;
+    margin-bottom: 8px;
+    filter: brightness(0) invert(1);/* Invert to white for dark backgrounds */
+}
+
+
+
+
+/* Local Business Spotlights Section */
+.local-spotlights {
+    padding: 60px 20px;
+    
+    color: #fff;
+    text-align: center;
+}
+
+.local-spotlights h2 {
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.local-spotlights p {
+    font-size: 1.1rem;
+    color: #ccc;
+    margin-bottom: 40px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Spotlight Grid */
+.spotlight-grid {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+/* Business Spotlight Card */
+.business-spotlight {
+    background-color: #1a1a1a;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+}
+
+.business-spotlight img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-bottom: 2px solid #333;
+}
+
+.business-spotlight h3 {
+    font-size: 1.5rem;
+    margin: 15px;
+    color: #fff;
+}
+
+.business-spotlight p {
+    font-size: 1rem;
+    color: #ccc;
+    margin: 0 15px 15px;
+    font-style: italic;
+}
+
+/* Read More Button */
+.read-more {
+    display: inline-block;
+    font-weight: bold;
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    background-color: #333;
+    margin: 15px;
+    transition: background-color 0.3s ease;
+}
+
+.read-more:hover {
+    background-color: #555;
+}
+
+/* Hover Effect */
+.business-spotlight:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+}
+
+/* About Us Section */
+.about-us {
+    padding: 60px 20px;
+   
+    color: #fff;
+    text-align: center;
+}
+
+.about-us h2 {
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.about-us p {
+    font-size: 1.1rem;
+    color: white;
+    margin-bottom: 40px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Categories Section */
+.categories {
+    padding: 60px 20px;
+    text-align: center;
+    
+    color: #fff;
+}
+
+
+
+.categories p {
+    font-size: 1.1rem;
+    color: #ccc;
+    margin-bottom: 40px;
+}
+
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    justify-content: center;
+}
+
+.category-item-container {
+    position: relative;
+    max-width: 250px;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease;
+}
+
+.category-item-container:hover {
+    transform: scale(1.05);
+}
+
+.category-item-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+
+.category-link {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background-color: #333;
+    color: #fff;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    border-radius: 5px;
+    text-decoration: none;
+  
+}
+
+.category-link:hover {
+    background-color: #555;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .category-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .category-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+/* recent articles */
+.recent-articles {
+    padding: 40px 20px;
+     /* Dark background */
+}
+
+.recent-articles h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 2rem;
+    color: #fff; /* Light text for the title */
+}
+
+.recent-articles p {
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 1.1rem;
+    color: #ddd; /* Light gray text for the paragraph */
+}
+
+.articles-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 columns by default */
+    gap: 20px; /* Adds space between article cards */
+    padding: 0 20px;
+}
+
+.article-card {
+    border:1px solid white;/* Darker background for the card */
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.article-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.article-image {
+    width: 100%;
+    height: 200px; /* Fixed height for all images */
+    object-fit: cover; /* Ensures the image covers the container */
+}
+
+.article-card h3 {
+    padding: 15px;
+    font-size: 1.2rem;
+    color: #fff; /* Light text for the title */
+}
+
+.read-more {
+    background-color: #fff; /* White background for the button */
+    color: #333; /* Dark text for the button */
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 25px;
+    text-align: center;
+    display: block;
+    margin: 10px auto;
+    text-decoration: none;
+}
+
+.read-more:hover {
+    background-color: #ddd; /* Lighter gray background on hover */
+}
+
+/* Responsive Design: Two columns on smaller screens */
+@media (max-width: 768px) {
+    .articles-grid {
+        grid-template-columns: repeat(2, 1fr); /* 2 columns on smaller screens */
+        gap: 20px; /* Keep spacing between articles */
+    }
+}
+
+/* Responsive Design: Single column on very small screens */
+@media (max-width: 480px) {
+    .articles-grid {
+        grid-template-columns: 1fr; /* 1 column on very small screens */
+        gap: 15px; /* Slightly smaller gap */
+    }
 }

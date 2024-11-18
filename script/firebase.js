@@ -35,7 +35,7 @@ async function fetchLatestBlog() {
                 <div class="article-card">
                     <img src="${data.image}" alt="${data.title}" class="article-image">
                     <h3>${data.title}</h3>
-                    <p>${data.description}</p>
+                    <p >${data.description}</p>
                     <a href="${data.link}" class="read-more">Read More</a>
                 </div>
             `;
@@ -115,9 +115,54 @@ document.getElementById("signup-form").addEventListener("submit", async function
 
 // Add event listeners to category items
 const categoryItems = document.querySelectorAll('.category-item-container');
+
 categoryItems.forEach(item => {
     item.addEventListener('click', function () {
-        const selectedCategory = item.getAttribute('data-category');
-        fetchBlogsByCategory(selectedCategory); // Fetch blogs based on selected category
+        const isSelected = item.classList.contains('selected');
+
+        // Remove 'selected' class from all items
+        categoryItems.forEach(i => i.classList.remove('selected'));
+
+        if (!isSelected) {
+            // If the clicked category was not selected, select it
+            item.classList.add('selected');
+            const selectedCategory = item.getAttribute('data-category');
+            fetchBlogsByCategory(selectedCategory); // Fetch blogs for the selected category
+        } else {
+            // If it was already selected, clear the content grid
+            document.getElementById("category-articles-grid").innerHTML = "<p>Select a category to explore blogs.</p>";
+        }
     });
 });
+
+// Function to fetch Instagram posts
+async function fetchInstagramPosts() {
+    try {
+        const postsRef = collection(db, "blogs");
+        const postsQuery = query(postsRef, orderBy("createdAt", "desc"), limit(6)); // Fetch the latest 6 posts
+        const querySnapshot = await getDocs(postsQuery);
+
+        if (querySnapshot.empty) {
+            console.log("No Instagram posts found!");
+            return;
+        }
+
+        let feedHTML = '';
+        querySnapshot.forEach(doc => {
+            const data = doc.data();
+            feedHTML += `
+                <div class="feed-item">
+                    <img src="${data.image}" alt="Instagram Post">
+                </div>
+            `;
+        });
+
+        // Update the feed grid with Instagram posts
+        document.querySelector(".feed-grid").innerHTML = feedHTML;
+    } catch (error) {
+        console.error("Error fetching Instagram posts:", error);
+    }
+}
+
+// Call the function to load the posts on page load
+fetchInstagramPosts();

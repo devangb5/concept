@@ -145,20 +145,22 @@ h1{
 /* Recent Articles Section */
 #latest-blog {
     padding: 40px 20px;
+    text-align: center;
 }
 
 #latest-blog h2 {
-    text-align: center;
+    
     margin-bottom: 20px;
     font-size: 2rem;
     color: white; /* Light text for the title */
 }
 
 #latest-blog p {
-    text-align: center;
+    text-align: justify;
     
     font-size: 1.1rem;
     color: #ccc; /* Light gray text for the paragraph */
+    -webkit-line-clamp: none;
 }
 
 #latest-articles-grid {
@@ -188,6 +190,7 @@ h1{
 #categories p {
     font-size: 1.1rem;
     color: #ccc;
+    text-align: justify;
     margin-bottom: 40px;
 }
 
@@ -258,6 +261,11 @@ h1{
     padding: 20px;
 }
 
+.category-item-container.selected {
+    border: 2px solid #ffffff; 
+    box-shadow: 0px 4px 20px rgba(255, 255, 255, 0.5); /* Glow effect */
+    transform: scale(1.1); /* Slightly enlarge the selected category */
+}
 .article-card {
     background-color: transparent;
     border: 1px solid #444;
@@ -268,7 +276,7 @@ h1{
 }
 
 .article-card:hover {
-    border-color: #4caf50;
+    border-color: white;
     transform: translateY(-5px);
 }
 
@@ -280,6 +288,7 @@ h1{
 }
 
 h3 {
+    text-align: center;
     font-size: 1.2em;
     margin-top: 15px;
     color: white;
@@ -322,6 +331,7 @@ p {
     }
 }
 
+
 /* Additional Mobile-Friendly Enhancements */
 @media (max-width: 480px) {
     .article-card {
@@ -344,6 +354,23 @@ p {
         padding: 5px 10px; /* Adjust padding for the read more link */
     }
 }
+@media (max-width: 768px) {
+    .article-card p {
+        display: -webkit-box;
+        -webkit-line-clamp: 4; /* Show only 2 lines */
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: normal;
+    }
+}
+
+@media (max-width: 480px) {
+    .article-card p {
+        -webkit-line-clamp: 1; /* Show only 1 line on very small screens */
+    }
+}
+
 
 /*--------------------------------------------------------Instagram Section--------------------------------------------*/
 /* Social Feed Section */

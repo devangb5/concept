@@ -1,16 +1,21 @@
 /* Global Variables */
 :root {
-
+    --bg-color:black;
     --text-color: white;
-    --muted-text: #ccc;
-    --border-radius: 10px;
-    --shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    --transition: 0.3s ease;
-    --padding: 1rem;
-    --gap: 1rem;
-    --max-width: 1000px;
-    --button-bg: #fff;
-    --button-text: #333;
+   
+}
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: var(--bg-color);
+    color:var(--text-color);
+
+  }
+h1{
+    font-size: 3rem;
+    margin-bottom: unset;
+    
+
 }
 
 /* Section Divider */
@@ -41,11 +46,7 @@
     text-align: center;
 }
 
-.intro-split h1 {
-    font-size: 3rem;
-    margin-bottom: unset;
-    color: var(--text-color);
-}
+
 
 .intro-split p {
     font-size: 1.5rem;
@@ -238,13 +239,13 @@
 /* Responsive Design */
 @media (max-width: 768px) {
     .category-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(4, 1fr);
     }
 }
 
 @media (max-width: 480px) {
     .category-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(4, 1fr);
     }
 }
 

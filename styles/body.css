@@ -160,7 +160,7 @@ h1{
     
     font-size: 1.1rem;
     color: #ccc; /* Light gray text for the paragraph */
-    -webkit-line-clamp: none;
+    -webkit-line-clamp: none !important;
 }
 
 #latest-articles-grid {

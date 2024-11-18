@@ -2,26 +2,33 @@ body {
   margin: 0;
   font-family: Arial, sans-serif;
   background-color: black;
-  
+  color:white;
 }
+#header{
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
 
+}
 .nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 30px;
-  /* Initial transparent background */
-  position: sticky ;
+  padding: 1rem;
+  
+ 
   color: white;
  
-  top: 0;
-  left: 0;
-  right: 0;
+
   transition: background-color 0.3s ease; /* Smooth transition */
-  z-index: 1000; /* Ensure header is on top of other content */
+ 
 }
 
 .nav.scrolled {
+  
+  
   background-color: rgba(0, 0, 0, 0.7); /* Solid color when scrolled */
 }
 
@@ -64,6 +71,7 @@ body {
 
 .navbar a {
   color: white;
+  font-size: 1.2rem;
   text-decoration: none;
 }
 

@@ -6,41 +6,16 @@
     <title>Around The Ville</title>
     <link rel="stylesheet" href="./styles/header.css">
     <link rel="stylesheet" href="./styles/body.css">
-    <link rel="stylesheet" href="./styles/nav.css">
-    <meta property="og:image" content="./assets/david.jpeg">
+    
+ <meta property="og:image" content="./assets/david.jpeg">
   <meta property="og:image:alt" content="David statue">
+  
+  
+  
 </head>
 <body>
   <!---------------------------------------------- Header section ----------------------------------------------------------------->
-   <header class="nav" >
-        <div class="logo">
-            <img src="assets/icons/logo.png" alt="My Logo">
-        </div>
-        
-        <nav class="navbar">
-            <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Blogs</a></li>
-                <li><a href="#">Images</a></li>
-                
-                <li><a href="#">About</a></li>
-            </ul>
-        </nav>
-        <div class="hamburger" id="hamburger-icon">
-            <img src="assets/icons/hamburger.png" alt="Menu">
-        </div>
-
-                <!-- Overlay Menu -->
-                <div class="overlay-menu" id="overlayMenu">
-                    <div class="overlay-content">
-                        <a href="#">Home</a>
-                        <a href="./blogs/">Blogs</a>
-                        <a href="#">Images</a>
-                        <a href="#">About</a>
-                        <button id="closeOverlay">Close</button>
-                    </div>
-                </div>
-    </header>
+  <div id="header"></div>
     
     
 <!---------------------------------------------- Intro Section ----------------------------------------------------------------->
@@ -62,49 +37,36 @@
         </section>
         <div class="section-divider"></div>     
 <!------------------------------------------------ Latest Articles -------------------------------------------------------------->
-<section class="recent-articles">
-    <h2>Latest Article</h2>
-    <p>Stay up-to-date with the latest in food, events, and local culture.</p>
-    
-    <div class="articles-grid">
-        <!-- Article 1 -->
-        <div class="article-card">
-            <img src="https://aroundtheville.com/food-truck-blogs/ricenow/Kate_Finn.webp" alt="Exploring the Best Food Trucks" class="article-image">
-            <h3>Rice Now</h3>
-            <p>Discover the journey of Kate Finn, owner of Rice Now, as she brings authentic Thai flavors to the streets through her popular food truck. Learn about her unique approach, popular dishes, future plans, and how she connects with her community. Follow Rice Now for fresh, flavorful Thai cuisine in your area!</p>
-            <a href="https://aroundtheville.com/food-truck-blogs/ricenow/" class="read-more">Read More</a>
-        </div>
-
-  
+<section id="latest-blog">
+    <h2>Latest Blog</h2>
+    <div id="latest-articles-grid"></div>
 </section>
 <div class="section-divider"></div>
  <!---------------------------------------------- Explore by category---------------------------------------------------------->
-<section class="categories">
+ <section id="categories">
     <h2>Explore by Category</h2>
-    <p>Discover the best of each category and find something for everyone.</p>
     <div class="category-grid">
-        <div class="category-item-container">
-            <img src="assets/food-truck.jpeg" alt="Food & Drink">
-           
-            <a href="#food-drink" class="category-link">Explore</a>
+        <div class="category-item-container" data-category="food-trucks">
+            <img src="assets/food-truck.jpeg" alt="Food Trucks">
         </div>
-        <div class="category-item-container">
-            <img src="assets/restaurant.jpeg" alt="Events">
-            
-            <a href="#events" class="category-link">Explore</a>
+        <div class="category-item-container" data-category="restaurants">
+            <img src="assets/restaurant.jpeg" alt="Restaurants">
         </div>
-        <div class="category-item-container">
-            <img src="assets/brewery.jpeg" alt="Shops & Boutiques">
-            
-            <a href="#shops" class="category-link">Explore</a>
+        <div class="category-item-container" data-category="brewery">
+            <img src="assets/brewery.jpeg" alt="Brewery">
         </div>
-        <div class="category-item-container">
-            <img src="assets/distillery.jpeg" alt="Outdoors">
-            
-            <a href="#outdoors" class="category-link">Explore</a>
+        <div class="category-item-container" data-category="distillery">
+            <img src="assets/distillery.jpeg" alt="distillery">
         </div>
     </div>
+    <div id="category-articles-grid"></div>
+  
 </section>
+
+
+
+
+
 <div class="section-divider"></div>
  <!---------------------------------------------- Instagram section ------------------------------------------------------------>
 <section class="social-feed">
@@ -162,7 +124,22 @@
   
 </section>
 
-<div class="section-divider"></div>       
+<div class="section-divider"></div> 
+<!---------------------------------------------- Sign Up Section -------------------------------------------------------------->
+<section class="signup-section">
+    <h2>Sign Up for Updates</h2>
+    <p>Stay updated with the latest food truck news and events. Sign up with your email!</p>
+    <form id="signup-form" class="signup-form">
+       
+        <input type="email" id="email" name="email" required placeholder="Enter your email">
+        
+        <button type="submit" class="signup-btn">Sign Up</button>
+    </form>
+    <p class="form-message" id="form-message"></p>
+</section>
+
+<div class="section-divider"></div>
+
 <!---------------------------------------------- Footer Section----------------------------------------------------------------->
  <footer>
     <div class="footer-content">
@@ -175,6 +152,10 @@
     </div>
 </footer>
 
-    <script src="script.js"></script>
+    <script src="script/general.js" ></script>
+    <script src="script/header.js"></script>
+    <script type="module" src="script/firebase.js"></script>
+    
+
 </body>
 </html>

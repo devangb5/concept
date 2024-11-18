@@ -43,7 +43,7 @@
 
 .intro-split h1 {
     font-size: 3rem;
-    margin-bottom: 20px;
+    margin-bottom: unset;
     color: var(--text-color);
 }
 
@@ -139,26 +139,28 @@
 }
 /* ---------------------------------------------Latest Article ------------------------------------------- */
 
+
+
 /* Recent Articles Section */
-.recent-articles {
+#latest-blog {
     padding: 40px 20px;
 }
 
-.recent-articles h2 {
+#latest-blog h2 {
     text-align: center;
     margin-bottom: 20px;
     font-size: 2rem;
     color: white; /* Light text for the title */
 }
 
-.recent-articles p {
+#latest-blog p {
     text-align: center;
     
     font-size: 1.1rem;
     color: #ccc; /* Light gray text for the paragraph */
 }
 
-.articles-grid {
+#latest-articles-grid {
     display: flex; /* Use flexbox for better centering */
     justify-content: center; /* Center horizontally */
     align-items: center; /* Center vertically */
@@ -166,73 +168,23 @@
     padding: 0 20px;
 }
 
-.article-card {
-    border: 1px solid white; /* Light border */
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    max-width: 100%; /* Default width */
-    margin: 0 auto; /* Center in grid */
-}
 
-.article-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-}
 
-.article-image {
-    width: 100%;
-    height: auto; /* Fixed height for all images */
-    object-fit: cover; /* Ensures the image covers the container */
-}
 
-.article-card h3 {
-    text-align: center;
-    padding: 15px;
-    font-size: 1.2rem;
-    color: #fff; /* Light text for the title */
-}
-
-.read-more {
-    background-color: #fff; /* White background for the button */
-    color: #333; /* Dark text for the button */
-    padding: 10px 20px;
-    font-size: 1rem;
-    border-radius: 25px;
-    text-align: center;
-    display: block;
-    margin: 10px auto;
-    text-decoration: none;
-}
-
-.read-more:hover {
-    background-color: #ddd; /* Lighter gray background on hover */
-}
-
-/* Scale down article card and center it on larger screens */
-@media (min-width: 768px ) {
-    .article-card {
-        max-width: 600px; /* Scale down card width */
-    }
-}
 
 /*---------------------------------------------------- Explore by Category --------------------------------------*/
 
 /* Categories Section */
-.categories {
+#categories {
     padding: 60px 20px;
     text-align: center;
     
-    color: #fff;
+   
 }
 
 
 
-.categories p {
+#categories p {
     font-size: 1.1rem;
     color: #ccc;
     margin-bottom: 40px;
@@ -296,6 +248,101 @@
     }
 }
 
+
+
+#category-articles-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.article-card {
+    background-color: transparent;
+    border: 1px solid #444;
+    padding: 20px;
+    border-radius: 10px;
+    transition: border-color 0.3s ease, transform 0.3s ease;
+    
+}
+
+.article-card:hover {
+    border-color: #4caf50;
+    transform: translateY(-5px);
+}
+
+.article-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+h3 {
+    font-size: 1.2em;
+    margin-top: 15px;
+    color: white;
+}
+
+p {
+    font-size: 1em;
+    margin: 10px 0;
+    color: #aaa;
+}
+
+.read-more {
+    display: inline-block;
+    color: #4caf50;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.read-more:hover {
+    text-decoration: underline;
+}
+
+/* Styling for smaller screens */
+@media (max-width: 768px) {
+    #category-articles-grid {
+        grid-template-columns: 1fr;
+        padding: 10px;
+    }
+
+    .article-card {
+        padding: 15px;
+    }
+
+    h3 {
+        font-size: 1.1em;
+    }
+
+    p {
+        font-size: 0.95em;
+    }
+}
+
+/* Additional Mobile-Friendly Enhancements */
+@media (max-width: 480px) {
+    .article-card {
+        padding: 15px;
+        border-radius: 8px; /* Slightly smaller rounded corners */
+    }
+
+    h3 {
+        font-size: 1em; /* Further reduce font size for very small screens */
+    }
+
+    p {
+        font-size: 0.9em;
+    }
+
+  
+
+    .read-more {
+        font-size: 0.85em;
+        padding: 5px 10px; /* Adjust padding for the read more link */
+    }
+}
 
 /*--------------------------------------------------------Instagram Section--------------------------------------------*/
 /* Social Feed Section */
@@ -468,6 +515,75 @@
     max-width: 700px;
     margin-left: auto;
     margin-right: auto;
+}
+
+/*-------------------------------------------------------SignUp Section----------------------------------------*/
+.signup-section {
+    background-color: #000000; /* Black background */
+    padding: 40px;
+    text-align: center;
+    color: #ffffff; /* White text color */
+    border-radius: 15px; /* Rounded corners for the section */
+}
+
+.signup-section h2 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: #ffffff; /* White text for heading */
+}
+
+.signup-section p {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+    color: #ffffff; /* White text for paragraph */
+}
+
+.signup-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.signup-form label {
+    margin-bottom: 8px;
+    font-size: 1rem;
+    text-align: left;
+    width: 100%;
+    color: #ffffff; /* White label text */
+}
+
+.signup-form input {
+    padding: 12px;
+    margin-bottom: 20px;
+    width: 100%;
+    border: 1px solid #ffffff; /* White border */
+    border-radius: 25px; /* Rounded input fields */
+    background-color: transparent; /* Transparent input background */
+    color: #ffffff; /* White text in input */
+    font-size: 1rem;
+}
+
+.signup-btn {
+    padding: 12px 20px;
+    background-color: transparent; /* Transparent background */
+    color: #ffffff; /* White text */
+    border: 1px solid #ffffff; /* White border */
+    border-radius: 25px; /* Rounded button */
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.signup-btn:hover {
+    background-color: #ffffff; /* White background on hover */
+    color: #000000; /* Black text on hover */
+}
+
+.form-message {
+    color: #ffffff; /* White text for success/error message */
+    margin-top: 20px;
+    font-size: 1rem;
 }
 
 /*------------------------------------------------------Additional Styling--------------------------*/

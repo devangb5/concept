@@ -4,42 +4,60 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./assets/styles/header.css">
-    
+    <link rel="stylesheet" href="./assets/styles/article.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <title>Blog Article</title>
-    <style>
-        body{
-            background-color: black;
-            margin:0;
-        }
-        /* Basic fallback styling for the loading text */
-      #blog-content{
-        
-        color:#ccc;
-      }
-        #blog-content img{
-            width: 100%;
-            height: auto;
-        }
-
-    </style>
 </head>
 <body>
     <!-- Header -->
     <div id="header"></div>
+
+    <!-- Progress bar container -->
+    <div id="progress-bar-container">
+        <div id="progress-bar"></div>
+    </div>
     
     <!-- Article content section -->
     <div id="blog-content">
         <p>Loading article...</p> <!-- Fallback text while loading -->
     </div>
-
-    <!-- Footer (optional) -->
-    <footer>
-        <p style="text-align: center;">&copy; 2024 Around the Ville</p>
-    </footer>
+    <section id="share-article">
+        <h3>Share this article</h3>
+        <div class="social-buttons">
+            <a href="#" class="social-icon" id="twitter-share" title="Share on Twitter">
+                <i class="fab fa-twitter"></i> <!-- Twitter Icon -->
+            </a>
+            <a href="#" class="social-icon" id="facebook-share" title="Share on Facebook">
+                <i class="fab fa-facebook-f"></i> <!-- Facebook Icon -->
+            </a>
+            <a href="#" class="social-icon" id="linkedin-share" title="Share on LinkedIn">
+                <i class="fab fa-linkedin-in"></i> <!-- LinkedIn Icon -->
+            </a>
+            <a href="#" class="social-icon" id="whatsapp-share" title="Share on WhatsApp">
+                <i class="fab fa-whatsapp"></i> <!-- WhatsApp Icon -->
+            </a>
+            <a href="#" class="social-icon" id="pinterest-share" title="Share on Pinterest">
+                <i class="fab fa-pinterest-p"></i> <!-- Pinterest Icon -->
+            </a>
+            <a href="#" class="social-icon" id="email-share" title="Share via Email">
+                <i class="fas fa-envelope"></i> <!-- Email Icon -->
+            </a>
+        </div>
+    </section>
+    
+    
+    
+    
+    
+    
+    <div class="section-divider"></div> 
+    <div id="related-articles"></div>
+ 
 
     <!-- Scripts -->
-    <script  src="./assets/script/header.js"></script>
+    <script src="./assets/script/header.js"></script>
     <script type="module" src="./assets/script/article.js"></script> <!-- Script to load article -->
+
   
 </body>
 </html>

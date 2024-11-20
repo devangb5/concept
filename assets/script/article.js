@@ -1,7 +1,8 @@
 import { collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-firestore.js";
 import { db } from './firebaseConfig.js';
 
-
+// Flag to prevent fetching after reaching the bottom
+let hasFetchedRelatedArticles = false;
 
 // Function to fetch and display the blog
 async function fetchAndDisplayBlog() {
@@ -24,11 +25,12 @@ async function fetchAndDisplayBlog() {
             return;
         }
 
+        let blogHTML = "";
         querySnapshot.forEach((doc) => {
             const data = doc.data();
 
             // Create HTML for the blog
-            let blogHTML = `
+            blogHTML += `
                 <h1>${data.title}</h1>
                 <img src="${data.image}" alt="${data.title}" class="blog-image">
             `;
@@ -42,12 +44,10 @@ async function fetchAndDisplayBlog() {
 
                 // Handle content.text: if it's an array, iterate over it; if it's a string, just display it
                 if (Array.isArray(content.text)) {
-                    // If content.text is an array, iterate through paragraphs
                     content.text.forEach((paragraph) => {
                         blogHTML += `<p>${paragraph}</p>`;
                     });
                 } else {
-                    // If content.text is a string, display it as a single paragraph
                     blogHTML += `<p>${content.text}</p>`;
                 }
 
@@ -56,11 +56,152 @@ async function fetchAndDisplayBlog() {
 
             document.getElementById("blog-content").innerHTML = blogHTML;
         });
+
+        // Initialize smooth scrolling behavior for links
+        document.querySelectorAll('a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
     } catch (error) {
         console.error("Error fetching blog:", error);
         document.getElementById("blog-content").innerHTML = "<p>Error loading blog. Please try again later.</p>";
     }
 }
 
-// Call the function when the page loads
-fetchAndDisplayBlog();
+// Function to fetch and display random related articles
+async function fetchRelatedArticles() {
+    // Prevent fetching if articles have already been displayed
+    if (hasFetchedRelatedArticles) {
+        return;
+    }
+
+    try {
+        // Fetch all blogs from the "blogs" collection
+        const blogsRef = collection(db, "blogs");
+        const querySnapshot = await getDocs(blogsRef);
+
+        // If no blogs are found
+        if (querySnapshot.empty) {
+            console.log("No blogs found.");
+            return;
+        }
+
+        // Create an array to hold the fetched articles
+        let allBlogs = [];
+        querySnapshot.forEach((doc) => {
+            allBlogs.push(doc.data());
+        });
+
+        // Shuffle the array to randomize the order
+        allBlogs = shuffleArray(allBlogs);
+
+        // Select the first 3 articles from the shuffled array
+        const randomBlogs = allBlogs.slice(0, 3);
+
+        // Prepare HTML content for the related articles
+        let relatedArticlesHTML = "<h3>Related Articles</h3>";
+        randomBlogs.forEach(blog => {
+            relatedArticlesHTML += `
+                <div class="related-article">
+                    <a href="/article.html?blog_number=${blog.blog_number}">
+                        <img src="${blog.image}" alt="${blog.title}" class="related-article-image">
+                        <p>${blog.title}</p>
+                    </a>
+                </div>
+            `;
+        });
+
+        // Display the related articles in the "related-articles" container
+        document.getElementById("related-articles").innerHTML = relatedArticlesHTML;
+
+        // Set flag to true to indicate articles have been fetched
+        hasFetchedRelatedArticles = true;
+
+    } catch (error) {
+        console.error("Error fetching related articles:", error);
+    }
+}
+
+// Function to shuffle an array (for randomizing the order)
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]]; // Swap elements
+    }
+    return array;
+}
+
+// Handle the scroll event for progress bar and related articles fetching
+window.addEventListener("scroll", () => {
+    const docHeight = document.documentElement.scrollHeight;
+    const winHeight = window.innerHeight;
+    const scrollPos = window.scrollY;
+
+    // Calculate the scroll progress
+    const progress = (scrollPos / (docHeight - winHeight)) * 100;
+
+    // Update progress bar width
+    document.getElementById("progress-bar").style.width = progress + "%";
+
+    // Handle sticky progress bar appearance
+    if (scrollPos > 100) { // Adjust the scroll position for the sticky effect
+        document.getElementById("progress-bar-container").style.display = 'block'; // Show progress bar
+        document.querySelector('h1').style.borderBottom = 'none'; // Hide the underline from the heading
+        document.getElementById("progress-bar-container").classList.add('sticky-progress'); // Make it sticky
+    } else {
+        document.getElementById("progress-bar-container").style.display = 'none'; // Hide progress bar when top
+        document.querySelector('h1').style.borderBottom = '4px solid #bdc3c7'; // Show the original underline on heading
+        document.getElementById("progress-bar-container").classList.remove('sticky-progress'); // Remove sticky effect
+    }
+
+    // Detect if the user reached the end of the article
+    if (scrollPos + winHeight >= docHeight) {
+        fetchRelatedArticles();
+    }
+});
+
+// Fetch blog and related articles when the page loads
+document.addEventListener('DOMContentLoaded', function() {
+    fetchAndDisplayBlog();
+    fetchRelatedArticles();
+
+    // Update social media share links dynamically
+    const currentPageURL = window.location.href;
+
+    // Check and update the social media share links with the current page URL
+    updateSocialMediaLinks(currentPageURL);
+});
+
+// Function to update social media share links
+function updateSocialMediaLinks(url) {
+    const socialLinks = {
+        twitter: `https://twitter.com/share?url=${encodeURIComponent(url)}`,
+        facebook: `https://facebook.com/share?url=${encodeURIComponent(url)}`,
+        linkedin: `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(url)}`,
+        whatsapp: `https://wa.me/?text=${encodeURIComponent(url)}`,
+        pinterest: `https://pinterest.com/pin/create/button/?url=${encodeURIComponent(url)}`,
+        email: `mailto:?subject=Check out this article&body=${encodeURIComponent(url)}`
+    };
+
+    const shareElements = {
+        twitter: document.getElementById('twitter-share'),
+        facebook: document.getElementById('facebook-share'),
+        linkedin: document.getElementById('linkedin-share'),
+        whatsapp: document.getElementById('whatsapp-share'),
+        pinterest: document.getElementById('pinterest-share'),
+        email: document.getElementById('email-share')
+    };
+
+    // Update each social link if the element exists
+    for (const [platform, link] of Object.entries(socialLinks)) {
+        const element = shareElements[platform];
+        if (element) {
+            element.setAttribute('href', link);
+        }
+    }
+}

@@ -1,0 +1,311 @@
+/* article.css */
+body {
+    background-color: #121212; /* Very dark gray background for a sleek, modern look */
+    color: #e0e0e0; /* Light gray for easy readability */
+    font-family: 'Georgia', serif; /* Elegant serif font for a magazine feel */
+    margin: 0;
+    padding: 0;
+}
+.section-divider {
+    width: 90%;
+    height: 1px;
+    background-color: gray;
+    margin: 40px auto;
+    opacity: 0.5;
+}
+
+/* Content container styling */
+#blog-content {
+    max-width: 900px;
+    margin: 40px auto; /* Center content with spacing at the top */
+    padding: 0 20px;
+    line-height: 1.75; /* Comfortable line spacing */
+    font-size: 1.25rem; /* Readable base font size */
+}
+
+/* Headings Styling */
+#blog-content h1 {
+    font-size: 2.5rem; /* Larger font size for the main title */
+    font-weight: 700; /* Bold for impact */
+    color: #f1f1f1; /* Soft white for the main title */
+    margin-bottom: 20px;
+    text-transform: uppercase; /* All uppercase for emphasis */
+    letter-spacing: 2px; /* Spacing between letters for magazine style */
+    text-align: center; /* Center-align the title */
+    position: relative; /* Position relative for the underline */
+    padding-bottom: 15px;
+}
+
+/* Animated glowing white underline */
+#blog-content h1::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 4px;
+    background-color: #fff; /* Glowing white underline */
+    transition: width 0.3s ease-out;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.6); /* Glowing effect */
+}
+
+/* When page scrolls, extend the underline */
+body.scrolled #blog-content h1::after {
+    width: 100%;
+    box-shadow: 0 0 25px rgba(255, 255, 255, 0.8); /* Stronger glowing effect when active */
+}
+
+/* Subheading styling */
+#blog-content h2 {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: #f0f0f0;
+    margin: 20px 0 10px 0;
+    text-transform: capitalize;
+}
+
+#blog-content p {
+    font-size: 1.1rem; /* Slightly smaller for paragraph text */
+    font-weight: 400;
+    color: #dcdcdc;
+    margin: 20px 0;
+    text-align: justify; /* Improve block text readability */
+    line-height: 1.8;
+}
+
+/* Adding styling for blockquotes, highlighting key parts */
+#blog-content blockquote {
+    font-size: 1.2rem;
+    font-style: italic;
+    color: #9e9e9e;
+    border-left: 4px solid #fff; /* Glowing white accent */
+    padding-left: 20px;
+    margin: 30px 0;
+    background: rgba(255, 255, 255, 0.1); /* Light background with a white tint */
+    font-family: 'Georgia', serif;
+}
+
+/* Images styling */
+#blog-content img {
+    width: 100%;
+    height: auto;
+    margin: 20px 0;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Intro and first image */
+#blog-content .intro {
+    font-size: 1.3rem;
+    font-weight: 500;
+    margin-top: 0;
+    margin-bottom: 30px;
+}
+
+#blog-content .intro img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+/* Styling for captions */
+#blog-content .caption {
+    font-size: 0.9rem;
+    font-style: italic;
+    color: #7f8c8d;
+    text-align: center;
+    margin-top: 10px;
+}
+
+/* Hyperlinks */
+#blog-content a {
+    color: #fff; /* White for links */
+    text-decoration: none;
+    font-weight: 500;
+    border-bottom: 2px solid #fff; /* White underline */
+    transition: color 0.3s, border-bottom 0.3s;
+}
+
+#blog-content a:hover {
+    color: #f1f1f1;
+    border-bottom: 2px solid #f1f1f1;
+}
+
+/* Footer Styling */
+footer {
+    font-size: 1rem;
+    text-align: center;
+    color: #888;
+    margin-top: 40px;
+    padding: 20px 0;
+    background-color: #2c2c2c;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    #blog-content {
+        padding: 0 15px;
+        font-size: 1.1rem;
+    }
+
+    #blog-content h1 {
+        font-size: 2rem;
+    }
+
+    #blog-content h2 {
+        font-size: 1.5rem;
+    }
+
+    #blog-content blockquote {
+        font-size: 1.1rem;
+    }
+
+    #blog-content img {
+        border-radius: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    #blog-content {
+        padding: 0 10px;
+        font-size: 1rem;
+    }
+
+    #blog-content h1 {
+        font-size: 1.5rem;
+    }
+
+    #blog-content h2 {
+        font-size: 1.3rem;
+    }
+
+    #blog-content blockquote {
+        font-size: 1rem;
+    }
+
+    #blog-content img {
+        border-radius: 6px;
+    }
+}
+
+/* Scroll Progress Bar */
+#progress-bar-container {
+    position: fixed;
+    top: 70;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background-color: #ccc;
+    z-index: 100;
+}
+
+#progress-bar {
+    height: 100%;
+    background-color: #fff; /* Glowing white progress bar */
+    width: 0;
+    transition: width 0.1s ease-in-out;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.6); /* Glowing effect */
+}
+
+#related-articles {
+    margin-top: 40px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Responsive grid */
+    gap: 20px; /* Spacing between grid items */
+    text-align: center;
+    padding: 0 20px; /* Add horizontal padding for better spacing */
+}
+
+.related-article {
+    background-color: #1e1e1e; /* Dark background for each article card */
+    border-radius: 10px; /* Rounded corners for cards */
+    overflow: hidden; /* Prevent image overflow */
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition on hover */
+}
+
+.related-article:hover {
+    transform: translateY(-10px); /* Slight lift effect on hover */
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3); /* Stronger shadow on hover */
+}
+
+.related-article img {
+    width: 100%;
+    height: 200px; /* Set a fixed height for images */
+    object-fit: cover; /* Ensure image covers the container */
+    border-bottom: 2px solid rgb(255, 98, 0); /* Accent border under the image */
+}
+
+.related-article p {
+    color: #f0f0f0;
+    margin-top: 10px;
+    font-size: 1.1rem;
+    padding: 10px 15px; /* Add padding around the text */
+}
+
+.related-article a {
+    text-decoration: none;
+    display: block; /* Make the entire card clickable */
+}
+
+.related-article a:hover {
+    text-decoration: none; /* Remove underline on hover */
+}
+
+/* Add media query for smaller screens */
+@media (max-width: 600px) {
+    #related-articles {
+        padding: 0 10px; /* Reduce horizontal padding for smaller screens */
+    }
+
+    .related-article {
+        margin: 10px 0; /* Add vertical margin to prevent sticking */
+    }
+}
+
+#share-article {
+    margin-top: 40px;
+    text-align: center;
+}
+
+.social-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* Spacing between icons */
+}
+
+.social-icon {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    background-color: #fff; /* White background */
+    border-radius: 50%;
+    color: #000; /* Black color for icons */
+    text-align: center;
+    line-height: 40px;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    font-size: 20px;
+    border: 2px solid #000; /* Black border for icons */
+}
+
+.social-icon:hover {
+    transform: scale(1.1); /* Slightly increase size on hover */
+    background-color: #000; /* Black background on hover */
+    color: #fff; /* White icons on hover */
+}
+
+.social-icon i {
+    pointer-events: none; /* Prevent pointer events from affecting the icon */
+}
+
+.social-icon:focus {
+    outline: none; /* Remove focus outline */
+}
+
+.social-icon i {
+    transition: color 0.3s ease;
+}
+
+
+

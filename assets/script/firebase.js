@@ -35,7 +35,7 @@ async function fetchLatestBlog() {
                     <img src="${data.image}" alt="${data.title}" class="article-image">
                     <h3>${data.title}</h3>
                     <p>${data.description}</p>
-                    <a href="blogs/article.html?blog_number=${data.blog_number}" class="read-more">Read More</a>
+                    <a href="article.html?blog_number=${data.blog_number}" class="read-more">Read More</a>
                 </div>
             `;
             document.getElementById("latest-articles-grid").innerHTML = latestBlogHTML;
@@ -70,7 +70,7 @@ async function fetchBlogsByCategory(category) {
                     <img src="${data.image}" alt="${data.title}" class="article-image">
                     <h3>${data.title}</h3>
                     <p>${data.description}</p>
-                    <a href="blogs/article.html?blog_number=${data.blog_number}" class="read-more">Read More</a>
+                    <a href="article.html?blog_number=${data.blog_number}" class="read-more">Read More</a>
                 </div>
             `;
         });

@@ -3,87 +3,68 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script>
-    async function fetchAndConvertToJson() {
-      const url = document.getElementById('url-input').value;
-
-      try {
-        // Fetch HTML content from the provided URL
-        const response = await fetch(url);
-        const htmlContent = await response.text();
-
-        // Parse the HTML content into a DOM structure
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(htmlContent, 'text/html');
-
-        // Initialize a Map to hold the structured data
-        let contentMap = new Map();
-        let contentArray = [];
-
-        // Extract headings and paragraphs
-        const headings = doc.querySelectorAll('h1, h2, h3, h4, h5, h6');
-        const paragraphs = doc.querySelectorAll('p');
-        
-        let currentIndex = 0;
-
-        headings.forEach(heading => {
-          // Retain all whitespace and new lines in the heading and paragraph content
-          let headingText = heading.innerText.trim();
-          let paragraphText = paragraphs[currentIndex] ? preserveWhitespace(paragraphs[currentIndex].innerHTML) : "";
-
-          // Add the heading and text to both the Map and Array
-          contentMap.set(headingText, paragraphText);
-          contentArray.push({ heading: headingText, text: paragraphText });
-
-          currentIndex++;
-        });
-
-        // If there are more paragraphs than headings, add the remaining paragraphs
-        while (currentIndex < paragraphs.length) {
-          const additionalHeading = "Additional Content";
-          const additionalText = preserveWhitespace(paragraphs[currentIndex].innerHTML);
-
-          contentMap.set(additionalHeading, additionalText);
-          contentArray.push({ heading: additionalHeading, text: additionalText });
-
-          currentIndex++;
-        }
-
-        // Display the Map and Array in the output section
-        const mapJson = JSON.stringify(Object.fromEntries(contentMap), null, 2);
-        const arrayJson = JSON.stringify(contentArray, null, 2);
-        
-        document.getElementById('json-output').innerHTML = `
-          <strong>Content Map:</strong>
-          <pre>${mapJson}</pre>
-          
-          <strong>Content Array:</strong>
-          <pre>${arrayJson}</pre>
-        `;
-
-      } catch (error) {
-        console.error('Error fetching or processing HTML:', error);
-        alert('Failed to fetch content from the URL');
-      }
-    }
-
-    // Function to preserve whitespace and new lines in text
-    function preserveWhitespace(html) {
-      // Replace all spaces, newlines, and tabs with their corresponding HTML entities
-      return html.replace(/(\r\n|\n|\r|\t)/g, ' ').replace(/\s+/g, ' ').trim();
-    }
-
-  </script>
+  <title>Update Firestore Content</title>
 </head>
 <body>
-  <h1>Website Content to Map and Array Converter</h1>
-  
-  <label for="url-input">Enter Website URL:</label>
-  <input type="text" id="url-input" placeholder="https://example.com" size="50">
-  <button onclick="fetchAndConvertToJson()">Convert Website to Map and Array</button>
+  <h1>Update Content to Firestore</h1>
 
-  <h2>Output:</h2>
-  <div id="json-output"></div> <!-- Display the Map and Array output -->
+  <form id="content-form">
+    <label for="title">Title:</label>
+    <input type="text" id="title" name="title" required>
+    
+    <label for="description">Description:</label>
+    <textarea id="description" name="description" required></textarea>
+    
+    <label for="imageUrl">Image URL:</label>
+    <input type="url" id="imageUrl" name="imageUrl" required>
+    
+    <button type="submit">Update Database</button>
+  </form>
 
+  <div id="status"></div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js";
+    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-firestore.js";
+
+    // Firebase configuration
+    const firebaseConfig = {
+        apiKey: "your-api-key",
+        authDomain: "your-auth-domain",
+        projectId: "your-project-id",
+        storageBucket: "your-storage-bucket",
+        messagingSenderId: "your-sender-id",
+        appId: "your-app-id"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // Handle Form Submission
+    document.getElementById("content-form").addEventListener("submit", async (e) => {
+      e.preventDefault(); // Prevent the form from refreshing the page
+      
+      // Collect form data
+      const title = document.getElementById("title").value;
+      const description = document.getElementById("description").value;
+      const imageUrl = document.getElementById("imageUrl").value;
+
+      try {
+        // Add content to Firestore
+        const docRef = await addDoc(collection(db, "blogs"), {
+          title: title,
+          description: description,
+          imageUrl: imageUrl,
+          createdAt: new Date() // Optional: Add timestamp
+        });
+
+        document.getElementById("status").innerText = `Content added with ID: ${docRef.id}`;
+      } catch (error) {
+        console.error("Error adding document: ", error);
+        document.getElementById("status").innerText = "Failed to update content.";
+      }
+    });
+  </script>
 </body>
 </html>

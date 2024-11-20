@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../assets/styles/header.css">
+    <link rel="stylesheet" href="../assets/styles/article.css"> <!-- Add styling for article -->
+    <title>Blog Article</title>
+    <style>
+        body{
+            background-color: black;
+            margin:0;
+        }
+        /* Basic fallback styling for the loading text */
+      #blog-content{
+        
+        color:#ccc;
+      }
+        #blog-content img{
+            width: 100%;
+            height: auto;
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div id="header"></div>
+    
+    <!-- Article content section -->
+    <div id="blog-content">
+        <p>Loading article...</p> <!-- Fallback text while loading -->
+    </div>
+
+    <!-- Footer (optional) -->
+    <footer>
+        <p style="text-align: center;">&copy; 2024 Around the Ville</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script  src="../assets/script/header.js"></script>
+    <script type="module" src="article.js"></script> <!-- Script to load article -->
+  
+</body>
+</html>

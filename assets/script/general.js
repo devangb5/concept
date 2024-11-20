@@ -27,10 +27,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Image slideshow for intro image
     const images = [
-        "assets/food-truck.jpeg",
-        "assets/brewery.jpeg",
-        "assets/restaurant.jpeg",
-        "assets/distillery.jpeg"
+        "assets/images/food-truck.jpeg",
+        "assets/images/brewery.jpeg",
+        "assets/images/restaurant.jpeg",
+        "assets/images/distillery.jpeg"
     ];
 
     const introImage = document.querySelector(".intro-image img");

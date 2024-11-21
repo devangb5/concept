@@ -2,7 +2,7 @@ import { db } from './firebaseConfig.js';
 import { collection, addDoc } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-firestore.js";
 
 // Path to the footer HTML file
-const footerPath = '/components/footer.html'; // Update this path accordingly
+const footerPath = 'components/footer.html'; // Update this path accordingly
 
 async function loadFooter() {
     try {

@@ -132,15 +132,7 @@ body.scrolled #blog-content h1::after {
     border-bottom: 2px solid #f1f1f1;
 }
 
-/* Footer Styling */
-footer {
-    font-size: 1rem;
-    text-align: center;
-    color: #888;
-    margin-top: 40px;
-    padding: 20px 0;
-    background-color: #2c2c2c;
-}
+
 
 /* Responsive Design */
 @media (max-width: 768px) {

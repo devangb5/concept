@@ -1,4 +1,3 @@
-
 #header{
   position: sticky;
   top: 0;
@@ -151,38 +150,7 @@
 }
 
 
-footer {
-  display: flex;
-  flex-direction: column; /* Stack items vertically on mobile */
-  align-items: center; /* Center items horizontally */
-
-  color: white;
-  text-align: center;
-  padding: 20px;
-  
-}
 
 
-.footer-content {
-  max-width: 100%; /* Max width for larger screens */
-  margin: auto; /* Center the footer content */
-}
 
-.footer-links {
-  list-style: none; /* Remove bullet points */
-  padding: 0; /* Remove default padding */
-}
 
-.footer-links li {
-  display: inline; /* Display links inline */
-  margin: 0 10px; /* Spacing between links */
-}
-
-.footer-links a {
-  color: white; /* Link color */
-  text-decoration: none; /* Remove underline */
-}
-
-.footer-links a:hover {
-  text-decoration: underline; /* Underline on hover for clarity */
-}

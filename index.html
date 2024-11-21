@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Around The Ville</title>
     <link rel="stylesheet" href="./assets/styles/header.css">
+    <link rel="stylesheet" href="./assets/styles/footer.css">
     <link rel="stylesheet" href="./assets/styles/body.css">
     
  <meta property="og:image" content="./assets/images/david.jpeg">
@@ -102,17 +103,10 @@
     </div>
 </section>
 <div class="section-divider"></div>
- <!---------------------------------------------- About Us Section---------------------------------------------------------------->
-<section class="about-us">
-    <h2>About Us</h2>
-    <p>Welcome to Around The Ville – your local guide to discovering the best food trucks, hidden gems, and unique businesses in the city. Our team is passionate about connecting you with the stories behind each neighborhood and the people who make them special.</p>
-  
-</section>
 
-<div class="section-divider"></div> 
 <!---------------------------------------------- Sign Up Section -------------------------------------------------------------->
 <section class="signup-section">
-    <h2>Sign Up for Updates</h2>
+    <h2>Stay Updated</h2>
     <p>Stay updated with the latest food truck news and events. Sign up with your email!</p>
     <form id="signup-form" class="signup-form">
        
@@ -124,21 +118,23 @@
 </section>
 
 <div class="section-divider"></div>
+<!-- Display Specials Section on Homepage -->
+<div id="specials-list"></div>
 
+ <!---------------------------------------------- About Us Section---------------------------------------------------------------->
+ <section class="about-us">
+    <h2>About Us</h2>
+    <p>Welcome to Around The Ville – your local guide to discovering the best food trucks, hidden gems, and unique businesses in the city. Our team is passionate about connecting you with the stories behind each neighborhood and the people who make them special.</p>
+  
+</section>
+
+<div class="section-divider"></div> 
 <!---------------------------------------------- Footer Section----------------------------------------------------------------->
- <footer>
-    <div class="footer-content">
-        <p>Around The Ville. All rights reserved.</p>
-        <ul class="footer-links">
-            <li><a href="#">Privacy Policy</a></li>
-            
-            <li><a href="#">Contact Us</a></li>
-        </ul>
-    </div>
-</footer>
+<div id="footer-container"></div>
 
     <script src="assets/script/general.js" ></script>
     <script src="assets/script/header.js"></script>
+    <script type="module" src="assets/script/footer.js"></script>
     <script type="module" src="assets/script/firebase.js"></script>
     
 

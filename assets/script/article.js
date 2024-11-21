@@ -57,13 +57,22 @@ async function fetchAndDisplayBlog() {
             document.getElementById("blog-content").innerHTML = blogHTML;
         });
 
-        // Initialize smooth scrolling behavior for links
+        // Initialize smooth scrolling behavior only for internal anchor links
         document.querySelectorAll('a').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
+                const href = this.getAttribute('href');
+                
+                // Only handle internal anchor links (starting with #)
+                if (href && href.startsWith('#')) {
+                    e.preventDefault();
+                    const targetElement = document.querySelector(href);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+                // External links will work normally without preventDefault
             });
         });
 
@@ -172,10 +181,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Update social media share links dynamically
     const currentPageURL = window.location.href;
-
-    // Check and update the social media share links with the current page URL
     updateSocialMediaLinks(currentPageURL);
 });
+
 // Function to update social media share links
 function updateSocialMediaLinks(url) {
     const socialLinks = {
@@ -200,8 +208,7 @@ function updateSocialMediaLinks(url) {
     for (const [platform, link] of Object.entries(socialLinks)) {
         const element = shareElements[platform];
         if (element) {
-            element.setAttribute('href', link); // Set the href attribute directly
+            element.setAttribute('href', link);
         }
     }
 }
-

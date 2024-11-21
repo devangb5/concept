@@ -39,7 +39,7 @@ body {
 /* Offer Image */
 .offer-card img {
     width: 100%;
-    height: 200px; /* Fixed height to maintain uniformity */
+    height: auto; /* Fixed height to maintain uniformity */
     object-fit: cover; /* Ensures the image covers the area without distortion */
 }
 

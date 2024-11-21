@@ -1,0 +1,68 @@
+<form id="special-form">
+    <input type="text" id="restaurant-name" placeholder="Restaurant Name" required>
+    <input type="text" id="special-title" placeholder="Special Title" required>
+    <textarea id="special-description" placeholder="Special Description" required></textarea>
+    <input type="date" id="expiration-date" placeholder="Expiration Date" required>
+    <button type="submit">Submit Special</button>
+</form>
+
+<!-- Display Offers Section -->
+<div id="offers-list"></div>
+
+<script src="https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.17.2/firebase-firestore.js"></script>
+
+<script>
+// Initialize Firebase
+import { db } from '../assets/script/firebaseConfig.js';
+// Handle Special Submission
+document.getElementById('special-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const restaurantName = document.getElementById('restaurant-name').value;
+    const specialTitle = document.getElementById('special-title').value;
+    const specialDescription = document.getElementById('special-description').value;
+    const expirationDate = document.getElementById('expiration-date').value;
+
+    try {
+        // Add the special offer to Firestore
+        await db.collection('specials').add({
+            restaurantName: restaurantName,
+            specialTitle: specialTitle,
+            specialDescription: specialDescription,
+            expirationDate: expirationDate,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        });
+
+        alert('Special offer submitted successfully!');
+        document.getElementById('special-form').reset(); // Reset the form
+    } catch (error) {
+        console.error("Error submitting special: ", error);
+        alert('Failed to submit special. Please try again.');
+    }
+});
+
+// Fetch and Display Specials on the Homepage
+async function loadSpecials() {
+    const specialsList = document.getElementById('specials-list');
+    const snapshot = await db.collection('specials').orderBy('createdAt', 'desc').get();
+
+    specialsList.innerHTML = ''; // Clear current specials
+
+    snapshot.forEach(doc => {
+        const special = doc.data();
+        const specialElement = document.createElement('div');
+        specialElement.classList.add('special');
+        specialElement.innerHTML = `
+            <h3>${special.specialTitle}</h3>
+            <p><strong>Restaurant:</strong> ${special.restaurantName}</p>
+            <p><strong>Description:</strong> ${special.specialDescription}</p>
+            <p><strong>Expires on:</strong> ${special.expirationDate}</p>
+        `;
+        specialsList.appendChild(specialElement);
+    });
+}
+
+// Load specials when the page loads
+window.onload = loadSpecials;
+</script>

@@ -108,7 +108,7 @@ async function fetchRelatedArticles() {
         randomBlogs.forEach(blog => {
             relatedArticlesHTML += `
                 <div class="related-article">
-                    <a href="/concept/article.html?blog_number=${blog.blog_number}">
+                    <a href="/article.html?blog_number=${blog.blog_number}">
                         <img src="${blog.image}" alt="${blog.title}" class="related-article-image">
                         <p>${blog.title}</p>
                     </a>
@@ -176,7 +176,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Check and update the social media share links with the current page URL
     updateSocialMediaLinks(currentPageURL);
 });
-
 // Function to update social media share links
 function updateSocialMediaLinks(url) {
     const socialLinks = {
@@ -201,7 +200,8 @@ function updateSocialMediaLinks(url) {
     for (const [platform, link] of Object.entries(socialLinks)) {
         const element = shareElements[platform];
         if (element) {
-            element.setAttribute('href', link);
+            element.setAttribute('href', link); // Set the href attribute directly
         }
     }
 }
+

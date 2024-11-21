@@ -1,0 +1,282 @@
+/* Global Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #000000;  /* Black background */
+    color: #ffffff;  /* White text */
+    margin: 0;
+    padding: 0;
+}
+
+/* Dashboard container */
+.dashboard {
+    padding: 40px;
+    max-width: 700px;
+    margin: 40px auto;
+}
+
+/* Headers */
+h1, h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #ffffff;  /* White text */
+    font-size: 2em;
+}
+
+/* Messages */
+.message {
+    text-align: center;
+    font-size: 0.9em;
+    color: #ffffff;  /* White text */
+    margin-top: 10px;
+}
+
+/* Forms and Containers */
+.special-form,
+.specials-list {
+    background: #1a1a1a;  /* Dark gray background */
+    padding: 30px;
+    border-radius: 15px; /* Rounded corners */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.6);
+    margin-bottom: 30px;
+    border: 1px solid #333333;  /* Add border for definition */
+}
+
+/* Form labels */
+.special-form label {
+    color: #ffffff;  /* White text */
+    font-size: 1em;
+    margin-bottom: 5px;
+    display: block;
+}
+
+/* Input and textarea styling */
+.special-form input,
+.special-form textarea,
+.special-form button {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    background: #000000;  /* Black background */
+    border: 1px solid #ffffff;  /* White border */
+    border-radius: 10px; /* Rounded corners */
+    color: #ffffff;  /* White text */
+    font-size: 1em;
+}
+
+/* Adjust spacing for form inputs */
+.special-form input, 
+.special-form textarea {
+    margin-bottom: 20px;
+}
+
+/* Make the textarea taller */
+.special-form textarea {
+    height: 120px;
+}
+
+/* Clean Button Design */
+.special-form button {
+    background: #000000;  /* Black background */
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #fff;
+    border: 1px solid #ffffff;
+    border-radius: 10px; /* Rounded corners */
+    transition: background 0.3s ease;
+    cursor: pointer;
+    padding: 15px;
+}
+
+.special-form button:hover {
+    background: #333333;  /* Slightly lighter on hover */
+}
+
+/* Center the login button */
+#login-form button {
+    display: block;
+    margin: 20px auto;
+}
+
+/* Logout button styling */
+#logout-button {
+    background-color: #1a1a1a;  /* Black background */
+    color: white;
+    padding: 12px 20px;
+    border: 1px solid #ffffff; /* White border */
+    border-radius: 10px; /* Rounded corners */
+    font-size: 16px;
+    cursor: pointer;
+    display: block;
+    margin: 20px auto;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+#logout-button:hover {
+    background-color: #333333;  /* Slightly lighter black on hover */
+}
+
+/* Special item styling */
+.special-item {
+    background: #000000;  /* Black background */
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px; /* Rounded corners */
+    transition: transform 0.2s;
+    border: 1px solid #ffffff;  /* White border */
+}
+
+.special-item:hover {
+    transform: translateY(-5px);
+    background: #1a1a1a;  /* Slightly lighter black */
+}
+
+.special-item h3 {
+    margin: 0 0 10px;
+    color: #ffffff;  /* White text */
+}
+
+.special-item p {
+    margin: 5px 0;
+    color: #ffffff;  /* White text */
+}
+
+/* Specials List */
+.specials-list {
+    margin-top: 20px;
+}
+
+/* Specials items layout */
+.special-items {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* Responsive grid */
+    gap: 20px;
+}
+
+.special-item img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover; /* Ensures the image covers the area without distortion */
+    border-radius: 10px; /* Rounded corners for images */
+}
+
+/* Link Styling */
+a {
+    color: #ffffff;  /* White text */
+    
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .special-items {
+        grid-template-columns: 1fr; /* Stack items on smaller screens */
+    }
+}
+/* Global Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #000;  /* Black background */
+    color: #fff;  /* White text */
+    margin: 0;
+    padding: 0;
+}
+
+/* Dashboard container */
+.dashboard {
+    padding: 40px;
+    max-width: 700px;
+    margin: 40px auto;
+}
+
+/* Headers */
+h1, h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #fff;  /* White text */
+    font-size: 2em;
+}
+
+/* Messages */
+.message {
+    text-align: center;
+    font-size: 0.9em;
+    color: #fff;  /* White text */
+    margin-top: 10px;
+}
+
+/* Forms with Flexbox */
+.special-form {
+    display: flex; /* Enable flexbox */
+    flex-direction: column; /* Stack items vertically */
+    align-items: center; /* Center items horizontally */
+    gap: 20px; /* Spacing between elements */
+    background: #1a1a1a; /* Dark gray background */
+    padding: 30px;
+    border-radius: 15px; /* Rounded corners */
+    box-shadow: 0px 4px 8px rgba(255, 255, 255, 0.2); /* Subtle white shadow */
+    border: 1px solid #fff; /* White border */
+    max-width: 400px; /* Limit width for compact layout */
+    margin: 0 auto; /* Center the form horizontally */
+}
+
+/* Input and Textarea Styling */
+.special-form input,
+.special-form textarea {
+    width: 100%; /* Stretch inputs to full width */
+    max-width: 350px; /* Prevent excessive stretching */
+    padding: 12px;
+    border: 1px solid #fff; /* White border */
+    border-radius: 10px; /* Rounded corners */
+    background: #000; /* Black background */
+    color: #fff; /* White text */
+    font-size: 1em;
+}
+
+/* Make the textarea taller */
+.special-form textarea {
+    height: 120px;
+}
+
+/* Form Labels */
+.special-form label {
+    align-self: flex-start; /* Align labels to the left */
+    color: #fff; /* White text */
+    font-size: 1em;
+}
+
+/* Centered Login Button */
+#login-form button {
+    padding: 12px 30px; /* Add padding for prominent button */
+    background: #000; /* Black background */
+    color: #fff; /* White text */
+    border: 1px solid #fff; /* White border */
+    border-radius: 10px; /* Rounded corners */
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#login-form button:hover {
+    background-color: #333; /* Slightly lighter black */
+}
+
+/* Specials List */
+.specials-list {
+    margin-top: 20px;
+    background: #1a1a1a; /* Darker background */
+    padding: 20px;
+    border-radius: 10px; /* Rounded corners */
+    border: 1px solid #fff; /* White border */
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .special-form {
+        max-width: 100%;
+        padding: 20px;
+    }
+}

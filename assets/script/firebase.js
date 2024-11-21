@@ -139,3 +139,4 @@ categoryItems.forEach(item => {
 // Initial calls to fetch data on page load
 fetchLatestBlog();
 fetchInstagramPosts();
+

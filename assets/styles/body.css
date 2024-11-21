@@ -1,24 +1,47 @@
 /* Global Variables */
+
 :root {
-    --bg-color:black;
+    --bg-color: black;
+    --bg-color-secondary: #1a1a1a;
+    --bg-color-tertiary: #333;
+    
     --text-color: white;
-   
+    --text-color-secondary: #ccc;
+    --text-color-tertiary: #aaa;
+    
+    --border-color: #444;
+    --border-color-secondary: #fff;
+    
+    --hover-color: #555;
+    
+    --transition-speed: 0.3s;
+    --box-shadow: 0px 4px 20px rgba(255, 255, 255, 0.1);
 }
+
+/* Global Resets */
 body {
     margin: 0;
     font-family: Arial, sans-serif;
     background-color: var(--bg-color);
-    color:var(--text-color);
-
-  }
-h1{
-    font-size: 3rem;
-    margin-bottom: unset;
-    
-
+    color: var(--text-color);
 }
 
-/* Section Divider */
+h1 {
+    font-size: 3rem;
+    margin-bottom: unset;
+}
+
+h2 {
+    font-size: 2rem;
+}
+
+h3 {
+    text-align: center;
+    font-size: 1.2em;
+    margin-top: 15px;
+    color: var(--text-color);
+}
+
 .section-divider {
     width: 90%;
     height: 1px;
@@ -27,13 +50,11 @@ h1{
     opacity: 0.5;
 }
 
-
-
 /* ---------------------------------------------Intro Section------------------------------------------- */
 .intro-split {
     display: flex;
     justify-content: space-between;
-    padding: 60px 20px;
+    padding: 60px 40px;
     align-items: center;
     opacity: 0;
     transform: translateY(20px);
@@ -81,9 +102,6 @@ h1{
         margin-bottom: 20px;
     }
 
-    .intro-split h2 {
-        font-size: 2rem;
-    }
 
     .intro-split p {
         font-size: 1rem;
@@ -146,21 +164,23 @@ h1{
 #latest-blog {
     padding: 40px 20px;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: center;
+
+    
+    
 }
 
-#latest-blog h2 {
-    
-    margin-bottom: 20px;
-    font-size: 2rem;
-    color: white; /* Light text for the title */
-}
+
 
 #latest-blog p {
     text-align: justify;
     
     font-size: 1.1rem;
     color: #ccc; /* Light gray text for the paragraph */
-    -webkit-line-clamp: none !important;
+    
 }
 
 #latest-articles-grid {
@@ -169,6 +189,7 @@ h1{
     align-items: center; /* Center vertically */
     gap: 20px; /* Space between article cards */
     padding: 0 20px;
+    max-width:500px
 }
 
 
@@ -287,12 +308,7 @@ h1{
     border-radius: 8px;
 }
 
-h3 {
-    text-align: center;
-    font-size: 1.2em;
-    margin-top: 15px;
-    color: white;
-}
+
 
 p {
     font-size: 1em;
@@ -322,9 +338,7 @@ p {
         padding: 15px;
     }
 
-    h3 {
-        font-size: 1.1em;
-    }
+
 
     p {
         font-size: 0.95em;
@@ -339,9 +353,7 @@ p {
         border-radius: 8px; /* Slightly smaller rounded corners */
     }
 
-    h3 {
-        font-size: 1em; /* Further reduce font size for very small screens */
-    }
+
 
     p {
         font-size: 0.9em;
@@ -365,11 +377,7 @@ p {
     }
 }
 
-@media (max-width: 480px) {
-    .article-card p {
-        -webkit-line-clamp: 1; /* Show only 1 line on very small screens */
-    }
-}
+
 
 
 /*--------------------------------------------------------Instagram Section--------------------------------------------*/
@@ -445,11 +453,7 @@ p {
     text-align: center;
 }
 
-.local-spotlights h2 {
-    font-size: 2.5rem;
-    font-weight: 600;
-    margin-bottom: 15px;
-}
+
 
 .local-spotlights p {
     font-size: 1.1rem;
@@ -486,11 +490,7 @@ p {
     border-bottom: 2px solid #333;
 }
 
-.business-spotlight h3 {
-    font-size: 1.5rem;
-    margin: 15px;
-    color: #fff;
-}
+
 
 .business-spotlight p {
     font-size: 1rem;
@@ -530,11 +530,7 @@ p {
     text-align: center;
 }
 
-.about-us h2 {
-    font-size: 2.5rem;
-    font-weight: 600;
-    margin-bottom: 20px;
-}
+
 
 .about-us p {
     font-size: 1.1rem;
@@ -554,11 +550,7 @@ p {
     border-radius: 15px; /* Rounded corners for the section */
 }
 
-.signup-section h2 {
-    font-size: 2rem;
-    margin-bottom: 10px;
-    color: #ffffff; /* White text for heading */
-}
+
 
 .signup-section p {
     font-size: 1.1rem;
@@ -695,7 +687,7 @@ p {
     background-color: rgba(0, 0, 0, 0.3); /* Semi-transparent overlay for readability */
     margin: 0;
     color: #fff;
-    font-size: 1rem;
+   
     text-align: center;
     padding: 0.5rem; /* Add padding for the text */
 }

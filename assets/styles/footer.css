@@ -31,22 +31,31 @@ footer {
     padding: 0;
     list-style: none;
     margin-top: 1rem;
+   
+    
+    
+    
 }
 
+
 .social-icons a {
-    font-size: 1.5rem;
-    color: #fff;
-    border: 3px solid #fff;
-    padding: 12px;
-    border-radius: 50%; /* Rounded icons */
     display: inline-block;
-    transition: all 0.3s ease;
+    width: 40px;
+    height: 40px;
+    background-color: #fff; /* White background */
+    border-radius: 50%;
+    color: #000; /* Black color for icons */
+    text-align: center;
+    line-height: 40px;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    font-size: 20px;
+    border: 2px solid #000; 
 }
 
 .social-icons a:hover {
-    background-color: white;
-    color: #000;
-    border-color: white;
+    transform: scale(1.1); /* Slightly increase size on hover */
+    background-color: #000; /* Black background on hover */
+    color: #fff; /* White icons on hover */
 }
 
 /* Newsletter */

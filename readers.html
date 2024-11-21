@@ -9,17 +9,48 @@
     <link rel="stylesheet" href="./assets/styles/footer.css">
 </head>
 <body>
-    <div id="header"></div>
-    
+    <!-- Header section -->
+    <div id="header">
+        <header>
+            <h1>Special Offers</h1>
+        </header>
+    </div>
+
+    <!-- Search and Sort section -->
+    <div id="search-sort-container">
+        <input type="text" id="searchBar" placeholder="Search offers">
+        <select id="sortOffers">
+            <option value="validUntilAsc">Sort by Validity (Ascending)</option>
+            <option value="validUntilDesc">Sort by Validity (Descending)</option>
+        </select>
+    </div>
+
     <main class="offers-container">
-        
-      
-        <!-- More cards will be dynamically loaded -->
+        <!-- Offer cards will be dynamically loaded here -->
     </main>
 
+    <!-- Modal for viewing offer details -->
+    <div id="offerModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modalTitle"></h2>
+            <img id="modalImage" src="" alt="Offer image">
+            <p id="modalDescription"></p>
+            <button class="share-btn">Share</button>
+        </div>
+    </div>
+    
+
+    <!-- Footer section -->
     <div id="footer-container"></div>
+
+    <!-- Include the script for dynamically loading header -->
     <script src="assets/script/header.js"></script>
+
+    <!-- Include the script for dynamically loading footer -->
     <script type="module" src="assets/script/footer.js"></script>
+
+    <!-- Include the script for offers and other functionalities -->
     <script type="module" src="./assets/script/readers.js"></script>
 </body>
 </html>

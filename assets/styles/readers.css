@@ -1,20 +1,21 @@
 /* Global Styles */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Arial', sans-serif;
     background-color: #000;  /* Black background */
     color: #fff;  /* White text */
     margin: 0;
     padding: 0;
+    box-sizing: border-box; /* Ensure padding and border don't affect width/height */
 }
 
-
-
-/* Offers Container */
+/* Container for Offers */
 .offers-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Responsive grid */
-    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* Adjusted for mobile responsiveness */
+    gap: 30px;
     padding: 40px;
+    justify-items: center;  /* Center align the offer cards */
+    margin-top: 20px; /* Add space between the top and container */
 }
 
 /* Offer Card */
@@ -24,18 +25,21 @@ body {
     overflow: hidden; /* Clip overflowing content */
     box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1); /* Subtle white shadow */
     border: 1px solid #333; /* Dark border */
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: 100%;  /* Ensure card spans full available width */
+    transition: box-shadow 0.3s ease, background-color 0.3s ease;
+    cursor: default;  /* No pointer cursor as we are removing hover functionality */
 }
 
 .offer-card:hover {
-    transform: translateY(-5px); /* Lift effect */
-    box-shadow: 0 8px 16px rgba(255, 255, 255, 0.2); /* More prominent shadow */
+    /* Remove hover effect as requested */
+    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1); /* Reset shadow */
+    background-color: #1a1a1a; /* Keep background unchanged */
 }
 
 /* Offer Image */
 .offer-card img {
     width: 100%;
-    height: auto;
+    height: 200px; /* Fixed height to maintain uniformity */
     object-fit: cover; /* Ensures the image covers the area without distortion */
 }
 
@@ -47,13 +51,14 @@ body {
 }
 
 .offer-details h2 {
-    font-size: 1.5em;
-    margin-bottom: 10px;
+    font-size: 1.6em;  /* Larger title */
+    font-weight: bold;
+    margin-bottom: 15px;
 }
 
 .offer-details p {
     font-size: 1em;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     color: #ccc; /* Light gray text */
 }
 
@@ -61,18 +66,208 @@ body {
     color: #fff; /* White text for emphasis */
 }
 
-/* Footer Styles */
-.footer {
-    text-align: center;
-    padding: 10px;
-    background: #1a1a1a; /* Darker background */
-    color: #ccc; /* Light gray text */
-    border-top: 2px solid #fff; /* White border for separation */
+/* Social Share Button */
+.social-share {
+    display: flex;
+    gap: 10px; /* Ensure the buttons are spaced */
+    justify-content: flex-start;
+    margin-top: 10px; /* Space between buttons and content */
 }
 
-/* Responsive Adjustments */
+.social-share a {
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 15px;
+    background-color: #444;
+    border-radius: 5px;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+    display: inline-block; /* Ensure the button works as a block element */
+    position: relative; /* Position for image overlay */
+    text-align: center; /* Center the text */
+    cursor: pointer;
+}
+
+.social-share a:hover {
+    background-color: #555;
+}
+
+.social-share a::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('path-to-your-image'); /* Set the image path for sharing */
+    background-size: cover; /* Ensure the image covers the area */
+    background-position: center;
+    opacity: 0.2;  /* Low opacity so it doesn't overpower the button */
+    z-index: -1; /* Make sure the text is on top */
+}
+
+/* Search and Sort Container */
+.search-sort-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #000;  /* Black background */
+    color: #fff;  /* White text */
+    border-bottom: 2px solid #fff;  /* White border for separation */
+    margin-bottom: 20px;  /* Spacing below the container */
+    width: 100%; /* Ensure it spans across the screen */
+}
+
+/* Search Input */
+#searchBar {
+    width: 70%;
+    padding: 10px;
+    font-size: 1em;
+    background-color: #333;  /* Darker background */
+    color: #fff;  /* White text */
+    border: 1px solid #fff;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    box-sizing: border-box; /* Prevent padding from affecting width */
+}
+
+#searchBar:focus {
+    background-color: #444;  /* Slightly lighter when focused */
+    outline: none;  /* Remove default outline */
+}
+
+/* Sort Dropdown */
+#sortOffers {
+    width: 25%;
+    padding: 10px;
+    font-size: 1em;
+    background-color: #333;  /* Darker background */
+    color: #fff;  /* White text */
+    border: 1px solid #fff;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    box-sizing: border-box; /* Prevent padding from affecting width */
+}
+
+#sortOffers:focus {
+    background-color: #444;  /* Slightly lighter when focused */
+    outline: none;  /* Remove default outline */
+}
+
+/* Responsive Adjustments for Search and Sort */
 @media (max-width: 768px) {
-    .offers-container {
-        grid-template-columns: 1fr; /* Stack items on smaller screens */
+    .search-sort-container {
+        flex-direction: column;
+        align-items: flex-start;
     }
+
+    #searchBar {
+        width: 100%;  /* Full width for smaller screens */
+        margin-bottom: 10px;
+    }
+
+    #sortOffers {
+        width: 100%;  /* Full width for smaller screens */
+    }
+}
+
+/* Modal Styles */
+#offerModal {
+    display: none;  /* Initially hidden */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);  /* Semi-transparent background */
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: #1a1a1a;
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+    width: 80%;
+    max-width: 600px;
+    color: #fff;
+}
+
+.modal-content img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.close {
+    color: #fff;
+    font-size: 2em;
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    cursor: pointer;
+}
+
+/* Loading Spinner Styles (for Infinite Scroll) */
+.spinner {
+    border: 4px solid #f3f3f3;  /* Light gray border */
+    border-top: 4px solid #ff5733;  /* Color of the spinner */
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 20px auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+/* Share Button */
+.share-btn {
+    color: #fff; /* White text */
+    background-color: #000; /* Black background */
+    padding: 15px 0; /* Vertical padding to make the button taller */
+    width: 100%; /* Make the button fill the entire card */
+    border-radius: 5px; /* Slightly rounded corners */
+    font-size: 1.2em; /* Adjust font size */
+    font-weight: bold; /* Bold text for emphasis */
+    cursor: pointer;
+    border: none;
+    text-align: center; /* Center text inside button */
+    transition: all 0.3s ease; /* Smooth transition on hover */
+}
+
+.share-btn:hover {
+    background-color: #fff; /* Change to white background on hover */
+    color: #000; /* Change text color to black on hover */
+}
+
+/* Optional: Image overlay inside the button */
+.share-btn::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('path-to-your-image'); /* Set image path */
+    background-size: cover;
+    background-position: center;
+    opacity: 0.1;  /* Light opacity */
+    z-index: -1; /* Keep image behind text */
+}
+
+/* Active State (optional) */
+.share-btn:active {
+    transform: scale(0.98); /* Shrink slightly when clicked */
+}
+
+/* Focused State */
+.share-btn:focus {
+    outline: none;
+    box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.6); /* Add a subtle glowing effect when focused */
 }

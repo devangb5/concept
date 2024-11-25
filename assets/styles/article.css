@@ -194,10 +194,10 @@ body.scrolled #blog-content h1::after {
 
 #progress-bar {
     height: 100%;
-    background-color: #fff; /* Glowing white progress bar */
+    background-color: rgb(255, 98, 0); /* Glowing white progress bar */
     width: 0;
     transition: width 0.1s ease-in-out;
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.6); /* Glowing effect */
+    box-shadow: 0 0 15px rgba(255, 98, 0, 0.6); /* Glowing effect */
 }
 
 #related-articles {

@@ -1,0 +1,265 @@
+/* General styles */
+body {
+    background-color: #000;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Hidden Class */
+.hidden {
+    display: none !important;
+}
+
+/* Search Section */
+#search-section {
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    position: relative;
+}
+
+#search-input {
+    flex: 1;
+    max-width: 600px;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 20px;
+    outline: none;
+    background-color: #222;
+    color: #fff;
+    font-size: 16px;
+    transition: box-shadow 0.3s ease;
+}
+
+#search-input:focus {
+    box-shadow: 0 0 10px #555;
+}
+
+/* Filter Icon and Category Menu */
+#filter-icon-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    background-color: #222;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    position: relative;
+}
+
+#filter-icon-container:hover {
+    background-color: #333;
+}
+
+#filter-icon {
+    width: 24px;
+    height: 24px;
+    filter: invert(1);
+    transition: transform 0.3s ease;
+}
+
+#filter-icon:hover {
+    transform: scale(1.1);
+}
+
+#category-menu {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 0;
+    background-color: #222;
+    color: #fff;
+    border: 1px solid #444;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    z-index: 10;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+    min-width: 150px;
+}
+
+.category-option {
+    background: none;
+    border: none;
+    color: inherit;
+    text-align: left;
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 14px;
+}
+
+.category-option:hover {
+    background-color: #555;
+    border-radius: 4px;
+}
+
+/* Display category buttons below search input for smaller screens */
+#category-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    margin-top: 10px;
+}
+
+#category-buttons .category-option {
+    padding: 12px;
+    background-color: #222;
+    border-radius: 5px;
+    font-size: 14px;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#category-buttons .category-option:hover {
+    background-color: #444;
+}
+
+/* Blogs Section */
+#blogs-section {
+    padding: 20px;
+}
+
+#blogs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 10px;
+    transition: grid-template-columns 0.3s ease;
+}
+
+.blog-card {
+    background-color: #111;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s ease;
+}
+
+.blog-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.7);
+}
+
+.blog-image {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-bottom: 2px solid #222;
+}
+
+.blog-title {
+    font-size: 18px;
+    margin: 15px 0 10px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.blog-description {
+    font-size: 14px;
+    color: #aaa;
+    margin: 0 10px 15px;
+    line-height: 1.4;
+}
+
+.read-more {
+    display: inline-block;
+    margin-bottom: 15px;
+    padding: 8px 16px;
+    border-radius: 20px;
+    background-color: #00aced;
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.read-more:hover {
+    background-color: #0084b4;
+    text-decoration: none;
+}
+
+/* No results */
+.no-results {
+    text-align: center;
+    font-size: 16px;
+    color: #777;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 600px) {
+    #search-section {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 15px;
+    }
+
+
+
+    /* Hide filter icon for smaller screens */
+    #filter-icon-container {
+        display: none;
+    }
+
+    #category-buttons {
+        display: flex !important;
+        flex-direction: row;
+        overflow-x: auto; /* Enable horizontal scroll */
+        gap: 10px;
+        width: 100%;
+        padding-bottom: 10px; /* Add space for scrollbar */
+        -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+    }
+
+
+    #category-buttons .category-option {
+        flex-shrink: 0; /* Prevent buttons from shrinking */
+        padding: 12px;
+        background-color: #222;
+        border-radius: 5px;
+        font-size: 14px;
+        color: #fff;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    #category-buttons .category-option:hover {
+        background-color: white;
+        color: black;
+    }
+
+    #blogs-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+    }
+
+    .blog-card {
+        font-size: 14px;
+    }
+
+    .blog-description {
+        font-size: 12px;
+    }
+
+    .read-more {
+        padding: 6px 12px;
+        font-size: 12px;
+    }
+}
+
+/* Transition for grid layout on screen resize */
+@media (min-width: 601px) {
+    #blogs-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+}

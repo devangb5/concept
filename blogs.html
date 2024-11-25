@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blogs | Around The Ville</title>
+    <link rel="stylesheet" href="./assets/styles/header.css">
+    <link rel="stylesheet" href="./assets/styles/footer.css">
+    <link rel="stylesheet" href="./assets/styles/blogs.css">
+</head>
+<body>
+    <!-- Header -->
+    <div id="header"></div>
+
+    <!-- Search Section -->
+  
+   
+
+    <section id="search-section">
+        <input type="text" id="search-input" placeholder="Search blogs by title or description..." />
+        
+        <!-- Filter Icon Container (Hidden on smaller screens) -->
+        <div id="filter-icon-container">
+            <img id="filter-icon" src="./assets/icons/filter.png" alt="Filter" />
+            
+            <!-- Category Menu (Hidden by default, will appear based on interaction) -->
+            <div id="category-menu" class="hidden">
+                <button class="category-option" data-category="">All</button>
+                <button class="category-option" data-category="food-trucks">Food Trucks</button>
+                <button class="category-option" data-category="restaurants">Restaurant</button>
+                <button class="category-option" data-category="brewery">Brewery</button>
+                <button class="category-option" data-category="distillery">Distillery</button>
+            </div>
+        </div>
+    
+        <!-- Category Buttons (Visible on smaller screens) -->
+        <div id="category-buttons" class="hidden">
+            <button class="category-option" data-category="">All</button>
+            <button class="category-option" data-category="food-trucks">Food Trucks</button>
+            <button class="category-option" data-category="restaurants">Restaurants</button>
+            <button class="category-option" data-category="brewery">Brewery</button>
+            <button class="category-option" data-category="distillery">Distillery</button>
+           
+        </div>
+    </section>
+    
+    
+    
+    <!-- Blogs Section -->
+    <section id="blogs-section">
+        <div id="blogs-grid"></div>
+    </section>
+
+    <div id="footer-container"></div>
+
+    <script type="module" src="assets/script/footer.js"></script>
+    <script src="assets/script/header.js"></script>
+    <script type="module" src="./assets/script/blogs.js"></script>
+</body>
+</html>

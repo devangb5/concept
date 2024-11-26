@@ -97,7 +97,7 @@ function updateMetaTags(data) {
     document.querySelector('meta[property="og:description"]').setAttribute('content', data.description);
     document.querySelector('meta[property="og:image"]').setAttribute('content', data.image);
     document.querySelector('meta[property="og:url"]').setAttribute('content', window.location.href);
-
+    
     // Update Twitter Card meta tags
     document.querySelector('meta[name="twitter:title"]').setAttribute('content', data.title);
     document.querySelector('meta[name="twitter:description"]').setAttribute('content', data.description);

@@ -4,50 +4,57 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Redirecting...</title>
+    <script type="module" src="https://aroundtheville.com/assets/script/firebaseConfig.js"></script>
 </head>
 <body>
-    <script type="module" src="https://aroundtheville.com/assets/script/firebaseConfig.js"></script>
-    
-    <script>
-        // Import Firebase
-       
+    <script type="module">
+        // Import required Firebase functions
+        
+        import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js";
         
 
 
+        // Main redirect function
+        async function redirect() {
+            try {
+                // Get the current URL path
+                const currentPath = window.location.pathname;
 
+                // Format the path (remove '/assets/blog-assets/' if it exists)
+                const formattedPath = currentPath.startsWith('/assets/blog-assets/') 
+                    ? currentPath.substring('/assets/blog-assets/'.length) 
+                    : currentPath;
 
+                // Construct the full URL
+                const fullUrl = `https://aroundtheville.com/${formattedPath}`;
 
-        // Get the current URL path
-  // Assuming currentPath contains the path like "/about.html" and you need to match against the full URL
-   const currentPath = window.location.pathname;  // e.g., '/about.html'
+                // Query Firestore to match the full URL
+                const blogsRef = collection(db, "blogs");
+                const q = query(blogsRef, where("link", "==", fullUrl));
+                const querySnapshot = await getDocs(q);
 
-// Remove leading slash from currentPath
-const formattedPath = currentPath.startsWith('/assets/blog-assets/') ? currentPath.substring('/assets/blog-assets/'.length) : currentPath;
+                // Handle query results
+                if (!querySnapshot.empty) {
+                    const doc = querySnapshot.docs[0].data();
+                    const blogNumber = doc.blog_number;
+                    if (blogNumber) {
+                        console.log("Redirecting to blog:", blogNumber);
+                        window.location.replace(`https://aroundtheville.com/article.html?blog_number=${blogNumber}`);
+                    } else {
+                        console.error("blog_number field is missing in Firestore.");
+                        window.location.replace('https://aroundtheville.com/'); // Fallback redirect
+                    }
+                } else {
+                    console.log("No matching blog found for the current path.");
+                    window.location.replace('https://aroundtheville.com/'); // Fallback redirect
+                }
+            } catch (error) {
+                console.error("Error querying Firestore:", error);
+                window.location.replace('https://aroundtheville.com/'); // Fallback redirect
+            }
+        }
 
-// Construct the full URL
-     const fullUrl = `https://aroundtheville.com/${formattedPath}`;
-
-// Query Firestore using the full URL
-const blogsRef = collection(db, "blogs");
-const q = query(blogsRef, where("link", "==", fullUrl));
-
-const querySnapshot = await getDocs(q);
-
-// Handle query results
-if (!querySnapshot.empty) {
-    const doc = querySnapshot.docs[0].data();
-    const blogNumber = doc.blog_number;
-    if (blogNumber) {
-        window.location.replace(`https://aroundtheville.com/article.html?blog_number=${blogNumber}`);
-    } else {
-        console.error("blog_number field is missing in Firestore.");
-    }
-} else {
-    console.log("No matching blog found for the current path.");
-    window.location.replace('https://aroundtheville.com/'); // Fallback redirect
-}
-
-
+        // Call the redirect function
         redirect();
     </script>
 </body>

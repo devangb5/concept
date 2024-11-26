@@ -38,13 +38,13 @@ if (!querySnapshot.empty) {
     const doc = querySnapshot.docs[0].data();
     const blogNumber = doc.blog_number;
     if (blogNumber) {
-        window.location.replace(`https://devangb5.github.io/concept/article.html?blog_number=${blogNumber}`);
+        window.location.replace(`https://aroundtheville.com/article.html?blog_number=${blogNumber}`);
     } else {
         console.error("blog_number field is missing in Firestore.");
     }
 } else {
     console.log("No matching blog found for the current path.");
-    window.location.replace('https://devangb5.github.io/concept/'); // Fallback redirect
+    window.location.replace('https://aroundtheville.com/'); // Fallback redirect
 }
 
 

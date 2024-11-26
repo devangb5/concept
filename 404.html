@@ -12,42 +12,39 @@
         import { collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js";
 
         async function redirect() {
-            try {
-                // Get the current URL path
-                const currentPath = window.location.pathname;
+    try {
+        // Get the current URL path and construct the full URL
+        const currentPath = window.location.pathname;
+        const fullUrl = `https://aroundtheville.com${currentPath}`;
+        console.log("Current Path:", currentPath);
+        console.log("Full URL Queried:", fullUrl);
 
-                // Construct the full URL to match Firestore's link field
-                const fullUrl = `https://aroundtheville.com${currentPath}`;
-                console.log("Current Path:", currentPath);
-                console.log("Full URL Queried:", fullUrl);
+        // Query Firestore
+        const blogsRef = collection(db, "blogs");
+        const q = query(blogsRef, where("link", "==", fullUrl));
+        const querySnapshot = await getDocs(q);
 
-                // Query Firestore for the matching link
-                const blogsRef = collection(db, "blogs");
-                const q = query(blogsRef, where("link", "==", fullUrl));
-                const querySnapshot = await getDocs(q);
-
-                // Handle the query results
-                if (!querySnapshot.empty) {
-                    const doc = querySnapshot.docs[0].data();
-                    const blogNumber = doc.blog_number;
-                    if (blogNumber) {
-                        console.log("Redirecting to blog:", blogNumber);
-                        window.location.replace(`https://aroundtheville.com/article.html?blog_number=${blogNumber}`);
-                    } else {
-                        console.error("blog_number field is missing in Firestore.");
-                    }
-                } else {
-                    console.log("No matching blog found for the current path.");
-                    window.location.replace('https://aroundtheville.com/');
-                }
-            } catch (error) {
-                console.error("Error querying Firestore:", error);
-                window.location.replace('https://aroundtheville.com/');
+        if (!querySnapshot.empty) {
+            console.log("Matching Document Found:", querySnapshot.docs[0].data());
+            const doc = querySnapshot.docs[0].data();
+            const blogNumber = doc.blog_number; // Firestore will return it as a string if stored as one
+            if (blogNumber) {
+                console.log("Redirecting to blog:", blogNumber);
+                window.location.replace(`https://aroundtheville.com/article.html?blog_number=${blogNumber}`);
+            } else {
+                console.error("blog_number field is missing in Firestore.");
             }
+        } else {
+            console.log("No matching blog found for the current path.");
+            window.location.replace('https://aroundtheville.com/');
         }
+    } catch (error) {
+        console.error("Error querying Firestore:", error);
+        window.location.replace('https://aroundtheville.com/');
+    }
+}
+redirect();
 
-        // Execute the redirect function
-        redirect();
     </script>
 </body>
 </html>

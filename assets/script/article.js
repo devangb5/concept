@@ -59,6 +59,12 @@ async function fetchAndDisplayBlog() {
 
             // Update social media share links
             updateSocialMediaLinks(window.location.href);
+
+            // Trigger Google Analytics page view for the new blog
+            gtag('event', 'page_view', {
+                page_title: data.title,
+                page_path: window.location.pathname
+            });
         });
 
         document.getElementById("blog-content").innerHTML = blogHTML;

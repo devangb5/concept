@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirecting...</title>
+</head>
+<body>
+    <script type="module" src="./assets/script/firebaseConfig.js"></script>
+    
+    <script type="module">
+        // Import Firebase
+       
+        import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-firestore.js";
+
+
+
+
+
+        // Get the current URL path
+  // Assuming currentPath contains the path like "/about.html" and you need to match against the full URL
+   const currentPath = window.location.pathname;  // e.g., '/about.html'
+
+// Remove leading slash from currentPath
+const formattedPath = currentPath.startsWith('/assets/blog-assets/') ? currentPath.substring('/assets/blog-assets/'.length) : currentPath;
+
+// Construct the full URL
+     const fullUrl = `https://aroundtheville.com/${formattedPath}`;
+
+// Query Firestore using the full URL
+const blogsRef = collection(db, "blogs");
+const q = query(blogsRef, where("link", "==", fullUrl));
+
+const querySnapshot = await getDocs(q);
+
+// Handle query results
+if (!querySnapshot.empty) {
+    const doc = querySnapshot.docs[0].data();
+    const blogNumber = doc.blog_number;
+    if (blogNumber) {
+        window.location.replace(`https://devangb5.github.io/concept/article.html?blog_number=${blogNumber}`);
+    } else {
+        console.error("blog_number field is missing in Firestore.");
+    }
+} else {
+    console.log("No matching blog found for the current path.");
+    window.location.replace('https://devangb5.github.io/concept/'); // Fallback redirect
+}
+
+
+        redirect();
+    </script>
+</body>
+</html>

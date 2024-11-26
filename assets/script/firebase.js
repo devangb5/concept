@@ -96,27 +96,7 @@ async function fetchInstagramPosts() {
     }
 }
 
-// Handle form submission for email signup
-document.getElementById("signup-form").addEventListener("submit", async function (event) {
-    event.preventDefault();
 
-    const email = document.getElementById("email").value;
-    const formMessage = document.getElementById("form-message");
-
-    if (email) {
-        try {
-            await addDoc(collection(db, "subscribers"), { email });
-            formMessage.textContent = "Thank you for signing up! We'll keep you updated.";
-            formMessage.style.color = "green";
-        } catch (error) {
-            formMessage.textContent = "Error: " + error.message;
-            formMessage.style.color = "red";
-        }
-    } else {
-        formMessage.textContent = "Please enter a valid email.";
-        formMessage.style.color = "red";
-    }
-});
 
 // Add event listeners to category items
 const categoryItems = document.querySelectorAll(".category-item-container");

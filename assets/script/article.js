@@ -54,8 +54,14 @@ async function fetchAndDisplayBlog() {
                 blogHTML += `</div>`;
             });
 
-            document.getElementById("blog-content").innerHTML = blogHTML;
+            // Update Meta tags dynamically
+            updateMetaTags(data);
+
+            // Update social media share links
+            updateSocialMediaLinks(window.location.href);
         });
+
+        document.getElementById("blog-content").innerHTML = blogHTML;
 
         // Initialize smooth scrolling behavior only for internal anchor links
         document.querySelectorAll('a').forEach(anchor => {
@@ -72,7 +78,6 @@ async function fetchAndDisplayBlog() {
                         });
                     }
                 }
-                // External links will work normally without preventDefault
             });
         });
 
@@ -80,6 +85,24 @@ async function fetchAndDisplayBlog() {
         console.error("Error fetching blog:", error);
         document.getElementById("blog-content").innerHTML = "<p>Error loading blog. Please try again later.</p>";
     }
+}
+
+// Function to update the meta tags dynamically
+function updateMetaTags(data) {
+    // Set page title dynamically
+    document.title = data.title;
+
+    // Update Open Graph meta tags
+    document.querySelector('meta[property="og:title"]').setAttribute('content', data.title);
+    document.querySelector('meta[property="og:description"]').setAttribute('content', data.description);
+    document.querySelector('meta[property="og:image"]').setAttribute('content', data.image);
+    document.querySelector('meta[property="og:url"]').setAttribute('content', window.location.href);
+
+    // Update Twitter Card meta tags
+    document.querySelector('meta[name="twitter:title"]').setAttribute('content', data.title);
+    document.querySelector('meta[name="twitter:description"]').setAttribute('content', data.description);
+    document.querySelector('meta[name="twitter:image"]').setAttribute('content', data.image);
+    document.querySelector('meta[name="twitter:url"]').setAttribute('content', window.location.href);
 }
 
 // Function to fetch and display random related articles
@@ -178,10 +201,6 @@ window.addEventListener("scroll", () => {
 document.addEventListener('DOMContentLoaded', function() {
     fetchAndDisplayBlog();
     fetchRelatedArticles();
-
-    // Update social media share links dynamically
-    const currentPageURL = window.location.href;
-    updateSocialMediaLinks(currentPageURL);
 });
 
 // Function to update social media share links
@@ -189,7 +208,7 @@ function updateSocialMediaLinks(url) {
     const socialLinks = {
         twitter: `https://twitter.com/share?url=${encodeURIComponent(url)}`,
         facebook: `https://facebook.com/share?url=${encodeURIComponent(url)}`,
-        linkedin: `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(url)}`,
+        instagram: `https://www.instagram.com/?url=${encodeURIComponent(url)}`,  // Updated for Instagram (Linking profile or post)
         whatsapp: `https://wa.me/?text=${encodeURIComponent(url)}`,
         pinterest: `https://pinterest.com/pin/create/button/?url=${encodeURIComponent(url)}`,
         email: `mailto:?subject=Check out this article&body=${encodeURIComponent(url)}`
@@ -198,7 +217,7 @@ function updateSocialMediaLinks(url) {
     const shareElements = {
         twitter: document.getElementById('twitter-share'),
         facebook: document.getElementById('facebook-share'),
-        linkedin: document.getElementById('linkedin-share'),
+        instagram: document.getElementById('instagram-share'),  // Updated to Instagram
         whatsapp: document.getElementById('whatsapp-share'),
         pinterest: document.getElementById('pinterest-share'),
         email: document.getElementById('email-share')

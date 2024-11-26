@@ -7,44 +7,47 @@
 </head>
 <body>
     <script type="module">
-        // Import Firebase modules
-        import { db } from "https://aroundtheville.com/assets/script/firebaseConfig.js";
-        import { collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js";
+        // Import Firebase and Firestore services
+        import { db } from "https://aroundtheville.com/assets/script/firebaseConfig.js"; // Import from your Firebase config
+        import { collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-firestore.js"; // Import Firestore methods
 
         async function redirect() {
-    try {
-        // Get the current URL path and construct the full URL
-        const currentPath = window.location.pathname;
-        const fullUrl = `https://aroundtheville.com${currentPath}`;
-        console.log("Current Path:", currentPath);
-        console.log("Full URL Queried:", fullUrl);
+            try {
+                // Get the current URL path and construct the full URL
+                const currentPath = window.location.pathname;
+                const fullUrl = `https://aroundtheville.com${currentPath}`;
+                console.log("Current Path:", currentPath);
+                console.log("Full URL Queried:", fullUrl);
 
-        // Query Firestore
-        const blogsRef = collection(db, "blogs");
-        const q = query(blogsRef, where("link", "==", fullUrl));
-        const querySnapshot = await getDocs(q);
+                // Query Firestore for the document where the `link` field matches the current URL
+                const blogsRef = collection(db, "blogs"); // Firestore collection reference
+                const q = query(blogsRef, where("link", "==", fullUrl)); // Query to match the link field
+                const querySnapshot = await getDocs(q); // Get documents matching the query
 
-        if (!querySnapshot.empty) {
-            console.log("Matching Document Found:", querySnapshot.docs[0].data());
-            const doc = querySnapshot.docs[0].data();
-            const blogNumber = doc.blog_number; // Firestore will return it as a string if stored as one
-            if (blogNumber) {
-                console.log("Redirecting to blog:", blogNumber);
-                window.location.replace(`https://aroundtheville.com/article.html?blog_number=${blogNumber}`);
-            } else {
-                console.error("blog_number field is missing in Firestore.");
+                if (!querySnapshot.empty) {
+                    console.log("Matching Document Found:", querySnapshot.docs[0].data());
+                    const doc = querySnapshot.docs[0].data(); // Get the document data
+                    const blogNumber = doc.blog_number; // Get the blog_number field from the document
+
+                    // Check if blog_number exists and redirect
+                    if (blogNumber) {
+                        console.log("Redirecting to blog:", blogNumber);
+                        window.location.replace(`https://aroundtheville.com/article.html?blog_number=${blogNumber}`);
+                    } else {
+                        console.error("blog_number field is missing in Firestore.");
+                    }
+                } else {
+                    console.log("No matching blog found for the current path.");
+                    window.location.replace('https://aroundtheville.com/'); // Fallback redirect
+                }
+            } catch (error) {
+                console.error("Error querying Firestore:", error);
+                window.location.replace('https://aroundtheville.com/'); // Fallback redirect on error
             }
-        } else {
-            console.log("No matching blog found for the current path.");
-            window.location.replace('https://aroundtheville.com/');
         }
-    } catch (error) {
-        console.error("Error querying Firestore:", error);
-        window.location.replace('https://aroundtheville.com/');
-    }
-}
-redirect();
 
+        // Call the redirect function
+        redirect();
     </script>
 </body>
 </html>

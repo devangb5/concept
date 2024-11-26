@@ -4,37 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Redirecting...</title>
-    
 </head>
 <body>
     <script type="module">
-        
-        
+        // Import Firestore and existing Firebase config
         import { db } from "https://aroundtheville.com/assets/script/firebaseConfig.js";
-        import { collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js";
-       
-        
+        import { collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-firestore.js";
 
         async function redirect() {
             try {
+                // Get the current URL path
                 const currentPath = window.location.pathname;
+
+                // Format the path (remove '/assets/blog-assets/' if it exists)
                 const formattedPath = currentPath.startsWith('/assets/blog-assets/')
                     ? currentPath.substring('/assets/blog-assets/'.length)
                     : currentPath;
+
+                // Construct the full URL
                 const fullUrl = `https://aroundtheville.com/${formattedPath}`;
 
+                // Query Firestore for matching blog link
                 const blogsRef = collection(db, "blogs");
                 const q = query(blogsRef, where("link", "==", fullUrl));
                 const querySnapshot = await getDocs(q);
 
+                // Redirect if a matching blog is found
                 if (!querySnapshot.empty) {
                     const doc = querySnapshot.docs[0].data();
                     const blogNumber = doc.blog_number;
+
                     if (blogNumber) {
                         console.log("Redirecting to blog:", blogNumber);
                         window.location.replace(`https://aroundtheville.com/article.html?blog_number=${blogNumber}`);
                     } else {
                         console.error("blog_number field is missing in Firestore.");
+                        window.location.replace('https://aroundtheville.com/');
                     }
                 } else {
                     console.log("No matching blog found for the current path.");
@@ -46,6 +51,7 @@
             }
         }
 
+        // Trigger the redirect
         redirect();
     </script>
 </body>

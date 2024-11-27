@@ -2,7 +2,7 @@
 .app-navigation {
     position: fixed;
     bottom: 0;
-    left:0;
+    left: 0;
     width: 100%;
     display: flex;
     justify-content: space-around;
@@ -25,7 +25,7 @@
     color: #ccc; /* Muted color for inactive items */
     font-size: 14px;
     transition: color 0.3s, transform 0.3s; /* Smooth hover effects */
-    padding: 5px;
+    padding: 8px; /* Increased padding for better tap area */
     user-select: none; /* Prevent text selection on icons */
 }
 
@@ -58,4 +58,16 @@
 .nav-item:focus {
     outline: 2px solid #00bcd4; /* Add visible focus state for accessibility */
     outline-offset: 4px;
+}
+
+/* Focus State for Touch Devices */
+.nav-item:active {
+    transform: scale(1.05); /* Slight shrink effect for active state on touch devices */
+}
+
+/* Add a larger tap area for mobile devices */
+@media (max-width: 600px) {
+    .nav-item {
+        padding: 12px; /* Increase padding on smaller screens for larger tap area */
+    }
 }

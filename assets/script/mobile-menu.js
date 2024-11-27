@@ -18,30 +18,35 @@ function generateMenuItems(menuItems) {
 }
 
 // Dynamically update the mobile menu
+// Dynamically update the mobile menu
 function updateMobileMenu() {
     const mobileMenu = document.getElementById('mobile-menu');
+    
+    // Clear existing menu items
+    mobileMenu.innerHTML = '';
 
-    // Hide the menu when not in standalone mode
-    if (!isStandalone()) {
-        mobileMenu.style.display = 'none';
-        return;
-    }
-
-    // Show the menu in standalone mode
-    mobileMenu.style.display = 'flex';
-    mobileMenu.innerHTML = ''; // Clear existing menu items
-
-    // Define menu items for standalone mode
-    const standaloneMenuItems = [
+    const menuItems = [
         { icon: 'fas fa-home', label: 'Home', link: '#home' },
         { icon: 'fas fa-search', label: 'Search', link: '#search' },
         { icon: 'fas fa-bell', label: 'Notifications', link: '#notifications' },
         { icon: 'fas fa-user', label: 'Profile', link: '#profile' }
     ];
 
-    // Append menu items
-    generateMenuItems(standaloneMenuItems).forEach(item => mobileMenu.appendChild(item));
+    menuItems.forEach(item => {
+        const menuItem = document.createElement('a');
+        menuItem.href = item.link;
+        menuItem.className = 'mobile-menu-item';
+        menuItem.innerHTML = `
+            <i class="${item.icon}"></i>
+            <span>${item.label}</span>
+        `;
+        mobileMenu.appendChild(menuItem);
+    });
+
+    // Show the menu
+    mobileMenu.style.display = 'flex';
 }
+
 
 // Initialize mobile menu on load
 function initMobileMenu() {

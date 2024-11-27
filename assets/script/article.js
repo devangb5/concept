@@ -96,19 +96,31 @@ async function fetchAndDisplayBlog() {
 // Function to update the meta tags dynamically
 function updateMetaTags(data) {
     // Set page title dynamically
-    document.title = data.title;
+    if (document.title) {
+        document.title = data.title;
+    }
 
     // Update Open Graph meta tags
-    document.querySelector('meta[property="og:title"]').setAttribute('content', data.title);
-    document.querySelector('meta[property="og:description"]').setAttribute('content', data.description);
-    document.querySelector('meta[property="og:image"]').setAttribute('content', data.image);
-    document.querySelector('meta[property="og:url"]').setAttribute('content', window.location.href);
-    
+    const ogTitle = document.querySelector('meta[property="og:title"]');
+    const ogDescription = document.querySelector('meta[property="og:description"]');
+    const ogImage = document.querySelector('meta[property="og:image"]');
+    const ogUrl = document.querySelector('meta[property="og:url"]');
+
+    if (ogTitle) ogTitle.setAttribute('content', data.title);
+    if (ogDescription) ogDescription.setAttribute('content', data.description);
+    if (ogImage) ogImage.setAttribute('content', data.image);
+    if (ogUrl) ogUrl.setAttribute('content', window.location.href);
+
     // Update Twitter Card meta tags
-    document.querySelector('meta[name="twitter:title"]').setAttribute('content', data.title);
-    document.querySelector('meta[name="twitter:description"]').setAttribute('content', data.description);
-    document.querySelector('meta[name="twitter:image"]').setAttribute('content', data.image);
-    document.querySelector('meta[name="twitter:url"]').setAttribute('content', window.location.href);
+    const twitterTitle = document.querySelector('meta[name="twitter:title"]');
+    const twitterDescription = document.querySelector('meta[name="twitter:description"]');
+    const twitterImage = document.querySelector('meta[name="twitter:image"]');
+    const twitterUrl = document.querySelector('meta[name="twitter:url"]');
+
+    if (twitterTitle) twitterTitle.setAttribute('content', data.title);
+    if (twitterDescription) twitterDescription.setAttribute('content', data.description);
+    if (twitterImage) twitterImage.setAttribute('content', data.image);
+    if (twitterUrl) twitterUrl.setAttribute('content', window.location.href);
 }
 
 // Function to fetch and display random related articles

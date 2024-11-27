@@ -1,25 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script type="module" src="./assets/script/article.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- SEO Meta Tags -->
+    
+    <!-- SEO Meta Tags (these will be updated dynamically) -->
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Blog Article">
+    <meta property="og:title" content="Blog - Around The Ville">
     <meta property="og:description" content="Description of the blog article">
-    <meta property="og:image" content="">
+    <meta property="og:image" content="https://aroundtheville.com/assets/images/david.jpeg">
     <meta property="og:url" content="">
-    <meta property="og:type" content="article">
-
 
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Blog Article">
     <meta name="twitter:description" content="Description of the blog article">
     <meta name="twitter:image" content="">
     <meta name="twitter:url" content="">
-   
 
     <link rel="stylesheet" href="./assets/styles/header.css">
     <link rel="stylesheet" href="./assets/styles/footer.css">
@@ -28,22 +24,17 @@
 
     <title>Blog Article</title>
 
-            <!-- GA4 -->
-            <script async src="https://www.googletagmanager.com/gtag/js?id=G-TYCR7B2T5J"></script>
-            <script>
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-TYCR7B2T5J');
-            </script>
-    
-            <!-- Favicon -->
-            <link rel="icon" type="image/png" href="./assets/icons/favicon/favicon-96x96.png" sizes="96x96" />
-            <link rel="icon" type="image/svg+xml" href="./assets/icons/favicon/favicon.svg" />
-            <link rel="shortcut icon" href="./assets/icons/favicon/favicon.ico" />
-            <link rel="apple-touch-icon" sizes="180x180" href="./assets/icons/favicon/apple-touch-icon.png" />
-            <meta name="apple-mobile-web-app-title" content="MyWebSite" />
-            <link rel="manifest" href="./assets/icons/favicon/site.webmanifest" />  
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TYCR7B2T5J"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-TYCR7B2T5J');
+    </script>
+
+    <!-- Favicon -->
+    <link rel="icon" href="./assets/icons/favicon/favicon.ico">
 </head>
 <body>
     <!-- Header -->
@@ -99,7 +90,6 @@
     <!-- Scripts -->
     <script src="./assets/script/header.js"></script>
     <script type="module" src="assets/script/footer.js"></script>
-     <!-- Script to load article -->
-
+    <script type="module" src="./assets/script/article.js"></script>
 </body>
 </html>

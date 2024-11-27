@@ -94,7 +94,7 @@ async function fetchAndDisplayBlog() {
 }
 
 // Function to update the meta tags dynamically
-function updateMetaTags(data) {
+async function updateMetaTags(data) {
     // Set page title dynamically
     if (document.title) {
         document.title = data.title;

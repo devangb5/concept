@@ -15,8 +15,10 @@
                 console.log("Current Path:", currentPath);
                 console.log("Full URL Queried:", fullUrl);
 
+                // Cloud Function URL
+                const cloudFunctionUrl = `https://app-srqv5adcia-uc.a.run.app`; // Replace with your actual Cloud Function URL
+
                 // Call the Cloud Function to get the corresponding blog_number
-                const cloudFunctionUrl = `https://app-srqv5adcia-uc.a.run.app`;
                 const response = await fetch(cloudFunctionUrl, {
                     method: "POST",
                     headers: {
@@ -26,7 +28,7 @@
                 });
 
                 if (!response.ok) {
-                    throw new Error(`Cloud Function error: ${response.status}`);
+                    throw new Error(`Cloud Function error: ${response.status} - ${response.statusText}`);
                 }
 
                 const { blogNumber } = await response.json(); // Parse the Cloud Function's response
@@ -36,7 +38,7 @@
                     console.log("Redirecting to blog:", blogNumber);
                     window.location.replace(`https://aroundtheville.com/blogs/${blogNumber}`);
                 } else {
-                    console.error("No matching blog found.");
+                    console.warn("No matching blog found. Redirecting to homepage.");
                     window.location.replace('https://aroundtheville.com/'); // Fallback redirect
                 }
             } catch (error) {

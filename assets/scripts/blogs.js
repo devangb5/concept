@@ -36,7 +36,8 @@ function displayBlogs(blogs) {
                 <img src="${blog.image}" alt="${blog.title}" class="blog-image" />
                 <h3 class="blog-title">${blog.title}</h3>
                 <p class="blog-description">${blog.description}</p>
-                <a href="article.html?blog_number=${blog.blog_number}" class="read-more">Read More</a>
+                <a href="/blogs/${blog.blog_number}" class="read-more">Read More</a>
+                
             </div>
         `).join('')
         : `<p class="no-results">No blogs found.</p>`;

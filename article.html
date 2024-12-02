@@ -4,92 +4,97 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- SEO Meta Tags (these will be updated dynamically) -->
+    <title>{{title}}</title>
+            <!-- GA4 -->
+            <script async src="https://www.googletagmanager.com/gtag/js?id=G-TYCR7B2T5J"></script>
+            <script>
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-TYCR7B2T5J');
+            </script>
+
+    <meta name="description" content="{{description}}">
+    <meta property="og:title" content="{{title}}">
+    <meta property="og:description" content="{{description}}">
+    <meta property="og:image" content="{{image}}">
+    <meta property="og:url" content="{{url}}">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Blog - Around The Ville">
-    <meta property="og:description" content="Description of the blog article">
-    <meta property="og:image" content="https://aroundtheville.com/assets/images/david.jpeg">
-    <meta property="og:url" content="">
-
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Blog Article">
-    <meta name="twitter:description" content="Description of the blog article">
-    <meta name="twitter:image" content="">
-    <meta name="twitter:url" content="">
+    <meta name="twitter:title" content="{{title}}">
+    <meta name="twitter:description" content="{{description}}">
+    <meta name="twitter:image" content="{{image}}">
 
-    <link rel="stylesheet" href="./assets/styles/header.css">
-    <link rel="stylesheet" href="./assets/styles/footer.css">
-    <link rel="stylesheet" href="./assets/styles/article.css">
+   
+    <link rel="stylesheet" href="/assets/styles/header.css">
+    <link rel="stylesheet" href="/assets/styles/footer.css">
+    <link rel="stylesheet" href="/assets/styles/article.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
-    <title>Blog Article</title>
-
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TYCR7B2T5J"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-TYCR7B2T5J');
-    </script>
-
-    <!-- Favicon -->
-    <link rel="icon" href="./assets/icons/favicon/favicon.ico">
+            <!-- Favicon -->
+            <link rel="icon" type="image/png" href="/assets/icons/favicon/favicon-96x96.png" sizes="96x96" />
+            <link rel="icon" type="image/svg+xml" href="/assets/icons/favicon/favicon.svg" />
+            <link rel="shortcut icon" href="/assets/icons/favicon/favicon.ico" />
+            <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/favicon/apple-touch-icon.png" />
+            <meta name="apple-mobile-web-app-title" content="MyWebSite" />
+            <link rel="manifest" href="/assets/icons/favicon/site.webmanifest" /> 
 </head>
 <body>
-    <!-- Header -->
     <div id="header"></div>
-
-    <!-- Progress bar container -->
     <div id="progress-bar-container">
         <div id="progress-bar"></div>
     </div>
-
-    <!-- Article content section -->
-    <div id="blog-content">
-        <p>Loading article...</p> <!-- Fallback text while loading -->
-    </div>
-
+    <main id="blog-content" aria-labelledby="article-title">
+        <h1 id="article-title">{{title}}</h1>
+        <img src="{{image}}" alt="{{title}}" class="blog-image">
+        <div id="article-content">{{content}}</div> <!-- Content is now directly rendered on the server side -->
+    </main>
     <!-- Share Article Section -->
     <section id="share-article">
         <h3>Share this article</h3>
         <div class="social-buttons">
-            <a href="#" class="social-icon" id="twitter-share" title="Share on Twitter">
+            <a href="/share/twitter?url={{url}}" class="social-icon" id="twitter-share" title="Share on Twitter">
                 <i class="fab fa-twitter"></i> <!-- Twitter Icon -->
             </a>
-            <a href="#" class="social-icon" id="facebook-share" title="Share on Facebook">
+            <a href="/share/facebook?url={{url}}" class="social-icon" id="facebook-share" title="Share on Facebook">
                 <i class="fab fa-facebook-f"></i> <!-- Facebook Icon -->
             </a>
-            <a href="#" class="social-icon" id="instagram-share" title="Share on Instagram">
+            <a href="/share/instagram?url={{url}}" class="social-icon" id="instagram-share" title="Share on Instagram">
                 <i class="fab fa-instagram"></i> <!-- Instagram Icon -->
             </a>
-            <a href="#" class="social-icon" id="whatsapp-share" title="Share on WhatsApp">
+            <a href="/share/whatsapp?url={{url}}" class="social-icon" id="whatsapp-share" title="Share on WhatsApp">
                 <i class="fab fa-whatsapp"></i> <!-- WhatsApp Icon -->
             </a>
-            <a href="#" class="social-icon" id="pinterest-share" title="Share on Pinterest">
+            <a href="/share/pinterest?url={{url}}" class="social-icon" id="pinterest-share" title="Share on Pinterest">
                 <i class="fab fa-pinterest-p"></i> <!-- Pinterest Icon -->
             </a>
-            <a href="#" class="social-icon" id="email-share" title="Share via Email">
+            <a href="/share/email?url={{url}}" class="social-icon" id="email-share" title="Share via Email">
                 <i class="fas fa-envelope"></i> <!-- Email Icon -->
             </a>
         </div>
     </section>
+    
 
     <div class="section-divider"></div>
 
     <!-- Related Articles Section -->
     <div id="related-articles">
-        <!-- Related articles will be dynamically inserted here -->
+        <h3>Related Articles</h3>
+        <div id="related-articles-content">
+            {{related_articles_content}} <!-- Placeholder for related articles -->
+        </div>
     </div>
+    
 
-    <div class="section-divider"></div>
-
-    <!-- Footer -->
     <div id="footer-container"></div>
 
-    <!-- Scripts -->
-    <script src="./assets/script/header.js"></script>
-    <script type="module" src="assets/script/footer.js"></script>
-    <script type="module" src="./assets/script/article.js"></script>
+    <script src="/assets/scripts/header.js" defer></script>
+    <script type="module" src="/assets/scripts/footer.js" defer></script>
+    <script type="module" src="/assets/scripts/article.js" defer></script>
+
+    <!-- Remove this script since it's not needed anymore -->
+    <script>
+        // The loadBlogContent function is removed to prevent duplication
+    </script>
 </body>
 </html>

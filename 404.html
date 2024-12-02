@@ -32,7 +32,7 @@
                     // Check if blog_number exists and redirect
                     if (blogNumber) {
                         console.log("Redirecting to blog:", blogNumber);
-                        window.location.replace(`https://aroundtheville.com/article.html?blog_number=${blogNumber}`);
+                        window.location.replace(`https://aroundtheville.com/blogs/${blogNumber}`);
                     } else {
                         console.error("blog_number field is missing in Firestore.");
                     }

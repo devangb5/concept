@@ -1,4 +1,4 @@
-import { db } from './firebaseConfig.js';
+import { db } from '/firebaseConfig.js';
 import { collection, query, where, orderBy, limit, getDocs, addDoc } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-firestore.js";
 
 

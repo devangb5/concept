@@ -1,0 +1,298 @@
+[debug] [2024-12-02T23:05:15.429Z] ----------------------------------------------------------------------
+[debug] [2024-12-02T23:05:15.435Z] Command:       /usr/local/bin/node /usr/local/bin/firebase deploy
+[debug] [2024-12-02T23:05:15.435Z] CLI Version:   13.27.0
+[debug] [2024-12-02T23:05:15.435Z] Platform:      darwin
+[debug] [2024-12-02T23:05:15.435Z] Node Version:  v20.16.0
+[debug] [2024-12-02T23:05:15.435Z] Time:          Mon Dec 02 2024 18:05:15 GMT-0500 (Eastern Standard Time)
+[debug] [2024-12-02T23:05:15.435Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2024-12-02T23:05:15.471Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2024-12-02T23:05:15.471Z] > authorizing via signed-in user (devangb5@gmail.com)
+[debug] [2024-12-02T23:05:15.471Z] [iam] checking project around-the-ville for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]
+[debug] [2024-12-02T23:05:15.472Z] Checked if tokens are valid: true, expires at: 1733182453162
+[debug] [2024-12-02T23:05:15.472Z] Checked if tokens are valid: true, expires at: 1733182453162
+[debug] [2024-12-02T23:05:15.472Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/around-the-ville:testIamPermissions [none]
+[debug] [2024-12-02T23:05:15.472Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/around-the-ville:testIamPermissions x-goog-quota-user=projects/around-the-ville
+[debug] [2024-12-02T23:05:15.472Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/around-the-ville:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2024-12-02T23:05:15.608Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/around-the-ville:testIamPermissions 200
+[debug] [2024-12-02T23:05:15.608Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/around-the-ville:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2024-12-02T23:05:15.608Z] Checked if tokens are valid: true, expires at: 1733182453162
+[debug] [2024-12-02T23:05:15.608Z] Checked if tokens are valid: true, expires at: 1733182453162
+[debug] [2024-12-02T23:05:15.608Z] >>> [apiv2][query] POST https://iam.googleapis.com/v1/projects/around-the-ville/serviceAccounts/around-the-ville@appspot.gserviceaccount.com:testIamPermissions [none]
+[debug] [2024-12-02T23:05:15.608Z] >>> [apiv2][body] POST https://iam.googleapis.com/v1/projects/around-the-ville/serviceAccounts/around-the-ville@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[debug] [2024-12-02T23:05:15.743Z] <<< [apiv2][status] POST https://iam.googleapis.com/v1/projects/around-the-ville/serviceAccounts/around-the-ville@appspot.gserviceaccount.com:testIamPermissions 404
+[debug] [2024-12-02T23:05:15.743Z] <<< [apiv2][body] POST https://iam.googleapis.com/v1/projects/around-the-ville/serviceAccounts/around-the-ville@appspot.gserviceaccount.com:testIamPermissions {"error":{"code":404,"message":"Unknown service account","status":"NOT_FOUND"}}
+[debug] [2024-12-02T23:05:15.743Z] [functions] service account IAM check errored, deploy may fail: Request to https://iam.googleapis.com/v1/projects/around-the-ville/serviceAccounts/around-the-ville@appspot.gserviceaccount.com:testIamPermissions had HTTP Error: 404, Unknown service account {"name":"FirebaseError","children":[],"context":{"body":{"error":{"code":404,"message":"Unknown service account","status":"NOT_FOUND"}},"response":{"statusCode":404}},"exit":1,"message":"Request to https://iam.googleapis.com/v1/projects/around-the-ville/serviceAccounts/around-the-ville@appspot.gserviceaccount.com:testIamPermissions had HTTP Error: 404, Unknown service account","status":404}
+[info] 
+[info] === Deploying to 'around-the-ville'...
+[info] 
+[info] i  deploying functions 
+[info] Running command: npm --prefix "$RESOURCE_DIR" run lint
+[info] ✔  functions: Finished running predeploy script. 
+[debug] [2024-12-02T23:05:16.206Z] Checked if tokens are valid: true, expires at: 1733182453162
+[debug] [2024-12-02T23:05:16.206Z] Checked if tokens are valid: true, expires at: 1733182453162
+[debug] [2024-12-02T23:05:16.206Z] >>> [apiv2][query] GET https://cloudresourcemanager.googleapis.com/v1/projects/around-the-ville [none]
+[debug] [2024-12-02T23:05:16.301Z] <<< [apiv2][status] GET https://cloudresourcemanager.googleapis.com/v1/projects/around-the-ville 200
+[debug] [2024-12-02T23:05:16.301Z] <<< [apiv2][body] GET https://cloudresourcemanager.googleapis.com/v1/projects/around-the-ville {"projectNumber":"431313384928","projectId":"around-the-ville","lifecycleState":"ACTIVE","name":"around-the-ville","labels":{"firebase":"enabled"},"createTime":"2024-11-18T13:54:46.612446Z"}
+[info] i  functions: preparing codebase default for deployment 
+[info] i  functions: ensuring required API cloudfunctions.googleapis.com is enabled... 
+[debug] [2024-12-02T23:05:16.302Z] Checked if tokens are valid: true, expires at: 1733182453162
+[debug] [2024-12-02T23:05:16.302Z] Checked if tokens are valid: true, expires at: 1733182453162
+[debug] [2024-12-02T23:05:16.302Z] Checked if tokens are valid: true, expires at: 1733182453162
+[debug] [2024-12-02T23:05:16.302Z] Checked if tokens are valid: true, expires at: 1733182453162
+[info] i  functions: ensuring required API cloudbuild.googleapis.com is enabled... 
+[debug] [2024-12-02T23:05:16.302Z] Checked if tokens are valid: true, expires at: 1733182453162
+[debug] [2024-12-02T23:05:16.303Z] Checked if tokens are valid: true, expires at: 1733182453162
+[info] i  artifactregistry: ensuring required API artifactregistry.googleapis.com is enabled... 
+[debug] [2024-12-02T23:05:16.303Z] Checked if tokens are valid: true, expires at: 1733182453162
+[debug] [2024-12-02T23:05:16.303Z] Checked if tokens are valid: true, expires at: 1733182453162
+[debug] [2024-12-02T23:05:16.303Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/around-the-ville/services/cloudfunctions.googleapis.com [none]
+[debug] [2024-12-02T23:05:16.303Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/around-the-ville/services/cloudfunctions.googleapis.com x-goog-quota-user=projects/around-the-ville
+[debug] [2024-12-02T23:05:16.304Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/around-the-ville/services/runtimeconfig.googleapis.com [none]
+[debug] [2024-12-02T23:05:16.304Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/around-the-ville/services/runtimeconfig.googleapis.com x-goog-quota-user=projects/around-the-ville
+[debug] [2024-12-02T23:05:16.304Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/around-the-ville/services/cloudbuild.googleapis.com [none]
+[debug] [2024-12-02T23:05:16.304Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/around-the-ville/services/cloudbuild.googleapis.com x-goog-quota-user=projects/around-the-ville
+[debug] [2024-12-02T23:05:16.305Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/around-the-ville/services/artifactregistry.googleapis.com [none]
+[debug] [2024-12-02T23:05:16.305Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/around-the-ville/services/artifactregistry.googleapis.com x-goog-quota-user=projects/around-the-ville
+[debug] [2024-12-02T23:05:16.693Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/around-the-ville/services/runtimeconfig.googleapis.com 200
+[debug] [2024-12-02T23:05:16.694Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/around-the-ville/services/runtimeconfig.googleapis.com [omitted]
+[debug] [2024-12-02T23:05:16.695Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/around-the-ville/services/cloudbuild.googleapis.com 200
+[debug] [2024-12-02T23:05:16.695Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/around-the-ville/services/cloudbuild.googleapis.com [omitted]
+[info] ✔  functions: required API cloudbuild.googleapis.com is enabled 
+[debug] [2024-12-02T23:05:16.696Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/around-the-ville/services/cloudfunctions.googleapis.com 200
+[debug] [2024-12-02T23:05:16.696Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/around-the-ville/services/cloudfunctions.googleapis.com [omitted]
+[info] ✔  functions: required API cloudfunctions.googleapis.com is enabled 
+[debug] [2024-12-02T23:05:16.698Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/around-the-ville/services/artifactregistry.googleapis.com 200
+[debug] [2024-12-02T23:05:16.698Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/around-the-ville/services/artifactregistry.googleapis.com [omitted]
+[info] ✔  artifactregistry: required API artifactregistry.googleapis.com is enabled 
+[debug] [2024-12-02T23:05:16.698Z] Checked if tokens are valid: true, expires at: 1733182453162
+[debug] [2024-12-02T23:05:16.698Z] Checked if tokens are valid: true, expires at: 1733182453162
+[debug] [2024-12-02T23:05:16.698Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/around-the-ville/adminSdkConfig [none]
+[debug] [2024-12-02T23:05:17.098Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/around-the-ville/adminSdkConfig 200
+[debug] [2024-12-02T23:05:17.098Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/around-the-ville/adminSdkConfig {"projectId":"around-the-ville","databaseURL":"https://around-the-ville-default-rtdb.firebaseio.com","storageBucket":"around-the-ville.firebasestorage.app"}
+[debug] [2024-12-02T23:05:17.099Z] Checked if tokens are valid: true, expires at: 1733182453162
+[debug] [2024-12-02T23:05:17.099Z] Checked if tokens are valid: true, expires at: 1733182453162
+[debug] [2024-12-02T23:05:17.099Z] >>> [apiv2][query] GET https://runtimeconfig.googleapis.com/v1beta1/projects/around-the-ville/configs [none]
+[debug] [2024-12-02T23:05:17.282Z] <<< [apiv2][status] GET https://runtimeconfig.googleapis.com/v1beta1/projects/around-the-ville/configs 200
+[debug] [2024-12-02T23:05:17.282Z] <<< [apiv2][body] GET https://runtimeconfig.googleapis.com/v1beta1/projects/around-the-ville/configs {}
+[debug] [2024-12-02T23:05:17.285Z] Validating nodejs source
+[debug] [2024-12-02T23:05:17.713Z] > [functions] package.json contents: {
+  "name": "functions",
+  "description": "Cloud Functions for Firebase",
+  "scripts": {
+    "lint": "eslint .",
+    "serve": "firebase emulators:start --only functions",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "18"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "firebase-admin": "^12.6.0",
+    "firebase-functions": "^6.0.1"
+  },
+  "devDependencies": {
+    "eslint": "^8.15.0",
+    "eslint-config-google": "^0.14.0",
+    "firebase-functions-test": "^3.1.0"
+  },
+  "private": true
+}
+[debug] [2024-12-02T23:05:17.714Z] Building nodejs source
+[info] i  functions: Loading and analyzing source code for codebase default to determine what to deploy 
+[debug] [2024-12-02T23:05:17.714Z] Could not find functions.yaml. Must use http discovery
+[debug] [2024-12-02T23:05:17.719Z] Found firebase-functions binary at '/Users/devang/Documents/GitHub/concept/functions/node_modules/.bin/firebase-functions'
+[info] Serving at port 8969
+
+[error] node:events:497
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE: address already in use :::8969
+    at Server.setupListenHandle [as _listen2] (node:net:1904:16)
+    at listenInCluster (node:net:1961:12)
+    at Server.listen (node:net:2063:7)
+    at Function.listen (/Users/devang/Documents/GitHub/concept/functions/node_modules/express/lib/application.js:635:24)
+    at Object.<anonymous> (/Users/devang/Documents/GitHub/concept/functions/index.js:96:5)
+    at Module._compile (node:internal/modules/cjs/loader:1358:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1416:10)
+    at Module.load (node:internal/modules/cjs/loader:1208:32)
+    at Module._load (node:internal/modules/cjs/loader:1024:12)
+    at Module.require (node:internal/modules/cjs/loader:1233:19)
+Emitted 'error' event on Server instance at:
+    at emitErrorNT (node:net:1940:8)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21) {
+  code: 'EADDRINUSE',
+  errno: -48,
+  syscall: 'listen',
+  address: '::',
+  port: 8969
+}
+
+Node.js v20.16.0
+
+[debug] [2024-12-02T23:05:17.887Z] Failed to call quitquitquit. This often means the server failed to start request to http://localhost:8969/__/quitquitquit failed, reason:  {"message":"request to http://localhost:8969/__/quitquitquit failed, reason: ","type":"system","errno":"ECONNREFUSED","code":"ECONNREFUSED"}
+[debug] [2024-12-02T23:05:17.943Z] FetchError: request to http://127.0.0.1:8969/__/functions.yaml failed, reason: socket hang up
+    at ClientRequest.<anonymous> (/usr/local/lib/node_modules/firebase-tools/node_modules/node-fetch/lib/index.js:1501:11)
+    at ClientRequest.emit (node:events:519:28)
+    at ClientRequest.emit (node:domain:488:12)
+    at Socket.socketOnEnd (node:_http_client:524:9)
+    at Socket.emit (node:events:531:35)
+    at Socket.emit (node:domain:488:12)
+    at endReadableNT (node:internal/streams/readable:1696:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2024-12-02T23:11:13.167Z] ----------------------------------------------------------------------
+[debug] [2024-12-02T23:11:13.175Z] Command:       /usr/local/bin/node /usr/local/bin/firebase deploy
+[debug] [2024-12-02T23:11:13.175Z] CLI Version:   13.27.0
+[debug] [2024-12-02T23:11:13.175Z] Platform:      darwin
+[debug] [2024-12-02T23:11:13.175Z] Node Version:  v20.16.0
+[debug] [2024-12-02T23:11:13.175Z] Time:          Mon Dec 02 2024 18:11:13 GMT-0500 (Eastern Standard Time)
+[debug] [2024-12-02T23:11:13.175Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2024-12-02T23:11:13.213Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2024-12-02T23:11:13.213Z] > authorizing via signed-in user (devangb5@gmail.com)
+[debug] [2024-12-02T23:11:13.213Z] [iam] checking project around-the-ville for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]
+[debug] [2024-12-02T23:11:13.213Z] Checked if tokens are valid: true, expires at: 1733182453162
+[debug] [2024-12-02T23:11:13.213Z] Checked if tokens are valid: true, expires at: 1733182453162
+[debug] [2024-12-02T23:11:13.214Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/around-the-ville:testIamPermissions [none]
+[debug] [2024-12-02T23:11:13.214Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/around-the-ville:testIamPermissions x-goog-quota-user=projects/around-the-ville
+[debug] [2024-12-02T23:11:13.214Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/around-the-ville:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2024-12-02T23:11:13.458Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/around-the-ville:testIamPermissions 200
+[debug] [2024-12-02T23:11:13.458Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/around-the-ville:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2024-12-02T23:11:13.458Z] Checked if tokens are valid: true, expires at: 1733182453162
+[debug] [2024-12-02T23:11:13.458Z] Checked if tokens are valid: true, expires at: 1733182453162
+[debug] [2024-12-02T23:11:13.458Z] >>> [apiv2][query] POST https://iam.googleapis.com/v1/projects/around-the-ville/serviceAccounts/around-the-ville@appspot.gserviceaccount.com:testIamPermissions [none]
+[debug] [2024-12-02T23:11:13.458Z] >>> [apiv2][body] POST https://iam.googleapis.com/v1/projects/around-the-ville/serviceAccounts/around-the-ville@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[debug] [2024-12-02T23:11:13.635Z] <<< [apiv2][status] POST https://iam.googleapis.com/v1/projects/around-the-ville/serviceAccounts/around-the-ville@appspot.gserviceaccount.com:testIamPermissions 404
+[debug] [2024-12-02T23:11:13.635Z] <<< [apiv2][body] POST https://iam.googleapis.com/v1/projects/around-the-ville/serviceAccounts/around-the-ville@appspot.gserviceaccount.com:testIamPermissions {"error":{"code":404,"message":"Unknown service account","status":"NOT_FOUND"}}
+[debug] [2024-12-02T23:11:13.635Z] [functions] service account IAM check errored, deploy may fail: Request to https://iam.googleapis.com/v1/projects/around-the-ville/serviceAccounts/around-the-ville@appspot.gserviceaccount.com:testIamPermissions had HTTP Error: 404, Unknown service account {"name":"FirebaseError","children":[],"context":{"body":{"error":{"code":404,"message":"Unknown service account","status":"NOT_FOUND"}},"response":{"statusCode":404}},"exit":1,"message":"Request to https://iam.googleapis.com/v1/projects/around-the-ville/serviceAccounts/around-the-ville@appspot.gserviceaccount.com:testIamPermissions had HTTP Error: 404, Unknown service account","status":404}
+[info] 
+[info] === Deploying to 'around-the-ville'...
+[info] 
+[info] i  deploying functions 
+[info] Running command: npm --prefix "$RESOURCE_DIR" run lint
+[info] ✔  functions: Finished running predeploy script. 
+[debug] [2024-12-02T23:11:14.222Z] Checked if tokens are valid: true, expires at: 1733182453162
+[debug] [2024-12-02T23:11:14.222Z] Checked if tokens are valid: true, expires at: 1733182453162
+[debug] [2024-12-02T23:11:14.222Z] >>> [apiv2][query] GET https://cloudresourcemanager.googleapis.com/v1/projects/around-the-ville [none]
+[debug] [2024-12-02T23:11:14.322Z] <<< [apiv2][status] GET https://cloudresourcemanager.googleapis.com/v1/projects/around-the-ville 200
+[debug] [2024-12-02T23:11:14.323Z] <<< [apiv2][body] GET https://cloudresourcemanager.googleapis.com/v1/projects/around-the-ville {"projectNumber":"431313384928","projectId":"around-the-ville","lifecycleState":"ACTIVE","name":"around-the-ville","labels":{"firebase":"enabled"},"createTime":"2024-11-18T13:54:46.612446Z"}
+[info] i  functions: preparing codebase default for deployment 
+[info] i  functions: ensuring required API cloudfunctions.googleapis.com is enabled... 
+[debug] [2024-12-02T23:11:14.323Z] Checked if tokens are valid: true, expires at: 1733182453162
+[debug] [2024-12-02T23:11:14.323Z] Checked if tokens are valid: true, expires at: 1733182453162
+[debug] [2024-12-02T23:11:14.323Z] Checked if tokens are valid: true, expires at: 1733182453162
+[debug] [2024-12-02T23:11:14.323Z] Checked if tokens are valid: true, expires at: 1733182453162
+[info] i  functions: ensuring required API cloudbuild.googleapis.com is enabled... 
+[debug] [2024-12-02T23:11:14.323Z] Checked if tokens are valid: true, expires at: 1733182453162
+[debug] [2024-12-02T23:11:14.323Z] Checked if tokens are valid: true, expires at: 1733182453162
+[info] i  artifactregistry: ensuring required API artifactregistry.googleapis.com is enabled... 
+[debug] [2024-12-02T23:11:14.324Z] Checked if tokens are valid: true, expires at: 1733182453162
+[debug] [2024-12-02T23:11:14.324Z] Checked if tokens are valid: true, expires at: 1733182453162
+[debug] [2024-12-02T23:11:14.324Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/around-the-ville/services/cloudfunctions.googleapis.com [none]
+[debug] [2024-12-02T23:11:14.324Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/around-the-ville/services/cloudfunctions.googleapis.com x-goog-quota-user=projects/around-the-ville
+[debug] [2024-12-02T23:11:14.324Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/around-the-ville/services/runtimeconfig.googleapis.com [none]
+[debug] [2024-12-02T23:11:14.324Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/around-the-ville/services/runtimeconfig.googleapis.com x-goog-quota-user=projects/around-the-ville
+[debug] [2024-12-02T23:11:14.325Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/around-the-ville/services/cloudbuild.googleapis.com [none]
+[debug] [2024-12-02T23:11:14.325Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/around-the-ville/services/cloudbuild.googleapis.com x-goog-quota-user=projects/around-the-ville
+[debug] [2024-12-02T23:11:14.325Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/around-the-ville/services/artifactregistry.googleapis.com [none]
+[debug] [2024-12-02T23:11:14.325Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/around-the-ville/services/artifactregistry.googleapis.com x-goog-quota-user=projects/around-the-ville
+[debug] [2024-12-02T23:11:14.716Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/around-the-ville/services/cloudbuild.googleapis.com 200
+[debug] [2024-12-02T23:11:14.716Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/around-the-ville/services/cloudbuild.googleapis.com [omitted]
+[info] ✔  functions: required API cloudbuild.googleapis.com is enabled 
+[debug] [2024-12-02T23:11:14.717Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/around-the-ville/services/artifactregistry.googleapis.com 200
+[debug] [2024-12-02T23:11:14.718Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/around-the-ville/services/artifactregistry.googleapis.com [omitted]
+[info] ✔  artifactregistry: required API artifactregistry.googleapis.com is enabled 
+[debug] [2024-12-02T23:11:14.723Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/around-the-ville/services/cloudfunctions.googleapis.com 200
+[debug] [2024-12-02T23:11:14.723Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/around-the-ville/services/cloudfunctions.googleapis.com [omitted]
+[info] ✔  functions: required API cloudfunctions.googleapis.com is enabled 
+[debug] [2024-12-02T23:11:14.753Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/around-the-ville/services/runtimeconfig.googleapis.com 200
+[debug] [2024-12-02T23:11:14.753Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/around-the-ville/services/runtimeconfig.googleapis.com [omitted]
+[debug] [2024-12-02T23:11:14.753Z] Checked if tokens are valid: true, expires at: 1733182453162
+[debug] [2024-12-02T23:11:14.753Z] Checked if tokens are valid: true, expires at: 1733182453162
+[debug] [2024-12-02T23:11:14.753Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/around-the-ville/adminSdkConfig [none]
+[debug] [2024-12-02T23:11:15.125Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/around-the-ville/adminSdkConfig 200
+[debug] [2024-12-02T23:11:15.125Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/around-the-ville/adminSdkConfig {"projectId":"around-the-ville","databaseURL":"https://around-the-ville-default-rtdb.firebaseio.com","storageBucket":"around-the-ville.firebasestorage.app"}
+[debug] [2024-12-02T23:11:15.126Z] Checked if tokens are valid: true, expires at: 1733182453162
+[debug] [2024-12-02T23:11:15.126Z] Checked if tokens are valid: true, expires at: 1733182453162
+[debug] [2024-12-02T23:11:15.126Z] >>> [apiv2][query] GET https://runtimeconfig.googleapis.com/v1beta1/projects/around-the-ville/configs [none]
+[debug] [2024-12-02T23:11:15.323Z] <<< [apiv2][status] GET https://runtimeconfig.googleapis.com/v1beta1/projects/around-the-ville/configs 200
+[debug] [2024-12-02T23:11:15.323Z] <<< [apiv2][body] GET https://runtimeconfig.googleapis.com/v1beta1/projects/around-the-ville/configs {}
+[debug] [2024-12-02T23:11:15.323Z] Validating nodejs source
+[debug] [2024-12-02T23:11:15.799Z] > [functions] package.json contents: {
+  "name": "functions",
+  "description": "Cloud Functions for Firebase",
+  "scripts": {
+    "lint": "eslint .",
+    "serve": "firebase emulators:start --only functions",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "18"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "firebase-admin": "^12.6.0",
+    "firebase-functions": "^6.0.1"
+  },
+  "devDependencies": {
+    "eslint": "^8.15.0",
+    "eslint-config-google": "^0.14.0",
+    "firebase-functions-test": "^3.1.0"
+  },
+  "private": true
+}
+[debug] [2024-12-02T23:11:15.799Z] Building nodejs source
+[info] i  functions: Loading and analyzing source code for codebase default to determine what to deploy 
+[debug] [2024-12-02T23:11:15.799Z] Could not find functions.yaml. Must use http discovery
+[debug] [2024-12-02T23:11:15.803Z] Found firebase-functions binary at '/Users/devang/Documents/GitHub/concept/functions/node_modules/.bin/firebase-functions'
+[info] Serving at port 8659
+
+[error] node:events:497
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE: address already in use :::8659
+    at Server.setupListenHandle [as _listen2] (node:net:1904:16)
+    at listenInCluster (node:net:1961:12)
+    at Server.listen (node:net:2063:7)
+    at Function.listen (/Users/devang/Documents/GitHub/concept/functions/node_modules/express/lib/application.js:635:24)
+    at Object.<anonymous> (/Users/devang/Documents/GitHub/concept/functions/index.js:96:5)
+    at Module._compile (node:internal/modules/cjs/loader:1358:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1416:10)
+    at Module.load (node:internal/modules/cjs/loader:1208:32)
+    at Module._load (node:internal/modules/cjs/loader:1024:12)
+    at Module.require (node:internal/modules/cjs/loader:1233:19)
+Emitted 'error' event on Server instance at:
+    at emitErrorNT (node:net:1940:8)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21) {
+  code: 'EADDRINUSE',
+  errno: -48,
+  syscall: 'listen',
+  address: '::',
+  port: 8659
+}
+
+Node.js v20.16.0
+
+[debug] [2024-12-02T23:11:16.073Z] Failed to call quitquitquit. This often means the server failed to start request to http://localhost:8659/__/quitquitquit failed, reason:  {"message":"request to http://localhost:8659/__/quitquitquit failed, reason: ","type":"system","errno":"ECONNREFUSED","code":"ECONNREFUSED"}
+[debug] [2024-12-02T23:11:16.190Z] FetchError: request to http://127.0.0.1:8659/__/functions.yaml failed, reason: socket hang up
+    at ClientRequest.<anonymous> (/usr/local/lib/node_modules/firebase-tools/node_modules/node-fetch/lib/index.js:1501:11)
+    at ClientRequest.emit (node:events:519:28)
+    at ClientRequest.emit (node:domain:488:12)
+    at Socket.socketOnEnd (node:_http_client:524:9)
+    at Socket.emit (node:events:531:35)
+    at Socket.emit (node:domain:488:12)
+    at endReadableNT (node:internal/streams/readable:1696:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
+[error] 
+[error] Error: An unexpected error has occurred.

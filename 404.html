@@ -7,10 +7,6 @@
 </head>
 <body>
     <script type="module">
-        // Import Firebase and Firestore services
-        import { db } from "https://aroundtheville.com/assets/scripts/firebaseConfig.js"; // Import from your Firebase config
-        import { collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-firestore.js"; // Import Firestore methods
-
         async function redirect() {
             try {
                 // Get the current URL path and construct the full URL
@@ -19,29 +15,32 @@
                 console.log("Current Path:", currentPath);
                 console.log("Full URL Queried:", fullUrl);
 
-                // Query Firestore for the document where the `link` field matches the current URL
-                const blogsRef = collection(db, "blogs"); // Firestore collection reference
-                const q = query(blogsRef, where("link", "==", fullUrl)); // Query to match the link field
-                const querySnapshot = await getDocs(q); // Get documents matching the query
+                // Call the Cloud Function to get the corresponding blog_number
+                const cloudFunctionUrl = `https://us-central1-around-the-ville.cloudfunctions.net/app/getBlogNumber`;
+                const response = await fetch(cloudFunctionUrl, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ url: fullUrl }), // Pass the current URL as JSON
+                });
 
-                if (!querySnapshot.empty) {
-                    console.log("Matching Document Found:", querySnapshot.docs[0].data());
-                    const doc = querySnapshot.docs[0].data(); // Get the document data
-                    const blogNumber = doc.blog_number; // Get the blog_number field from the document
+                if (!response.ok) {
+                    throw new Error(`Cloud Function error: ${response.status}`);
+                }
 
-                    // Check if blog_number exists and redirect
-                    if (blogNumber) {
-                        console.log("Redirecting to blog:", blogNumber);
-                        window.location.replace(`https://aroundtheville.com/blogs/${blogNumber}`);
-                    } else {
-                        console.error("blog_number field is missing in Firestore.");
-                    }
+                const { blogNumber } = await response.json(); // Parse the Cloud Function's response
+
+                // Check if blogNumber exists and redirect
+                if (blogNumber) {
+                    console.log("Redirecting to blog:", blogNumber);
+                    window.location.replace(`https://aroundtheville.com/blogs/${blogNumber}`);
                 } else {
-                    console.log("No matching blog found for the current path.");
+                    console.error("No matching blog found.");
                     window.location.replace('https://aroundtheville.com/'); // Fallback redirect
                 }
             } catch (error) {
-                console.error("Error querying Firestore:", error);
+                console.error("Error calling Cloud Function:", error);
                 window.location.replace('https://aroundtheville.com/'); // Fallback redirect on error
             }
         }

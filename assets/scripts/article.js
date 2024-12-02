@@ -1,5 +1,5 @@
 import { collection, getDocs } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-firestore.js";
-import { db } from '/firebaseConfig.js';
+import { db } from './firebaseConfig.js';
 
 // Flag to prevent fetching after reaching the bottom
 let hasFetchedRelatedArticles = false;

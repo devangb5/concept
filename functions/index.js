@@ -93,3 +93,11 @@ app.get("/blogs/:blog_number", async (req, res) => {
 });
 
 exports.app = functions.https.onRequest(app);
+
+// Open a port for local development (only if not in a Firebase environment)
+if (!process.env.FUNCTIONS_EMULATOR && !process.env.FUNCTIONS_RUNTIME) {
+  const PORT = process.env.PORT || 5500;
+  app.listen(PORT, () => {
+    console.log(`Server is running locally on http://localhost:${PORT}`);
+  });
+}

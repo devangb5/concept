@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors");
 const app = express();
 const path = require("path");
 const fs = require("fs/promises"); // Use promises for async operations
@@ -13,6 +14,17 @@ admin.initializeApp({
 });
 
 const db = admin.firestore();
+// Enable CORS for your domain
+const corsOptions = {
+  origin: "https://aroundtheville.com", // Allow this origin
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE", // Allowed methods
+  credentials: true, // Allow cookies or authentication headers
+};
+app.use(cors(corsOptions)); // Use cors middleware
+
+app.get("/", (req, res) => {
+  res.send("CORS-enabled function is working!");
+});
 
 // Middleware to serve static files from the appropriate directories
 app.use(express.static(path.join(__dirname, ".."))); // Serve static files from 'assets'
@@ -94,10 +106,4 @@ app.get("/blogs/:blog_number", async (req, res) => {
 
 exports.app = functions.https.onRequest(app);
 
-// Open a port for local development (only if not in a Firebase environment)
-if (!process.env.FUNCTIONS_EMULATOR && !process.env.FUNCTIONS_RUNTIME) {
-  const PORT = process.env.PORT || 5500;
-  app.listen(PORT, () => {
-    console.log(`Server is running locally on http://localhost:${PORT}`);
-  });
-}
+

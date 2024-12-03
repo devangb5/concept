@@ -1,10 +1,9 @@
 const express = require("express");
 const cors = require("cors");
 const app = express();
-const path = require("path");
-const fs = require("fs/promises"); // Use promises for async operations
 const admin = require("firebase-admin");
 const functions = require("firebase-functions");
+const axios = require("axios"); // Use axios to fetch raw assets from GitHub
 
 // Initialize Firebase Admin SDK with the service account
 const serviceAccount = require("./serviceKey.json");
@@ -15,6 +14,7 @@ admin.initializeApp({
 
 const db = admin.firestore();
 
+// Configure CORS options
 const corsOptions = {
   origin: "*", // Allow all origins for testing
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
@@ -23,7 +23,6 @@ const corsOptions = {
 
 app.use(cors(corsOptions)); // Use cors middleware
 app.use(express.json()); // Middleware to parse JSON bodies
-app.use(express.static(path.join(__dirname, "..", "assets"))); // Serve static files from 'assets'
 
 app.get("/", (req, res) => {
   res.send("CORS-enabled function is working!");
@@ -79,16 +78,15 @@ app.get("/blogs/:blog_number", async (req, res) => {
   try {
     const blogData = await fetchBlogData(blogNumber);
 
-    // Path to the HTML template
-    const templatePath = path.join(__dirname, "..", "article.html");
-    console.log(templatePath);
+    // GitHub URL for the raw template file
+    const templateUrl = "https://raw.githubusercontent.com/devangb5/concept/main/article.html";
 
-
-    // Check if the template file exists
     try {
-      const template = await fs.readFile(templatePath, "utf8");
+      // Fetch the template from GitHub
+      const response = await axios.get(templateUrl);
+      const template = response.data; // This is the HTML template
 
-      // Populate the HTML template
+      // Populate the HTML template with dynamic content
       let populatedTemplate = template
           .replace(/{{title}}/g, blogData.title || "Untitled")
           .replace(/{{description}}/g, blogData.description || "No description available")
@@ -101,8 +99,8 @@ app.get("/blogs/:blog_number", async (req, res) => {
 
       // Send the populated template as the response
       res.send(populatedTemplate);
-    } catch (readError) {
-      console.error("Template file read error:", readError.message);
+    } catch (error) {
+      console.error("Error fetching template from GitHub:", error.message);
       res.status(500).send("Template file not found or read error.");
     }
   } catch (error) {
@@ -129,7 +127,6 @@ app.post("/blogs", async (req, res) => {
   }
 });
 
-// Helper function to extract blog number from the URL path
 /**
  * Extracts the blog number from a given URL path.
  * @param {string} path - The URL path to extract the blog number from.
@@ -139,6 +136,7 @@ function extractBlogNumberFromPath(path) {
   const match = path.match(/\/blogs\/(\d+)/);
   return match ? match[1] : null; // Returns the blog number or null if not found
 }
+
 
 exports.app = functions.https.onRequest(app);
 

@@ -10,27 +10,34 @@
     <script type="module">
         async function redirect() {
             try {
+                // Get the current path from the URL
                 const currentPath = window.location.pathname;
+
+                // URL to your cloud function
                 const cloudFunctionUrl = 'https://us-central1-around-the-ville.cloudfunctions.net/app';
 
+                // Send the current path to the cloud function
                 const response = await fetch(cloudFunctionUrl, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ path: currentPath })
+                    body: JSON.stringify({ url: currentPath })  // Ensure 'url' matches your server-side expectation
                 });
 
+                // If the response is not okay, throw an error
                 if (!response.ok) {
                     throw new Error(`Cloud Function error: ${response.status} - ${response.statusText}`);
                 }
 
+                // Parse the response as JSON
                 const { blogNumber } = await response.json();
 
+                // If the blog number is found, redirect to the blog page
                 if (blogNumber) {
                     window.location.href = `/blogs/${blogNumber}`;
                 } else {
-                    // Handle cases where no blog number is found
+                    // If no blog number is found, redirect to the homepage
                     alert('Blog not found. Redirecting to homepage.');
                     window.location.href = '/';
                 }
@@ -39,11 +46,12 @@
                 alert('An error occurred. Redirecting to homepage.');
                 window.location.href = '/';
             } finally {
-                // Remove the loading indicator
+                // Hide the loading indicator once the process is complete
                 document.getElementById('loading').style.display = 'none';
             }
         }
 
+        // Execute the redirect function
         redirect();
     </script>
 </body>

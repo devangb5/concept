@@ -34,7 +34,7 @@
                 // Check if blogNumber exists and redirect
                 if (blogNumber) {
                     console.log("Redirecting to blog:", blogNumber);
-                    window.location.replace(`https://us-central1-around-the-ville.cloudfunctions.net/app/blogs/${blogNumber}`); // Redirect to the blog using a relative path
+                    window.location.replace(`https://aroundtheville.com/around-the-ville/us-central1/app/blogs/${blogNumber}`); // Redirect to the blog using a relative path
                 } else {
                     console.warn("No matching blog found. Redirecting to homepage.");
                     window.location.replace('/'); // Fallback redirect to homepage using a relative path

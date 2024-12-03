@@ -6,52 +6,47 @@
     <title>Redirecting...</title>
 </head>
 <body>
-    <div id="loading">Redirecting...</div>
     <script type="module">
+        // Import Firebase and Firestore services
+        import { db } from "https://aroundtheville.com/assets/script/firebaseConfig.js"; // Import from your Firebase config
+        import { collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-firestore.js"; // Import Firestore methods
+
         async function redirect() {
             try {
-                // Get the current path from the URL
+                // Get the current URL path and construct the full URL
                 const currentPath = window.location.pathname;
+                const fullUrl = `https://aroundtheville.com${currentPath}`;
+                console.log("Current Path:", currentPath);
+                console.log("Full URL Queried:", fullUrl);
 
-                // URL to your cloud function
-                const cloudFunctionUrl = 'https://us-central1-around-the-ville.cloudfunctions.net/app';
+                // Query Firestore for the document where the `link` field matches the current URL
+                const blogsRef = collection(db, "blogs"); // Firestore collection reference
+                const q = query(blogsRef, where("link", "==", fullUrl)); // Query to match the link field
+                const querySnapshot = await getDocs(q); // Get documents matching the query
 
-                // Send the current path to the cloud function
-                const response = await fetch(cloudFunctionUrl, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ url: currentPath })  // Ensure 'url' matches your server-side expectation
-                });
+                if (!querySnapshot.empty) {
+                    console.log("Matching Document Found:", querySnapshot.docs[0].data());
+                    const doc = querySnapshot.docs[0].data(); // Get the document data
+                    const blogNumber = doc.blog_number; // Get the blog_number field from the document
 
-                // If the response is not okay, throw an error
-                if (!response.ok) {
-                    throw new Error(`Cloud Function error: ${response.status} - ${response.statusText}`);
-                }
-
-                // Parse the response as JSON
-                const { blogNumber } = await response.json();
-
-                // If the blog number is found, redirect to the blog page
-                if (blogNumber) {
-                    window.location.href = `/blogs/${blogNumber}`;
+                    // Check if blog_number exists and redirect
+                    if (blogNumber) {
+                        console.log("Redirecting to blog:", blogNumber);
+                        window.location.replace(`https://aroundtheville.com/blogs/${blogNumber}`);
+                    } else {
+                        console.error("blog_number field is missing in Firestore.");
+                    }
                 } else {
-                    // If no blog number is found, redirect to the homepage
-                    alert('Blog not found. Redirecting to homepage.');
-                    window.location.href = '/';
+                    console.log("No matching blog found for the current path.");
+                    window.location.replace('https://aroundtheville.com/'); // Fallback redirect
                 }
             } catch (error) {
-                console.error('Error calling Cloud Function:', error);
-                alert('An error occurred. Redirecting to homepage.');
-                window.location.href = '/';
-            } finally {
-                // Hide the loading indicator once the process is complete
-                document.getElementById('loading').style.display = 'none';
+                console.error("Error querying Firestore:", error);
+                window.location.replace('https://aroundtheville.com/'); // Fallback redirect on error
             }
         }
 
-        // Execute the redirect function
+        // Call the redirect function
         redirect();
     </script>
 </body>

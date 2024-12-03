@@ -2,7 +2,7 @@
 async function loadHeader() {
     try {
         // Fetch the header.html file
-        const response = await fetch('/components/header.html');
+        const response = await fetch('https://aroundtheville.com/components/header.html');
 
         // Check if the fetch was successfuls
         if (!response.ok) {

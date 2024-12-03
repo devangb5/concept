@@ -2,7 +2,7 @@ import { db } from './firebaseConfig.js';
 import { collection, addDoc, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-firestore.js";
 
 // Path to the footer HTML file
-const footerPath = '/components/footer.html'; // Ensure this path points to your footer file
+const footerPath = 'https://aroundtheville.com/components/footer.html'; // Ensure this path points to your footer file
 
 // Helper function to dynamically wrap content based on the field names
 function wrapContentFromArray(contentArray) {

@@ -45,11 +45,11 @@ body {
     bottom: 0;
     left: 0;
     width: 100%; /* Start with full width */
-    height: 4px;
+    
     background-color: #fff; /* Glowing white underline */
     transition: width 0.3s ease-out;
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.6); /* Glowing effect */
-    opacity: 0; /* Start as invisible */
+    
+    opacity: 1; /* Start as invisible */
 }
 
 /* When page scrolls, show the underline */
@@ -183,6 +183,7 @@ body.scrolled #blog-content h1::before {
 
 /* Scroll Progress Bar */
 #progress-bar-container {
+    display:none;
     position: fixed;
     top: 85px; /* Ensure units are specified */
     left: 0;

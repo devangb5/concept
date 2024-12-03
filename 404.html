@@ -9,22 +9,20 @@
     <script type="module">
         async function redirect() {
             try {
-                // Get the current URL path and construct the full URL
+                // Get the current URL path
                 const currentPath = window.location.pathname;
-                const fullUrl = `https://aroundtheville.com${currentPath}`;
                 console.log("Current Path:", currentPath);
-                console.log("Full URL Queried:", fullUrl);
 
-                // Cloud Function URL
-                const cloudFunctionUrl = `https://us-central1-around-the-ville.cloudfunctions.net/app`; // Replace with your actual Cloud Function URL
+                // Cloud Function URL (using relative path)
+                const cloudFunctionUrl = `/cloudfunctions/app`; // Use a relative URL for your Cloud Function
 
-                // Call the Cloud Function to get the corresponding blog_numbe
+                // Call the Cloud Function to get the corresponding blog_number
                 const response = await fetch(cloudFunctionUrl, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
                     },
-                    body: JSON.stringify({ url: fullUrl }), // Pass the current URL as JSON
+                    body: JSON.stringify({ path: currentPath }), // Pass the current path as JSON
                 });
 
                 if (!response.ok) {
@@ -36,14 +34,14 @@
                 // Check if blogNumber exists and redirect
                 if (blogNumber) {
                     console.log("Redirecting to blog:", blogNumber);
-                    window.location.replace(`https://aroundtheville.com/blogs/${blogNumber}`);
+                    window.location.replace(`/blogs/${blogNumber}`); // Redirect to the blog using a relative path
                 } else {
                     console.warn("No matching blog found. Redirecting to homepage.");
-                    window.location.replace('https://aroundtheville.com/'); // Fallback redirect
+                    window.location.replace('/'); // Fallback redirect to homepage using a relative path
                 }
             } catch (error) {
                 console.error("Error calling Cloud Function:", error);
-                window.location.replace('https://aroundtheville.com/'); // Fallback redirect on error
+                window.location.replace('/'); // Fallback redirect on error using a relative path
             }
         }
 

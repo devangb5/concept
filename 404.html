@@ -6,46 +6,44 @@
     <title>Redirecting...</title>
 </head>
 <body>
+    <div id="loading">Redirecting...</div>
     <script type="module">
         async function redirect() {
             try {
-                // Get the current URL path
                 const currentPath = window.location.pathname;
-                console.log("Current Path:", currentPath);
+                const cloudFunctionUrl = 'https://us-central1-around-the-ville.cloudfunctions.net/app';
 
-                // Cloud Function URL (using relative path)
-                const cloudFunctionUrl = `https://us-central1-around-the-ville.cloudfunctions.net/app`; // Use a relative URL for your Cloud Function
-
-                // Call the Cloud Function to get the corresponding blog_number
                 const response = await fetch(cloudFunctionUrl, {
-                    method: "POST",
+                    method: 'POST',
                     headers: {
-                        "Content-Type": "application/json",
+                        'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ path: currentPath }), // Pass the current path as JSON
+                    body: JSON.stringify({ path: currentPath })
                 });
 
                 if (!response.ok) {
                     throw new Error(`Cloud Function error: ${response.status} - ${response.statusText}`);
                 }
 
-                const { blogNumber } = await response.json(); // Parse the Cloud Function's response
+                const { blogNumber } = await response.json();
 
-                // Check if blogNumber exists and redirect
                 if (blogNumber) {
-                    console.log("Redirecting to blog:", blogNumber);
-                    window.location.replace(`blogs/${blogNumber}`); // Redirect to the blog using a relative path
+                    window.location.href = `/blogs/${blogNumber}`;
                 } else {
-                    console.warn("No matching blog found. Redirecting to homepage.");
-                    window.location.replace('/'); // Fallback redirect to homepage using a relative path
+                    // Handle cases where no blog number is found
+                    alert('Blog not found. Redirecting to homepage.');
+                    window.location.href = '/';
                 }
             } catch (error) {
-                console.error("Error calling Cloud Function:", error);
-                window.location.replace('/'); // Fallback redirect on error using a relative path
+                console.error('Error calling Cloud Function:', error);
+                alert('An error occurred. Redirecting to homepage.');
+                window.location.href = '/';
+            } finally {
+                // Remove the loading indicator
+                document.getElementById('loading').style.display = 'none';
             }
         }
 
-        // Call the redirect function
         redirect();
     </script>
 </body>

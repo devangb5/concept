@@ -16,12 +16,9 @@ admin.initializeApp({
 const db = admin.firestore();
 
 const corsOptions = {
-  origin: [
-    "https://aroundtheville.com", // Your custom domain
-    "https://us-central1-around-the-ville.cloudfunctions.net/app", // Firebase-hosted domain
-  ],
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE", // Allowed methods
-  credentials: true, // Allow cookies or authentication headers
+  origin: "*", // Allow all origins for testing
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  credentials: true,
 };
 
 app.use(cors(corsOptions)); // Use cors middleware
@@ -39,17 +36,22 @@ app.get("/", (req, res) => {
  * @throws {Error} If the blog is not found.
  */
 async function fetchBlogData(blogNumber) {
-  const blogSnapshot = await db
-      .collection("blogs")
-      .where("blog_number", "==", blogNumber)
-      .limit(1)
-      .get();
+  try {
+    const blogSnapshot = await db
+        .collection("blogs")
+        .where("blog_number", "==", blogNumber)
+        .limit(1)
+        .get();
 
-  if (blogSnapshot.empty) {
-    throw new Error("Blog not found");
+    if (blogSnapshot.empty) {
+      throw new Error("Blog not found");
+    }
+
+    return blogSnapshot.docs[0].data();
+  } catch (error) {
+    console.error("Error fetching blog data:", error);
+    throw error; // Re-throw the error to be handled by the calling function
   }
-
-  return blogSnapshot.docs[0].data();
 }
 
 /**
@@ -78,7 +80,9 @@ app.get("/blogs/:blog_number", async (req, res) => {
     const blogData = await fetchBlogData(blogNumber);
 
     // Path to the HTML template
-    const templatePath = path.join(__dirname, "article.html");
+    const templatePath = path.join(__dirname, "..", "article.html");
+    console.log(templatePath);
+
 
     // Check if the template file exists
     try {
@@ -108,16 +112,20 @@ app.get("/blogs/:blog_number", async (req, res) => {
 });
 
 // Route to handle the POST request for fetching blog number based on URL path
-app.post("/cloudfunctions/app", async (req, res) => {
-  const {url} = req.body; // Get the current URL path from the request body
-  const blogNumber = extractBlogNumberFromPath(url); // Extract the blog number from the URL
+app.post("/blogs", async (req, res) => {
+  const {url} = req.body;
+  const blogNumber = extractBlogNumberFromPath(url);
+
+  if (!blogNumber) {
+    return res.status(400).json({message: "Invalid blog URL"});
+  }
 
   try {
-    await fetchBlogData(blogNumber); // Check if blog exists to avoid unused variable warning
-    res.json({blogNumber}); // Respond with the blog number
+    await fetchBlogData(blogNumber);
+    res.json({blogNumber});
   } catch (error) {
     console.error("Error fetching blog:", error.message);
-    res.status(404).json({message: "Blog not found"}); // Respond with a 404 status
+    res.status(404).json({message: "Blog not found"});
   }
 });
 

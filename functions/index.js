@@ -26,7 +26,7 @@ const corsOptions = {
 
 app.use(cors(corsOptions)); // Use cors middleware
 app.use(express.json()); // Middleware to parse JSON bodies
-app.use(express.static(path.join(__dirname, ".."))); // Serve static files from 'assets'
+app.use(express.static(path.join(__dirname, "..", "assets"))); // Serve static files from 'assets'
 
 app.get("/", (req, res) => {
   res.send("CORS-enabled function is working!");

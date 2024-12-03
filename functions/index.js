@@ -14,20 +14,21 @@ admin.initializeApp({
 });
 
 const db = admin.firestore();
+
 // Enable CORS for your domain
 const corsOptions = {
   origin: "https://aroundtheville.com", // Allow this origin
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE", // Allowed methods
   credentials: true, // Allow cookies or authentication headers
 };
+
 app.use(cors(corsOptions)); // Use cors middleware
+app.use(express.json()); // Middleware to parse JSON bodies
+app.use(express.static(path.join(__dirname, ".."))); // Serve static files from 'assets'
 
 app.get("/", (req, res) => {
   res.send("CORS-enabled function is working!");
 });
-
-// Middleware to serve static files from the appropriate directories
-app.use(express.static(path.join(__dirname, ".."))); // Serve static files from 'assets'
 
 /**
  * Fetch blog data from Firestore.
@@ -104,6 +105,29 @@ app.get("/blogs/:blog_number", async (req, res) => {
   }
 });
 
+// Route to handle the POST request for fetching blog number based on URL path
+app.post("/cloudfunctions/app", async (req, res) => {
+  const {url} = req.body; // Get the current URL path from the request body
+  const blogNumber = extractBlogNumberFromPath(url); // Extract the blog number from the URL
+
+  try {
+    await fetchBlogData(blogNumber); // Check if blog exists to avoid unused variable warning
+    res.json({blogNumber}); // Respond with the blog number
+  } catch (error) {
+    console.error("Error fetching blog:", error.message);
+    res.status(404).json({message: "Blog not found"}); // Respond with a 404 status
+  }
+});
+
+// Helper function to extract blog number from the URL path
+/**
+ * Extracts the blog number from a given URL path.
+ * @param {string} path - The URL path to extract the blog number from.
+ * @return {string|null} The blog number or null if not found.
+ */
+function extractBlogNumberFromPath(path) {
+  const match = path.match(/\/blogs\/(\d+)/);
+  return match ? match[1] : null; // Returns the blog number or null if not found
+}
+
 exports.app = functions.https.onRequest(app);
-
-

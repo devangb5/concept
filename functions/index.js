@@ -15,9 +15,11 @@ admin.initializeApp({
 
 const db = admin.firestore();
 
-// Enable CORS for your domain
 const corsOptions = {
-  origin: "https://devangb5.github.io/concept/", // Allow this origin
+  origin: [
+    "https://aroundtheville.com", // Your custom domain
+    "https://us-central1-around-the-ville.cloudfunctions.net", // Firebase-hosted domain
+  ],
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE", // Allowed methods
   credentials: true, // Allow cookies or authentication headers
 };

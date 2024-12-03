@@ -17,7 +17,7 @@ const db = admin.firestore();
 
 const corsOptions = {
   origin: [
-    
+    "https://aroundtheville.com", // Your custom domain
     "https://us-central1-around-the-ville.cloudfunctions.net/app", // Firebase-hosted domain
   ],
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE", // Allowed methods

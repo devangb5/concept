@@ -78,7 +78,7 @@ app.get("/blogs/:blog_number", async (req, res) => {
     const blogData = await fetchBlogData(blogNumber);
 
     // Path to the HTML template
-    const templatePath = path.join(__dirname, "..", "article.html");
+    const templatePath = path.join(__dirname, "article.html");
 
     // Check if the template file exists
     try {

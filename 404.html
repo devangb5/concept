@@ -14,7 +14,7 @@
                 console.log("Current Path:", currentPath);
 
                 // Cloud Function URL (using relative path)
-                const cloudFunctionUrl = `https://us-central1-around-the-ville.cloudfunctions.net/app/`; // Use a relative URL for your Cloud Function
+                const cloudFunctionUrl = `https://us-central1-around-the-ville.cloudfunctions.net/app`; // Use a relative URL for your Cloud Function
 
                 // Call the Cloud Function to get the corresponding blog_number
                 const response = await fetch(cloudFunctionUrl, {

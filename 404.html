@@ -16,9 +16,9 @@
                 console.log("Full URL Queried:", fullUrl);
 
                 // Cloud Function URL
-                const cloudFunctionUrl = `https://us-central1-around-the-ville.cloudfunctions.net/app/blogs`; // Replace with your actual Cloud Function URL
+                const cloudFunctionUrl = `https://us-central1-around-the-ville.cloudfunctions.net/app/blogs/`; // Replace with your actual Cloud Function URL
 
-                // Call the Cloud Function to get the corresponding blog_number
+                // Call the Cloud Function to get the corresponding blog_numbe
                 const response = await fetch(cloudFunctionUrl, {
                     method: "POST",
                     headers: {

@@ -17,7 +17,7 @@ const db = admin.firestore();
 
 // Enable CORS for your domain
 const corsOptions = {
-  origin: "https://aroundtheville.com", // Allow this origin
+  origin: "https://devangb5.github.io/concept/", // Allow this origin
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE", // Allowed methods
   credentials: true, // Allow cookies or authentication headers
 };
@@ -131,3 +131,11 @@ function extractBlogNumberFromPath(path) {
 }
 
 exports.app = functions.https.onRequest(app);
+
+// Start the server locally if running directly (not deployed)
+const PORT = process.env.PORT || 5500; // Use environment port or default to 3000
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
+  });
+}

@@ -21,7 +21,7 @@
 /* Global Resets */
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
+    font-family: 'Georgia', serif;
     background-color: var(--bg-color);
     color: var(--text-color);
 }

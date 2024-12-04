@@ -1,8 +1,8 @@
 /* article.css */
 /* article.css */
 body {
-    background-color: #121212; /* Very dark gray background for a sleek, modern look */
-    color: #e0e0e0; /* Light gray for easy readability */
+    background-color: #000;
+    color: #fff; /* Light gray for easy readability */
     font-family: 'Georgia', serif; /* Elegant serif font for a magazine feel */
     margin: 0;
     padding: 0;

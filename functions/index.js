@@ -21,7 +21,7 @@ const corsOptions = {
   credentials: true,
 };
 
-app.use(cors(corsOptions)); // Use cors middleware
+app.use(cors(corsOptions)); // Use CORS middleware
 app.use(express.json()); // Middleware to parse JSON bodies
 
 app.get("/", (req, res) => {
@@ -137,11 +137,13 @@ function extractBlogNumberFromPath(path) {
   return match ? match[1] : null; // Returns the blog number or null if not found
 }
 
+// Use your new CNAME for requests instead of the default Firebase Functions URL
+// You can replace the URL used in axios calls to your custom CNAME if necessary
 
 exports.app = functions.https.onRequest(app);
 
 // Start the server locally if running directly (not deployed)
-const PORT = process.env.PORT || 5500; // Use environment port or default to 3000
+const PORT = process.env.PORT || 5500; // Use environment port or default to 5500
 if (require.main === module) {
   app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);

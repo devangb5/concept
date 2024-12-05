@@ -8,7 +8,7 @@
   <body>
     <script type="module">
         // Import Firebase and Firestore services
-        import { db } from "https://aroundtheville.com/assets/scripts/firebaseConfig.js"; // Import from your Firebase config
+        import { db } from "https://blogs.aroundtheville.com/assets/scripts/firebaseConfig.js"; // Use the subdomain URL
         import { collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-firestore.js"; // Import Firestore methods
 
         async function redirect() {
@@ -32,17 +32,17 @@
                     // Check if blog_number exists and redirect
                     if (blogNumber) {
                         console.log("Redirecting to blog:", blogNumber);
-                        window.location.replace(`https://aroundtheville.com/blogs/${blogNumber}`);
+                        window.location.replace(`https://blogs.aroundtheville.com/blogs/${blogNumber}`);
                     } else {
                         console.error("blog_number field is missing in Firestore.");
                     }
                 } else {
                     console.log("No matching blog found for the current path.");
-                    window.location.replace('https://aroundtheville.com/'); // Fallback redirect
+                    window.location.replace('https://blogs.aroundtheville.com/'); // Fallback redirect
                 }
             } catch (error) {
                 console.error("Error querying Firestore:", error);
-                window.location.replace('https://aroundtheville.com/'); // Fallback redirect on error
+                window.location.replace('https://blogs.aroundtheville.com/'); // Fallback redirect on error
             }
         }
 

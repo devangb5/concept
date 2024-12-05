@@ -16,7 +16,10 @@ const db = admin.firestore();
 
 // Configure CORS options
 const corsOptions = {
-  origin: "https://blogs.aroundtheville.com", // Adjust for testing
+  origin: [
+    "https://blogs.aroundtheville.com",
+    "http://localhost:5500", // For local testing
+  ],
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true,
 };
@@ -24,7 +27,11 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 
-// Route to fetch and render a blog article
+/**
+ * Fetch and render a blog article.
+ * @param {string} blogNumber - The blog number from the URL parameter.
+ * @return {Promise<void>}
+ */
 app.get("/blogs/:blog_number", async (req, res) => {
   const blogNumber = req.params.blog_number;
   console.log(`Fetching blog with number: ${blogNumber}`);
@@ -33,7 +40,8 @@ app.get("/blogs/:blog_number", async (req, res) => {
     const blogData = await fetchBlogData(blogNumber);
 
     // GitHub URL for the raw template file
-    const templateUrl = "https://raw.githubusercontent.com/devangb5/concept/main/article.html";
+    const templateUrl =
+      "https://raw.githubusercontent.com/devangb5/concept/main/article.html";
 
     // Fetch the template from GitHub
     const response = await axios.get(templateUrl);
@@ -83,23 +91,16 @@ async function fetchBlogData(blogNumber) {
  * @param {Array<Object>} contentArray - The array of content items.
  * @return {string} The formatted HTML string.
  */
-function formatContentArray(contentArray) {
+function formatContentArray(contentArray = []) {
   return contentArray
       .map((item) => {
         const textHTML = Array.isArray(item.text)?
         item.text.map((paragraph) => `<p>${paragraph}</p>`).join(""):
-        `<p>${item.text}</p>`;
-
-        return `<h2>${item.heading}</h2>${textHTML}`;
+        `<p>${item.text || ""}</p>`;
+        return `<h2>${item.heading || "Untitled Section"}</h2>${textHTML}`;
       })
       .join("");
 }
-
-/**
- * Extracts the blog number from a given URL path.
- * @param {string} path - The URL path to extract the blog number from.
- * @return {string|null} The blog number or null if not found.
- */
 
 exports.app = functions.https.onRequest(app);
 

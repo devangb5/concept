@@ -1,11 +1,20 @@
 const CACHE_NAME = 'my-site-cache-v1';
 const urlsToCache = [
-    '/',
-    '/index.html',
-    '/styles.css',
-    '/script.js',
-    // Add other assets you want to cache
-];
+        '/',
+        '/index.html',
+        '/assets/styles/header.css',
+        '/assets/styles/footer.css',
+        '/assets/styles/article.css',
+        '/assets/scripts/header.js',
+        '/assets/scripts/footer.js',
+        '/assets/scripts/article.js',
+        '/assets/icons/favicon/favicon-96x96.png',
+        '/assets/icons/favicon/favicon.svg',
+        '/assets/icons/favicon/favicon.ico',
+        '/assets/icons/favicon/apple-touch-icon.png',
+        '/assets/icons/favicon/site.webmanifest',
+        // Add more specific assets if needed
+    ];
 
 self.addEventListener('install', event => {
     event.waitUntil(

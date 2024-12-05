@@ -164,7 +164,19 @@
     <script src="https://aroundtheville.com/assets/scripts/header.js"></script>
     <script type="module" src="https://aroundtheville.com/assets/scripts/footer.js"></script>
     <script type="module" src="https://aroundtheville.com/assets/scripts/firebase.js"></script>
-    
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/assets/scripts/service-worker.js') // Adjust path if necessary
+                    .then(registration => {
+                        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                    })
+                    .catch(error => {
+                        console.error('ServiceWorker registration failed: ', error);
+                    });
+            });
+        }
+        </script>
 
 </body>
 </html>

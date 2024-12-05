@@ -78,5 +78,18 @@
     </div>
     <script src="./assets/script/header.js"></script>
     <script type="module" src="./assets/script/offer.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/assets/scripts/service-worker.js') // Adjust path if necessary
+                    .then(registration => {
+                        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                    })
+                    .catch(error => {
+                        console.error('ServiceWorker registration failed: ', error);
+                    });
+            });
+        }
+        </script>
 </body>
 </html>

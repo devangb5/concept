@@ -39,7 +39,7 @@ async function fetchRelatedArticles() {
         randomBlogs.forEach(blog => {
             relatedArticlesHTML += `
                 <div class="related-article">
-                <a href="/blogs/${blog.blog_number}">
+                <a href="https://blogs.aroundtheville.com/blogs/${blog.blog_number}">
                         <img src="${blog.image}" alt="${blog.title}" class="related-article-image">
                         <p>${blog.title}</p>
                     </a>

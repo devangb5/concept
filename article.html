@@ -37,7 +37,7 @@
     <link rel="shortcut icon" href="https://aroundtheville.com/assets/icons/favicon/favicon.ico" />
     <link rel="apple-touch-icon" sizes="180x180" href="https://aroundtheville.com/assets/icons/favicon/apple-touch-icon.png" />
     <meta name="apple-mobile-web-app-title" content="Around The Ville" />
-    <link rel="manifest" href="https://blogs.aroundtheville.com/assets/icons/favicon/blogs-site.webmanifest" />
+    <link rel="manifest" href="https://blogs.aroundtheville.com/assets/icons/favicon/site.webmanifest" />
     
 </head>
 <body>
@@ -91,9 +91,21 @@
     <script type="module" src="https://aroundtheville.com/assets/scripts/footer.js" defer></script>
     <script type="module" src="https://aroundtheville.com/assets/scripts/article.js" defer></script>
 
-    <!-- Remove this script since it's not needed anymore -->
-    <script>
-        // The loadBlogContent function is removed to prevent duplication
-    </script>
+     <!-- Service Worker Registration -->
+     <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/assets/scripts/service-worker.js') // Adjust path if necessary
+                    .then(registration => {
+                        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                    })
+                    .catch(error => {
+                        console.error('ServiceWorker registration failed: ', error);
+                    });
+            });
+        }
+        </script>
+
+
 </body>
 </html>

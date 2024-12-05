@@ -16,7 +16,7 @@ const db = admin.firestore();
 
 // Configure CORS options
 const corsOptions = {
-  origin: "*", // Allow all origins for testing
+  origin: "https://blogs.aroundtheville.com", // Allow all origins for testing
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true,
 };

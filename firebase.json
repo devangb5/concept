@@ -20,6 +20,12 @@
   ],
   "hosting": {
     "public": ".",
+    "rewrites": [
+      {
+        "source": "/blogs/**",  
+        "function": "app"      
+      }
+    ],
     "ignore": [
       "firebase.json",
       "**/.*",

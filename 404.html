@@ -15,9 +15,9 @@
             try {
                 // Get the current URL path and construct the full URL
                 const currentPath = window.location.pathname;
-                const fullUrl = `https://aroundtheville.com${currentPath}`;
+                const fullUrl = `https://blogs.aroundtheville.com${currentPath}`;
                 console.log("Current Path:", currentPath);
-                console.log("Full URL Queried:", fullUrl);
+                console.log("Full URL Queried:", fullUrl);s
 
                 // Query Firestore for the document where the `link` field matches the current URL
                 const blogsRef = collection(db, "blogs"); // Firestore collection reference

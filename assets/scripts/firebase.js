@@ -23,7 +23,7 @@ async function fetchLatestBlog() {
                     <img src="${data.image}" alt="${data.title}" class="article-image">
                     <h3>${data.title}</h3>
                     <p>${data.description}</p>
-                    <a href="https://blogs.aroundtheville.com/blogs/${data.blog_number}" class="read-more">Read More</a>
+                    <a href="blogs/${data.blog_number}" class="read-more">Read More</a>
                 </div>
             `;
             document.getElementById("latest-articles-grid").innerHTML = latestBlogHTML;

@@ -17,5 +17,6 @@
   ],
   "theme_color": "black",
   "background_color": "black",
-  "display": "standalone"
+  "display": "standalone",
+  "scope": "https://blogs.aroundtheville.com/"
 }

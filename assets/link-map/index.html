@@ -3,26 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-    <meta property="og:title" content="Link Map - Around The Ville">
-    <meta property="og:description" content="Explore #aroundtheville with our ultimate guide to food, dining, and hidden gems in our vibrant community.">
-    <meta property="og:url" content="https://aroundtheville.com/assets/link-map/">
-    <meta property="og:type" content="website">
-    <meta name="description" content="Explore #aroundtheville with our ultimate guide to food, dining, and hidden gems in our vibrant community.">
-    <title>Link Map - Around The Ville</title>
-	<!-- GA4 -->
+    <title>Link Map</title>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-TYCR7B2T5J"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-    
       gtag('config', 'G-TYCR7B2T5J');
     </script>
-            <!-- / Google Analytics -->
-            
-   
-
     <style>
         body {
             margin: 0;
@@ -31,62 +19,58 @@
         }
 
         header {
-    display: flex;
-    flex-direction: column; 
-    align-items: center;
-    background-color: black; 
-    padding: 20px; 
+            display: flex;
+            flex-direction: column; 
+            align-items: center;
+            background-color: black; 
+            padding: 20px; 
+        }
 
+        .logo-link {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 10px; 
+        }
 
-}
+        .logo {
+            height: 80px; 
+            width: 80px; 
+            border-radius: 50%; 
+            object-fit: cover; 
+        }
 
-.logo-link {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 10px; 
-}
+        .header-text {
+            text-align: center;
+        }
 
-.logo {
-    height: 80px; 
-    width: 80px; 
-    border-radius: 50%; 
-    object-fit: cover; 
-}
+        h1 {
+            margin: 0;
+            color: white; 
+            font-size: 1rem; 
+        }
 
-.header-text {
-    text-align: center;
-}
+        .description {
+            color: white; 
+            margin: 5px 0;
+            font-size: 0.8rem; 
+        }
 
-h1 {
-    margin: 0;
-    color: white; 
-    font-size: 1rem; 
-}
+        .website-link {
+            color: white; 
+            text-decoration: underline;
+            font-size: 0.7rem; 
+        }
 
-.description {
-    color: white; 
-    margin: 5px 0;
-    font-size: 0.8rem; 
-}
+        h2 {
+            color: grey;
+            font-size: 0.7rem;
+            text-align: center;
+        }
 
-.website-link {
-    color: white; 
-    text-decoration: underline;
-    font-size: 0.7rem; 
-}
-
-
-h2 {
-    color: grey;
-    font-size: 0.7rem;
-    text-align: center;
-}
         .grid-container {
-            
             display: grid;
             grid-template-columns: repeat(3, 1fr); 
             gap: 0.5vh; 
-            
         }
 
         .post {
@@ -94,7 +78,6 @@ h2 {
             padding-bottom: 100%; 
             overflow: hidden;
             background-color: #f0f0f0; 
-       
         }
 
         .post img {
@@ -106,6 +89,39 @@ h2 {
             object-fit: cover; 
         }
     </style>
+    <!-- Firebase App -->
+    <script type="module">
+        // Import Firebase libraries
+        import { db } from '/assets/scripts/firebaseConfig.js';
+        import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-firestore.js";
+
+
+        // Fetch and Display Blogs
+        async function loadBlogs() {
+            try {
+                const q = query(collection(db, 'blogs'), orderBy('createdAt','desc'));
+                const querySnapshot = await getDocs(q);
+                const container = document.getElementById('grid-container');
+
+                querySnapshot.forEach(doc => {
+                    const data = doc.data();
+                    const post = document.createElement('div');
+                    post.className = 'post';
+                    post.innerHTML = `
+                        <a href="https://blogs.aroundtheville.com/blogs/${data.blog_number}" rel="noopener noreferrer">
+                            <img src="${data.image}" alt="${data.title}">
+                        </a>
+                    `;
+                    container.appendChild(post);
+                });
+            } catch (error) {
+                console.error('Error fetching blogs:', error);
+            }
+        }
+
+        // Load blogs on page load
+        loadBlogs();
+    </script>
 </head>
 <body>
     <header>
@@ -114,124 +130,12 @@ h2 {
         </a>
         <div class="header-text">
             <h1>Around The Ville</h1>
-            <p class="description">Exploring #aroundtheville | Your ultimate guide to food, dining, and hidden gems in our vibrant community.🌟</p>
             <a href="https://aroundtheville.com" rel="noopener noreferrer" class="website-link">Visit our website</a>
         </div>
     </header>
     <h2>Click on the image to read the full article.</h2>
-<div class="grid-container">
-    <div class="post">
-        <a href="https://aroundtheville.com/restaurant-bar/restaurant/vin-bun/" rel="noopener noreferrer">
-        <img src="https://aroundtheville.com/restaurant-bar/restaurant/vin-bun/spring-rolls.webp" alt="Post 24">
-    </a></div>
-    <div class="post">
-        <a href="https://aroundtheville.com/food-truck-blogs/all-thai'd-up/" rel="noopener noreferrer">
-        <img src="https://aroundtheville.com/food-truck-blogs/all-thai'd-up/kathy_closeup.webp" alt="Post 23">
-    </a></div>
-
-    <div class="post">
-        <a href="https://aroundtheville.com/food-truck-blogs/ricenow/" rel="noopener noreferrer">
-        <img src="https://aroundtheville.com/food-truck-blogs/ricenow/Kate_Finn.webp" alt="Post 22">
-    </a></div>
-    <div class="post">
-        <a href="https://aroundtheville.com/food-truck-blogs/red-top-dogs/" rel="noopener noreferrer">
-        <img src="https://aroundtheville.com/food-truck-blogs/red-top-dogs/ft.webp" alt="Post 21">
-    </a></div>
-
-    <div class="post">
-        <a href="https://aroundtheville.com/food-truck-blogs/smokncantina/" rel="noopener noreferrer">
-        <img src="https://aroundtheville.com/food-truck-blogs/smokncantina/owner-smokncantina.webp" alt="Post 20">
-    </a></div>
-    <div class="post">
-        <a href="https://aroundtheville.com/restaurant-bar/restaurant/charcuterie-creations/" rel="noopener noreferrer">
-        <img src="https://aroundtheville.com/restaurant-bar/restaurant/charcuterie-creations/sarah-insta.JPG" alt="Post 19">
-    </a></div>
-    <div class="post">
-        <a href="https://aroundtheville.com/restaurant-bar/restaurant/fresh-out-the-box/" rel="noopener noreferrer">
-        <img src="https://aroundtheville.com/restaurant-bar/restaurant/fresh-out-the-box/dung-tran.webp" alt="Post 18">
-    </a></div>
-    <div class="post">
-        <a href="https://aroundtheville.com/restaurant-bar/restaurant/river-road-bbq/" rel="noopener noreferrer">
-        <img src="https://aroundtheville.com/restaurant-bar/restaurant/river-road-bbq/krissy-davis.webp" style="object-position: 100% 100%;"alt="Post 17">
-    </a></div>
-    <div class="post">
-        <a href="https://aroundtheville.com/distillery/buzzards-roost" rel="noopener noreferrer">
-        <img src="https://aroundtheville.com/distillery/buzzards-roost/buzzards.JPG" alt="Post 16">
-    </a></div>
-    <div class="post">
-        <a href="https://aroundtheville.com/restaurant-bar/restaurant/mr-c-cheesecake" rel="noopener noreferrer">
-        <img src="https://aroundtheville.com/restaurant-bar/restaurant/mr-c-cheesecake/mr-c.webp" alt="Post 15">
-    </a></div>
-
-    <div class="post">
-        <a href="https://aroundtheville.com/restaurant-bar/restaurant/anko-sushi" rel="noopener noreferrer">
-        <img src="https://aroundtheville.com/restaurant-bar/restaurant/anko-sushi/anko-sushi-owner.webp" alt="Post 14">
-    </a></div>
-
-    <div class="post">
-        <a href="https://aroundtheville.com/food-truck-blogs/str8-drop-wings/" rel="noopener noreferrer">
-        <img src="https://aroundtheville.com/food-truck-blogs/str8-drop-wings/tony.webp" alt="Post 13">
-    </a></div>
-    <div class="post">
-        <a href="https://aroundtheville.com/food-truck-blogs/bamba-egg-roll/" rel="noopener noreferrer">
-        <img src="https://aroundtheville.com/restaurant-bar/restaurant/sarap/owner.webp" alt="Post 12">
-    </a></div>
-    <div class="post">
-        <a href="https://aroundtheville.com/food-truck-blogs/coffees-and-cream/" rel="noopener noreferrer">
-        <img src="https://aroundtheville.com/food-truck-blogs/coffees-and-cream/melissa-donna-closeup.webp" alt="Post 11">
-    </a></div>
-    <div class="post">
-        <a href="https://aroundtheville.com/178-2/" rel="noopener noreferrer">
-        <img src="https://aroundtheville.com/178-2/images/belle_louisville.webp" alt="Post 10">
-    </a></div>
-    <div class="post">
-        <a href="https://aroundtheville.com/food-truck-blogs/spotz-gelato/" rel="noopener noreferrer">
-        <img src="https://aroundtheville.com/food-truck-blogs/spotz-gelato/spotz-gelato-owner-beth.webp" alt="Post 9">
-    </a></div>
-
-    <div class="post">
-        <a href="https://aroundtheville.com/food-truck-blogs/sugar-rush-and-sum/" rel="noopener noreferrer">
-        <img src="https://aroundtheville.com/food-truck-blogs/sugar-rush-and-sum/terra-peach-funnel-cake.webp" alt="Post 8">
-    </a></div>
-
-    <div class="post">
-        <a href="https://aroundtheville.com/food-truck-blogs/friends-fusion-food/">
-        <img src="https://aroundtheville.com/food-truck-blogs/friends-fusion-food/specials-1.jpg" alt="Post 7">
-    </a>
+    <div class="grid-container" id="grid-container">
+        <!-- Dynamic content will load here -->
     </div>
-
-    <div class="post">
-        <a href="https://aroundtheville.com/attractions/murals/" rel="noopener noreferrer">
-        <img src="https://aroundtheville.com/attractions/murals/girl-with-flower-mural.webp" alt="Post 6">
-    </a>
-    </div>
-  
-    <div class="post">
-        <a href="https://aroundtheville.com/restaurant-bar/restaurant/alchemy/" rel="noopener noreferrer">
-        <img src="https://aroundtheville.com/restaurant-bar/restaurant/alchemy/alchemy-cover.webp" alt="Post 5">
-    </a>
-    </div>
-    <div class="post">
-        <a href="https://aroundtheville.com/food-truck-blogs/four-pegs/" rel="noopener noreferrer">
-        <img src="https://aroundtheville.com/food-truck-blogs/four-pegs/cover_chris_four_pegs.webp" alt="Post 4">
-    </a>
-    </div>
-    <div class="post">
-        <a href="https://aroundtheville.com/food-truck-blogs/woof-n-waggin/" rel="noopener noreferrer">
-        <img src="https://aroundtheville.com/food-truck-blogs/woof-n-waggin/insta_cover.webp" alt="Post 3">
-    </a>
-    </div>
-    <div class="post">
-        <a href="https://aroundtheville.com/restaurant-bar/restaurant/noosh-nosh/" rel="noopener noreferrer">
-        <img src="https://aroundtheville.com/restaurant-bar/restaurant/noosh-nosh/insta_cover.jpg" alt="Post 2">
-    </a>
-    </div>
-    <div class="post">
-        <a href="https://aroundtheville.com/food-truck-blogs/acme-chicken-bowls/" rel="noopener noreferrer">
-        <img src="https://aroundtheville.com/food-truck-blogs/acme-chicken-bowls/acme-chicken-bowls-food-trucks.webp" alt="Post 1">
-    </a>
-    </div>
-</div>
-
 </body>
 </html>

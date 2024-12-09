@@ -26,6 +26,7 @@ function wrapContentFromArray(contentArray) {
 }
 
 // Function to load and inject the footer content
+// Function to load and inject the footer content
 async function loadFooter() {
     try {
         // Load footer HTML content
@@ -49,43 +50,37 @@ async function loadFooter() {
 
                     if (docSnap.exists()) {
                         const policyContent = docSnap.data().content; // Assumes 'content' is an array of objects
-                        const title = docSnap.data().title; // Separate field for title
+                        const title = docSnap.data().title;
 
-                        // Create and display the modal for the privacy policy
-                        const modal = document.createElement('div');
-                        modal.id = 'privacy-policy-modal';
-                        modal.classList.add('modal');
-                        modal.innerHTML = `
-                            <div class="privacy-modal-content">
-                                <span class="close-button">&times;</span>
-                                <div id="privacy-policy-content"></div>
-                            </div>
-                        `;
-                        document.body.appendChild(modal);
-
-                        // Add title to the modal before the content
-                        const privacyContent = `
-                            <h1>${title}</h1>
-                            ${wrapContentFromArray(policyContent)}
-                        `;
-                        document.getElementById('privacy-policy-content').innerHTML = privacyContent;
-
-                        // Handle modal close actions
-                        const closeButton = modal.querySelector('.close-button');
-                        closeButton.addEventListener('click', () => modal.remove());
-
-                        // Close the modal when clicking outside of it
-                        window.addEventListener('click', (event) => {
-                            if (event.target === modal) modal.remove();
-                        });
-
-                        // Show the modal
-                        modal.style.display = "block";
+                        createModal("Privacy Policy", title, wrapContentFromArray(policyContent));
                     } else {
                         console.error("Privacy policy not found in Firestore.");
                     }
                 } catch (error) {
                     console.error("Error fetching privacy policy from Firestore:", error);
+                }
+            });
+        }
+
+        // Attach event listener to the contact us link
+        const contactUsLink = document.getElementById("contact-us-link");
+        if (contactUsLink) {
+            contactUsLink.addEventListener("click", async function (e) {
+                e.preventDefault();
+                try {
+                    const docRef = doc(db, "privacy-policy", "contact-us");
+                    const docSnap = await getDoc(docRef);
+
+                    if (docSnap.exists()) {
+                        const contactContent = docSnap.data().content; // Assumes 'content' is an array of objects
+                        const title = docSnap.data().title;
+
+                        createModal("Contact Us", title, wrapContentFromArray(contactContent));
+                    } else {
+                        console.error("Contact information not found in Firestore.");
+                    }
+                } catch (error) {
+                    console.error("Error fetching contact information from Firestore:", error);
                 }
             });
         }
@@ -114,6 +109,37 @@ async function loadFooter() {
         console.error("Error loading footer: ", error);
     }
 }
+
+// Utility function to create a modal dynamically
+function createModal(modalId, title, content) {
+    const modal = document.createElement('div');
+    modal.id = `${modalId.toLowerCase().replace(/\s+/g, '-')}-modal`;
+    modal.classList.add('modal');
+    modal.innerHTML = `
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h1>${title}</h1>
+            ${content}
+        </div>
+    `;
+    document.body.appendChild(modal);
+
+    // Handle modal close actions
+    const closeButton = modal.querySelector('.close-button');
+    closeButton.addEventListener('click', () => modal.remove());
+
+    // Close the modal when clicking outside of it
+    window.addEventListener('click', (event) => {
+        if (event.target === modal) modal.remove();
+    });
+
+    // Show the modal
+    modal.style.display = "block";
+}
+
+// Initialize footer on page load
+document.addEventListener("DOMContentLoaded", loadFooter);
+
 
 // Initialize footer on page load
 document.addEventListener("DOMContentLoaded", loadFooter);

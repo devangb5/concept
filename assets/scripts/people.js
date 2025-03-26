@@ -22,9 +22,10 @@ async function loadFeaturedAndRecentPeople() {
 
     // Update the inner HTML to display featured people
     document.querySelector('.featured-recent-grid').innerHTML = featuredAndRecent.map(person => `
-        <div class="featured-recent-card" onclick="window.location.href='people_article.html?id=${person.id}'">
-            <img src="${person.image}" alt="${person.name}" class="person-image">
-
+        <div class="featured-recent-card" >
+        <a href="https://people.aroundtheville.com/people/${person.id}">    
+        <img src="${person.image}" alt="${person.name}" class="person-image">
+        </a>
         </div>
     `).join('');
 }
@@ -66,9 +67,9 @@ async function fetchRelatedArticles() {
         randomBlogs.forEach(blog => {
             relatedArticlesHTML += `
                 <div class="related-article">
-                <a href="https://blogs.aroundtheville.com/blogs/${blog.blog_number}">
-                        <img src="${blog.image}" alt="${blog.title}" class="related-article-image">
-                        <p>${blog.title}</p>
+                <a href="https://blogs.aroundtheville.com/blogs/${person.id}">
+                        <img src="${blog.image}" alt="${person.title}" class="related-article-image">
+                        <p>${person.title}</p>
                     </a>
                 </div>
             `;
@@ -120,4 +121,4 @@ function initializeSocialMediaLinks() {
     updateSocialMediaLinks(articleUrl); // Update the social links
 }
 // Call the function to load people on page load
-document.addEventListener('DOMContentLoaded', loadFeaturedAndRecentPeople);
+document.addEventListener('DOMContentLoaded', loadFeaturedAndRecentPeople, fetchRelatedArticles, initializeSocialMediaLinks);

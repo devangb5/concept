@@ -40,7 +40,7 @@ async function fetchRelatedArticles() {
 
     try {
         // Fetch all blogs from the "blogs" collection
-        const blogsRef = collection(db, "blogs");
+        const blogsRef = collection(db, "people");
         const querySnapshot = await getDocs(blogsRef);
 
         // If no blogs are found

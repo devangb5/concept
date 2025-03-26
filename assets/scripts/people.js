@@ -68,7 +68,7 @@ async function fetchRelatedArticles() {
             relatedArticlesHTML += `
                 <div class="related-article">
                 <a href="https://blogs.aroundtheville.com/blogs/${person.id}">
-                        <img src="${blog.image}" alt="${person.title}" class="related-article-image">
+                        <img src="${person.image}" alt="${person.title}" class="related-article-image">
                         <p>${person.title}</p>
                     </a>
                 </div>
@@ -121,4 +121,8 @@ function initializeSocialMediaLinks() {
     updateSocialMediaLinks(articleUrl); // Update the social links
 }
 // Call the function to load people on page load
-document.addEventListener('DOMContentLoaded', loadFeaturedAndRecentPeople, fetchRelatedArticles, initializeSocialMediaLinks);
+document.addEventListener('DOMContentLoaded', function() {
+    loadFeaturedAndRecentPeople();
+    fetchRelatedArticles();
+    initializeSocialMediaLinks();
+});

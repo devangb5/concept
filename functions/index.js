@@ -91,7 +91,7 @@ app.get("/people/:person_id", async (req, res) => {
     const personData = await fetchPersonData(personId);
 
     // GitHub URL for the raw template file for person profile
-    const templateUrl = "https://raw.githubusercontent.com/devangb5/concept/main/peeple_article.html";
+    const templateUrl = "https://raw.githubusercontent.com/devangb5/concept/main/people_article.html";
 
     // Fetch the template from GitHub
     const response = await axios.get(templateUrl);

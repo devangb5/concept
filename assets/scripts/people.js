@@ -32,6 +32,7 @@ async function loadFeaturedAndRecentPeople() {
 // Flag to prevent fetching after reaching the bottom
 let hasFetchedRelatedArticles = false;
 
+// Function to fetch and display random related articles
 async function fetchRelatedArticles() {
     // Prevent fetching if articles have already been displayed
     if (hasFetchedRelatedArticles) {
@@ -39,50 +40,60 @@ async function fetchRelatedArticles() {
     }
 
     try {
-        // Fetch all people from the "people" collection
-        const peopleRef = collection(db, "people");
-        const querySnapshot = await getDocs(peopleRef);
+        // Fetch all blogs from the "blogs" collection
+        const blogsRef = collection(db, "people");
+        const querySnapshot = await getDocs(blogsRef);
 
-        // If no people are found
+        // If no blogs are found
         if (querySnapshot.empty) {
-            console.log("No related people found.");
+            console.log("No blogs found.");
             return;
         }
 
-        // Map people data correctly
-        let allPeople = querySnapshot.docs.map(doc => ({
-            id: doc.id,
-            ...doc.data()
-        }));
+        // Create an array to hold the fetched articles
+        let allBlogs = [];
+        querySnapshot.forEach((doc) => {
+            allBlogs.push(doc.data());
+        });
 
         // Shuffle the array to randomize the order
-        allPeople = shuffleArray(allPeople);
+        allBlogs = shuffleArray(allBlogs);
 
-        // Select the first 3 people from the shuffled array
-        const randomPeople = allPeople.slice(0, 3);
+        // Select the first 3 articles from the shuffled array
+        const randomBlogs = allBlogs.slice(0, 3);
 
-        // Prepare HTML content for the related people
-        let relatedPeopleHTML = "<h3>Related People</h3>";
-        relatedPeopleHTML += randomPeople.map(person => `
-            <div class="related-article">
+        // Prepare HTML content for the related articles
+        let relatedArticlesHTML = "<h3>Related Articles</h3>";
+        randomBlogs.forEach(person => {
+            relatedArticlesHTML += `
+                <div class="related-article">
                 <a href="https://people.aroundtheville.com/people/${person.id}">
-                    <img src="${person.image}" alt="${person.name}" class="related-article-image">
-                    <p>${person.name}</p>
-                </a>
-            </div>
-        `).join('');
+                        <img src="${person.image}" alt="${person.name}" class="related-article-image">
+                        <p>${person.name}</p>
+                    </a>
+                </div>
+            `;
+        });
 
-        // Display the related people in the "related-articles" container
-        document.getElementById("related-articles").innerHTML = relatedPeopleHTML;
+        // Display the related articles in the "related-articles" container
+        document.getElementById("related-articles").innerHTML = relatedArticlesHTML;
 
-        // Set flag to true to indicate people have been fetched
+        // Set flag to true to indicate articles have been fetched
         hasFetchedRelatedArticles = true;
 
     } catch (error) {
-        console.error("Error fetching related people:", error);
+        console.error("Error fetching related articles:", error);
     }
 }
 
+// Function to shuffle an array (for randomizing the order)
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]]; // Swap elements
+    }
+    return array;
+}
 // Function to update social media share links
 function updateSocialMediaLinks(url) {
     const socialLinks = {

@@ -64,10 +64,10 @@ async function fetchRelatedArticles() {
 
         // Prepare HTML content for the related articles
         let relatedArticlesHTML = "<h3>Related Articles</h3>";
-        randomBlogs.forEach(blog => {
+        randomBlogs.forEach(person => {
             relatedArticlesHTML += `
                 <div class="related-article">
-                <a href="https://blogs.aroundtheville.com/blogs/${person.id}">
+                <a href="https://people.aroundtheville.com/people/${person.id}">
                         <img src="${person.image}" alt="${person.title}" class="related-article-image">
                         <p>${person.title}</p>
                     </a>

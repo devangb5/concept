@@ -86,6 +86,7 @@ async function fetchRelatedArticles() {
     }
 }
 
+
 // Function to shuffle an array (for randomizing the order)
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -94,6 +95,37 @@ function shuffleArray(array) {
     }
     return array;
 }
+
+// Handle the scroll event for progress bar and related articles fetching
+window.addEventListener("scroll", () => {
+    const docHeight = document.documentElement.scrollHeight;
+    const winHeight = window.innerHeight;
+    const scrollPos = window.scrollY;
+
+    // Calculate the scroll progress
+    const progress = (scrollPos / (docHeight - winHeight)) * 100;
+
+    // Update progress bar width
+    const progressBar = document.getElementById("progress-bar");
+    progressBar.style.width = progress + "%";
+
+    // Handle sticky progress bar appearance
+    const progressBarContainer = document.getElementById("progress-bar-container");
+    if (scrollPos > 100) { // Adjust the scroll position for the sticky effect
+        progressBarContainer.style.display = 'block'; // Show progress bar
+        document.querySelector('h1').style.borderBottom = 'none'; // Hide the underline from the heading
+        progressBarContainer.classList.add('sticky-progress'); // Make it sticky
+    } else {
+        progressBarContainer.style.display = 'none'; // Hide progress bar when top
+        document.querySelector('h1').style.borderBottom = '4px solid #bdc3c7'; // Show the original underline on heading
+        progressBarContainer.classList.remove('sticky-progress'); // Remove sticky effect
+    }
+
+    // Detect if the user reached the end of the article
+    if (scrollPos + winHeight >= docHeight) {
+        fetchRelatedArticles();
+    }
+});
 // Function to update social media share links
 function updateSocialMediaLinks(url) {
     const socialLinks = {

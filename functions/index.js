@@ -98,11 +98,14 @@ app.get("/people/:person_id", async (req, res) => {
     const template = response.data;
 
     // Populate the HTML template with dynamic content
-    const populatedTemplate = template
+    let populatedTemplate = template
         .replace(/{{name}}/g, personData.name || "Unnamed")
         .replace(/{{description}}/g, personData.description || "No description available")
         .replace(/{{image}}/g, personData.image || "default-image.jpg")
         .replace(/{{url}}/g, `${req.protocol}://${req.get("host")}${req.originalUrl}`);
+    // Build the content for the blog from the 'content' array
+    const contentHTML = formatContentArray(personData.content);
+    populatedTemplate = populatedTemplate.replace(/{{content}}/g, contentHTML);
 
     // Send the populated template as the response
     res.send(populatedTemplate);

@@ -22,8 +22,12 @@
     "public": ".",
     "rewrites": [
       {
-        "source": "/blogs/**",  
-        "function": "app"      
+        "source": "/blogs/**",
+        "function": "app"
+      },
+      {
+        "source": "/people/**",
+        "function": "app"
       }
     ],
     "ignore": [

@@ -1,5 +1,18 @@
 {
   "projects": {
     "default": "around-the-ville"
-  }
+  },
+  "targets": {
+    "around-the-ville": {
+      "hosting": {
+        "people": [
+          "people.aroundtheville.com"
+        ],
+        "blogs": [
+          "blogs.aroundtheville.com"
+        ]
+      }
+    }
+  },
+  "etags": {}
 }

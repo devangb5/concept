@@ -72,27 +72,55 @@ async function fetchBlogsByCategory(category) {
 // Function to fetch Instagram posts
 async function fetchInstagramPosts() {
     try {
-        const postsRef = collection(db, "blogs");
-        const postsQuery = query(postsRef, orderBy("createdAt", "desc"), limit(6));
-        const querySnapshot = await getDocs(postsQuery);
+        let allPosts = [];
 
-        if (querySnapshot.empty) {
-            console.log("No Instagram posts found!");
+        // Fetch posts from the "blogs" collection
+        const blogsRef = collection(db, "blogs");
+        const blogsQuery = query(blogsRef, orderBy("createdAt", "desc")); // No limit here
+        const blogsSnapshot = await getDocs(blogsQuery);
+
+        if (!blogsSnapshot.empty) {
+            blogsSnapshot.forEach(doc => {
+                const data = doc.data();
+                allPosts.push({ ...data, collection: 'blogs' });
+            });
+        }
+
+        // Fetch posts from the "people" collection
+        const peopleRef = collection(db, "people");
+        const peopleQuery = query(peopleRef, orderBy("createdAt", "desc")); // No limit here
+        const peopleSnapshot = await getDocs(peopleQuery);
+
+        if (!peopleSnapshot.empty) {
+            peopleSnapshot.forEach(doc => {
+                const data = doc.data();
+                allPosts.push({ ...data, collection: 'people' });
+            });
+        }
+
+        // Combine and sort all posts by createdAt
+        allPosts.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
+
+        // Get the top 6 posts
+        const topSixPosts = allPosts.slice(0, 6);
+
+        if (topSixPosts.length === 0) {
+            console.log("No posts found in either 'blogs' or 'people' collection!");
             return;
         }
 
         let feedHTML = "";
-        querySnapshot.forEach(doc => {
-            const data = doc.data();
+        topSixPosts.forEach(post => {
             feedHTML += `
                 <div class="feed-item">
-                    <img src="${data.image}" alt="Instagram Post">
+                    <img src="${post.image}" alt="${post.collection} Post">
                 </div>
             `;
         });
         document.querySelector(".feed-grid").innerHTML = feedHTML;
+
     } catch (error) {
-        console.error("Error fetching Instagram posts:", error);
+        console.error("Error fetching posts:", error);
     }
 }
 

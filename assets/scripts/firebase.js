@@ -104,6 +104,41 @@ async function fetchFoodTruckDiscoverCards() {
     }
 }
 
+async function fetchRestaurantDiscoverCards() {
+    try {
+        const categoriesRef = collection(db, "blogs");
+        const foodTruckQuery = query(
+            categoriesRef,
+            where("category", "==", "restaurants"),
+            orderBy("createdAt", "desc")
+        );
+        const snapshot = await getDocs(foodTruckQuery);
+
+        if (snapshot.empty) {
+            console.log("No food truck categories found!");
+            return;
+        }
+
+        let cardHTML = "";
+        snapshot.forEach(doc => {
+            const cat = doc.data();
+            cardHTML += `
+                <a href="https://blogs.aroundtheville.com/blogs/${cat.blog_number}" class="discover-card">
+                    <img src="${cat.image}" alt="${cat.title}" />
+                    <div class="discover-card-overlay">
+                        <h3 class="discover-card-title">${cat.title}</h3>
+                    </div>
+                </a>
+            `;
+        });
+
+        document.querySelector("#discover-slider-restaurant").innerHTML = cardHTML;
+
+    } catch (error) {
+        console.error("Error fetching Discover cards:", error);
+    }
+}
+
 
 // Function to fetch Instagram posts
 async function fetchInstagramPosts() {
@@ -184,3 +219,4 @@ categoryItems.forEach(item => {
 fetchLatestBlog();
 fetchInstagramPosts();
 fetchFoodTruckDiscoverCards();
+fetchRestaurantDiscoverCards();

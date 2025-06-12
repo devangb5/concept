@@ -653,7 +653,9 @@ p {
 
 
 
-
+#discover-section{
+    padding:0px 20px;
+}
   
   .discover-section-title {
     text-align: center;

@@ -139,7 +139,26 @@ async function fetchRestaurantDiscoverCards() {
     }
 }
 
+async function loadPeopleFilmstrip() {
+    const container = document.getElementById("filmstrip-track");
+    const snapshot = await getDocs(collection(db, "people"));
+    const people = [];
+  
+    snapshot.forEach(doc => people.push(doc.data()));
+    const looped = [...people, ...people]; // Duplicate for seamless loop
+  
+    looped.forEach(person => {
+      const tile = document.createElement("div");
+      tile.className = "filmstrip-item";
+      tile.innerHTML = `
+        <a href="https://people.aroundtheville.com/people/${person.id}"><img src="${person.image}" alt="${person.name}" loading="lazy" /></a>
+      `;
+      container.appendChild(tile);
+    });
+  }
+  document.addEventListener("DOMContentLoaded", loadPeopleFilmstrip);
 
+ 
 // Function to fetch Instagram posts
 async function fetchInstagramPosts() {
     try {

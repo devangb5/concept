@@ -26,6 +26,11 @@ body {
     color: var(--text-color);
 }
 
+@media(min-width:768px){
+    body{max-width: 1400px;
+    margin: 40px auto;
+    padding: 0 20px;}}
+
 h1 {
     font-size: 3rem;
     margin-bottom: unset;
@@ -162,7 +167,7 @@ h3 {
 
 /* Recent Articles Section */
 #latest-blog {
-    padding: 40px 20px;
+    padding: 60px 20px;
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -200,7 +205,7 @@ h3 {
 
 /* Categories Section */
 #categories {
-    padding: 60px 20px;
+    padding: 20px 20px;
     text-align: center;
     
    
@@ -383,7 +388,7 @@ p {
 /*--------------------------------------------------------Instagram Section--------------------------------------------*/
 /* Social Feed Section */
 .social-feed {
-    padding: 40px 20px;
+    padding: 20px 20px;
     background-color: #000; /* Black background */
     text-align: center;
 }
@@ -524,7 +529,7 @@ p {
 
 /*-------------------------------------------------------About Us Section----------------------------------------*/
 .about-us {
-    padding: 60px 20px;
+    padding: 20px 20px;
    
     color: #fff;
     text-align: justify;
@@ -654,7 +659,7 @@ p {
 
 
 #discover-section{
-    padding:60px 20px;
+    padding:20px 20px;
 }
   
   .discover-section-title {
@@ -752,7 +757,7 @@ p {
     overflow: hidden;
     white-space: nowrap;
     position: relative;
-    padding: 60px 20px;
+    padding: 20px 20px;
   }
   
   .filmstrip-track {
@@ -791,5 +796,6 @@ p {
 .film-strip-p  {
  
     margin-bottom: 30px;
+    font-size: 1em;
     
 }

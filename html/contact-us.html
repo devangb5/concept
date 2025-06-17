@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact Us | Around The Ville</title>
+  <link rel="stylesheet" href="../assets/styles/body.css">
+  <link rel="stylesheet" href="../assets/styles/header.css">
+  <link rel="stylesheet" href="../assets/styles/footer.css">
+
+</head>
+
+<body>
+<div id="header"></div>
+  <div class="container" style="padding: 1rem;">
+    
+
+    
+        <section style="max-width: 700px; margin: 0 auto; padding: 2rem;">
+            <h1 style="font-size: 2rem; color: #fff; margin-bottom: 1rem;">Contact Us</h1>
+            <p style="color: #ccc; margin-bottom: 2rem;">We’d love to hear from you. Whether you’re a food truck owner, a reader with feedback, or just want to say hello — drop us a message below.</p>
+          
+            <form id="contact-form" style="display: flex; flex-direction: column; gap: 1.5rem;">
+              <div>
+                <label for="name" style="display: block; color: #aaa; margin-bottom: 0.5rem;">Your Name</label>
+                <input type="text" id="name" name="name" required
+                       style="width: 100%; padding: 0.75rem; background-color: #111; color: #fff; border: 1px solid #333; border-radius: 6px;" />
+              </div>
+          
+              <div>
+                <label for="email" style="display: block; color: #aaa; margin-bottom: 0.5rem;">Your Email</label>
+                <input type="email" id="email" name="email" required
+                       style="width: 100%; padding: 0.75rem; background-color: #111; color: #fff; border: 1px solid #333; border-radius: 6px;" />
+              </div>
+          
+              <div>
+                <label for="message" style="display: block; color: #aaa; margin-bottom: 0.5rem;">Message</label>
+                <textarea id="message" name="message" rows="6" required
+                          style="width: 100%; padding: 0.75rem; background-color: #111; color: #fff; border: 1px solid #333; border-radius: 6px;"></textarea>
+              </div>
+          
+              <button type="submit"
+                      style="background-color: #1e90ff; color: #fff; border: none; padding: 0.75rem 1.5rem; font-size: 1rem; border-radius: 6px; cursor: pointer;">
+                Send Message
+              </button>
+            </form>
+          
+            <p style="color: #aaa; margin-top: 2rem;">Prefer email? Reach us at <a href="mailto:team@aroundtheville.com" style="color: #1e90ff;">team@aroundtheville.com</a></p>
+          </section>
+          
+
+          
+    </body>
+    <div class="section-divider"></div> 
+    <div id="footer-container"></div>
+    
+    <script type="module" src="https://aroundtheville.com/assets/scripts/footer.js"></script>
+  <script>
+    document.getElementById("current-year").textContent = new Date().getFullYear();
+  </script>
+  <script type="module">
+    import { db } from '../assets/scripts/firebaseConfig.js';
+    import { collection, addDoc } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-firestore.js";
+  
+    const form = document.getElementById("contact-form");
+  
+    form.addEventListener("submit", async function (e) {
+      e.preventDefault();
+  
+      const name = form.name.value.trim();
+      const email = form.email.value.trim();
+      const message = form.message.value.trim();
+  
+      if (!name || !email || !message) {
+        alert("All fields are required.");
+        return;
+      }
+  
+      try {
+        await addDoc(collection(db, "contactMessages"), {
+          name,
+          email,
+          message,
+          timestamp: new Date()
+        });
+  
+        alert("Thanks for reaching out! We'll get back to you shortly.");
+        form.reset();
+      } catch (error) {
+        console.error("❌ Failed to save message:", error);
+        alert("Something went wrong. Please try again later.");
+      }
+    });
+  </script>
+  <script src="https://aroundtheville.com/assets/scripts/header.js"></script>
+</body>
+</html>

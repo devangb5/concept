@@ -1,26 +1,11 @@
 import { db } from './firebaseConfig.js';
 import {
-  collection,
-  addDoc,
-  query,
-  where,
-  getDocs
+  doc,
+  getDoc,
+  setDoc
 } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-firestore.js";
 
-// Path to the footer HTML file
-const footerPath = 'https://aroundtheville.com/components/footer.html'; // Static footer path
-
-// Helper to wrap content (still used if needed in future modals)
-function wrapContentFromArray(contentArray) {
-  return contentArray
-    .map(item => {
-      let html = "";
-      if (item.heading) html += `<h2>${item.heading}</h2>`;
-      if (item.paragraph) html += `<p>${item.paragraph}</p>`;
-      return html;
-    })
-    .join("");
-}
+const footerPath = 'https://aroundtheville.com/components/footer.html';
 
 async function loadFooter() {
   try {
@@ -32,7 +17,6 @@ async function loadFooter() {
     const yearElement = document.getElementById('current-year');
     if (yearElement) yearElement.textContent = new Date().getFullYear();
 
-    // ✅ Newsletter subscription with duplicate check
     const newsletterForm = document.getElementById("newsletter-form");
     if (newsletterForm) {
       newsletterForm.addEventListener("submit", async function (e) {
@@ -46,18 +30,15 @@ async function loadFooter() {
         }
 
         try {
-          const existingQuery = query(
-            collection(db, "subscribers"),
-            where("email", "==", email)
-          );
-          const querySnapshot = await getDocs(existingQuery);
+          const docRef = doc(db, "subscribers", email);
+          const docSnap = await getDoc(docRef);
 
-          if (!querySnapshot.empty) {
+          if (docSnap.exists()) {
             alert("You’ve already subscribed with this email.");
             return;
           }
 
-          await addDoc(collection(db, "subscribers"), {
+          await setDoc(docRef, {
             email,
             timestamp: new Date()
           });
@@ -70,12 +51,9 @@ async function loadFooter() {
         }
       });
     }
-
   } catch (error) {
     console.error("Error loading footer: ", error);
   }
 }
-
-
 
 document.addEventListener("DOMContentLoaded", loadFooter);

@@ -4,86 +4,135 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Contact Us | Around The Ville</title>
+  
   <link rel="stylesheet" href="../assets/styles/body.css">
   <link rel="stylesheet" href="../assets/styles/header.css">
   <link rel="stylesheet" href="../assets/styles/footer.css">
 
-          <!-- Favicon -->
-          <link rel="icon" type="image/png" href="https://aroundtheville.com/assets/icons/favicon/favicon-96x96.png" sizes="96x96" />
-          <link rel="icon" type="image/svg+xml" href="https://aroundtheville.com/assets/icons/favicon/favicon.svg" />
-          <link rel="shortcut icon" href="https://aroundtheville.com/assets/icons/favicon/favicon.ico" />
-          <link rel="apple-touch-icon" sizes="180x180" href="https://aroundtheville.com/assets/icons/favicon/apple-touch-icon.png" />
-          <meta name="apple-mobile-web-app-title" content="MyWebSite" />
-          <link rel="manifest" href="https://aroundtheville.com/assets/icons/favicon/site.webmanifest" /> 
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="https://aroundtheville.com/assets/icons/favicon/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="https://aroundtheville.com/assets/icons/favicon/favicon.svg" />
+  <link rel="shortcut icon" href="https://aroundtheville.com/assets/icons/favicon/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="https://aroundtheville.com/assets/icons/favicon/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-title" content="MyWebSite" />
+  <link rel="manifest" href="https://aroundtheville.com/assets/icons/favicon/site.webmanifest" /> 
 
+  <style>
+    .contact-section {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .contact-section h1 {
+      font-size: 2rem;
+      color: #fff;
+      margin-bottom: 1rem;
+    }
+
+    .contact-section p {
+      color: #ccc;
+      margin-bottom: 2rem;
+    }
+
+    #contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    #contact-form label {
+      display: block;
+      color: #aaa;
+      margin-bottom: 0.5rem;
+    }
+
+    #contact-form input,
+    #contact-form textarea {
+      width: 100%;
+      padding: 0.75rem;
+      background-color: #111;
+      
+      border: 1px solid #333;
+      border-radius: 6px;
+    }
+
+    #contact-form button {
+      border: none;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .email-link {
+      color: #aaa;
+      margin-top: 2rem;
+    }
+
+    .email-link a {
+      color: #1e90ff;
+    }
+  </style>
 </head>
 
 <body>
-<div id="header"></div>
+  <div id="header"></div>
+
   <div class="container">
-    
+    <section class="contact-section">
+      <h1>Contact Us</h1>
+      <p>We’d love to hear from you. Whether you’re a food truck owner, a reader with feedback, or just want to say hello — drop us a message below.</p>
 
-    
-        <section style="max-width: 700px; margin: 0 auto; padding: 2rem;">
-            <h1 style="font-size: 2rem; color: #fff; margin-bottom: 1rem;">Contact Us</h1>
-            <p style="color: #ccc; margin-bottom: 2rem;">We’d love to hear from you. Whether you’re a food truck owner, a reader with feedback, or just want to say hello — drop us a message below.</p>
-          
-            <form id="contact-form" style="display: flex; flex-direction: column; gap: 1.5rem;">
-              <div>
-                <label for="name" style="display: block; color: #aaa; margin-bottom: 0.5rem;">Your Name</label>
-                <input type="text" id="name" name="name" required
-                       style="width: 100%; padding: 0.75rem; background-color: #111; color: #fff; border: 1px solid #333; border-radius: 6px;" />
-              </div>
-          
-              <div>
-                <label for="email" style="display: block; color: #aaa; margin-bottom: 0.5rem;">Your Email</label>
-                <input type="email" id="email" name="email" required
-                       style="width: 100%; padding: 0.75rem; background-color: #111; color: #fff; border: 1px solid #333; border-radius: 6px;" />
-              </div>
-          
-              <div>
-                <label for="message" style="display: block; color: #aaa; margin-bottom: 0.5rem;">Message</label>
-                <textarea id="message" name="message" rows="6" required
-                          style="width: 100%; padding: 0.75rem; background-color: #111; color: #fff; border: 1px solid #333; border-radius: 6px;"></textarea>
-              </div>
-          
-              <button type="submit"
-                      style=" border: none; padding: 0.75rem 1.5rem; font-size: 1rem; border-radius: 6px; cursor: pointer;">
-                Send Message
-              </button>
-            </form>
-          
-            <p style="color: #aaa; margin-top: 2rem;">Prefer email? Reach us at <a href="mailto:team@aroundtheville.com" style="color: #1e90ff;">team@aroundtheville.com</a></p>
-          </section>
-          
+      <form id="contact-form">
+        <div>
+          <label for="name">Your Name</label>
+          <input type="text" id="name" name="name" required />
+        </div>
 
-          
-    </body>
-    <div class="section-divider"></div> 
-    <div id="footer-container"></div>
-    
-    <script type="module" src="https://aroundtheville.com/assets/scripts/footer.js"></script>
+        <div>
+          <label for="email">Your Email</label>
+          <input type="email" id="email" name="email" required />
+        </div>
+
+        <div>
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="6" required></textarea>
+        </div>
+
+        <button type="submit">Send Message</button>
+      </form>
+
+      <p class="email-link">Prefer email? Reach us at <a href="mailto:team@aroundtheville.com">team@aroundtheville.com</a></p>
+    </section>
+  </div>
+
+  <div class="section-divider"></div> 
+  <div id="footer-container"></div>
+
+  <script type="module" src="https://aroundtheville.com/assets/scripts/footer.js"></script>
   <script>
     document.getElementById("current-year").textContent = new Date().getFullYear();
   </script>
+
   <script type="module">
     import { db } from '../assets/scripts/firebaseConfig.js';
     import { collection, addDoc } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-firestore.js";
-  
+
     const form = document.getElementById("contact-form");
-  
+
     form.addEventListener("submit", async function (e) {
       e.preventDefault();
-  
+
       const name = form.name.value.trim();
       const email = form.email.value.trim();
       const message = form.message.value.trim();
-  
+
       if (!name || !email || !message) {
         alert("All fields are required.");
         return;
       }
-  
+
       try {
         await addDoc(collection(db, "contactMessages"), {
           name,
@@ -91,7 +140,7 @@
           message,
           timestamp: new Date()
         });
-  
+
         alert("Thanks for reaching out! We'll get back to you shortly.");
         form.reset();
       } catch (error) {
@@ -100,6 +149,7 @@
       }
     });
   </script>
+
   <script src="https://aroundtheville.com/assets/scripts/header.js"></script>
 </body>
 </html>

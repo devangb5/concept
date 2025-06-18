@@ -1,44 +1,42 @@
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-</head>
-<header class="nav">
+  </head>
+  
+  <header class="nav">
+    <!-- Logo -->
     <div class="logo">
-        <img src="https://aroundtheville.com/assets/icons/logo.png" alt="My Logo">
+      <a href="https://aroundtheville.com/"><img src="https://aroundtheville.com/assets/icons/logo.png" alt="Logo" /></a>
     </div>
-
-    <nav class="navbar">
-        <ul>
-            <li><a href="https://aroundtheville.com/">Home</a></li>
-            <li><a href="https://aroundtheville.com/blogs.html">Blogs</a></li>
-            <li><a href="https://aroundtheville.com/people.html">People</a></li>
-            
-            
-        </ul>
+  
+    <!-- Desktop Nav Links -->
+    <nav class="nav-links">
+      <a href="https://aroundtheville.com/">Home</a>
+      <a href="https://aroundtheville.com/blogs.html">Stories</a>
+      <a href="https://aroundtheville.com/people.html">People</a>
+      <a href="https://aroundtheville.com/html/contact-us.html">Contact</a>
     </nav>
-
-    <!-- Hamburger Menu -->
-    <div class="hamburger" id="hamburger-icon">
-        <img src="https://aroundtheville.com/assets/icons/hamburger.png" alt="Menu">
+  
+    <!-- Hamburger for Mobile -->
+    <div id="hamburger-icon" class="hamburger">
+      <span></span>
+      <span></span>
+      <span></span>
     </div>
-
-    <!-- New Overlay Menu -->
-   <!-- New Overlay Menu -->
-<div class="overlay-menu" id="overlayMenu">
-    <div class="overlay-content">
-        <!-- Navigation Links -->
-        <a href="https://aroundtheville.com/">Home</a>
-        <a href="https://aroundtheville.com/blogs.html">Blogs</a>
-        <a href="https://aroundtheville.com/people.html">People</a>
-        
-       
-
-      
-
-
-        <!-- Close X Button (Positioned at Top Right) -->
-        <button id="closeOverlay" class="close-btn">X</button>
+  </header>
+  
+  <!-- Full Screen Overlay Menu for Mobile -->
+  <div id="overlayMenu" class="overlay-menu">
+    <div class="overlay-header">
+      <div class="logo">
+        <a href="https://aroundtheville.com/"><img src="https://aroundtheville.com/assets/icons/logo.png" alt="Logo" /></a>
+      </div>
+      <button id="closeOverlay" class="close-btn">×</button>
     </div>
-</div>
-
-</header>
-
+    <nav class="overlay-content">
+      <a href="https://aroundtheville.com/" style="--delay:0.1s">Home</a>
+      <a href="https://aroundtheville.com/blogs.html" style="--delay:0.2s">Stories</a>
+      <a href="https://aroundtheville.com/people.html" style="--delay:0.3s">People</a>
+      <a href="https://aroundtheville.com/html/contact-us.html" style="--delay:0.4s">Contact</a>
+    </nav>
+  </div>
+  

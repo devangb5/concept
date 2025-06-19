@@ -68,9 +68,11 @@ app.get("/blogs/:blog_number", async (req, res) => {
  * @throws {Error} If the blog is not found.
  */
 async function fetchBlogData(blogNumber) {
+  const now = new Date();
   const blogSnapshot = await db
       .collection("blogs")
       .where("blog_number", "==", blogNumber)
+      .where("createdAt", "<=", now)
       .limit(1)
       .get();
 
@@ -125,8 +127,22 @@ async function fetchPersonData(personId) {
   if (!personSnapshot.exists) {
     throw new Error("Person not found");
   }
-  return personSnapshot.data();
+
+  const personData = personSnapshot.data();
+
+  // Convert Firestore Timestamp to JS Date
+  const createdAtDate = (personData.createdAt && typeof personData.createdAt.toDate === "function")?
+  personData.createdAt.toDate():
+  new Date(personData.createdAt);
+  const now = new Date();
+
+  if (createdAtDate > now) {
+    throw new Error("Person profile not published yet");
+  }
+
+  return personData;
 }
+
 
 /**
  * Formats an array of content items into HTML.

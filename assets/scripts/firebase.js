@@ -3,15 +3,24 @@ import { collection, query, where, orderBy, limit, getDocs, addDoc } from "https
 
 
 
-// Function to fetch the latest blog
+// Function to fetch the latest published blog
 async function fetchLatestBlog() {
     try {
         const blogsRef = collection(db, "blogs");
-        const latestBlogQuery = query(blogsRef, orderBy("createdAt", "desc"), limit(1));
+        const now = new Date();
+
+        // Only get blogs that are published (publishAt <= now)
+        const latestBlogQuery = query(
+            blogsRef,
+            where("createdAt", "<=", now),
+            orderBy("createdAt", "desc"),
+            limit(1)
+        );
+
         const querySnapshot = await getDocs(latestBlogQuery);
 
         if (querySnapshot.empty) {
-            console.log("No blogs found!");
+            console.log("No published blogs found!");
             document.getElementById("latest-articles-grid").innerHTML = "<p>No blog posts available.</p>";
             return;
         }
@@ -34,13 +43,16 @@ async function fetchLatestBlog() {
     }
 }
 
+
 // Function to fetch blogs by category
 async function fetchBlogsByCategory(category) {
     try {
         const blogsRef = collection(db, "blogs");
+        const now = new Date();
         const categoryQuery = query(
             blogsRef,
             where("category", "==", category),
+            where("createdAt", "<=", now),
             orderBy("createdAt", "desc")
         );
         const querySnapshot = await getDocs(categoryQuery);
@@ -72,9 +84,11 @@ async function fetchBlogsByCategory(category) {
 async function fetchFoodTruckDiscoverCards() {
     try {
         const categoriesRef = collection(db, "blogs");
+        const now = new Date();
         const foodTruckQuery = query(
             categoriesRef,
             where("category", "==", "food-trucks"),
+            where("createdAt", "<=", now),
             orderBy("createdAt", "desc")
         );
         const snapshot = await getDocs(foodTruckQuery);
@@ -107,9 +121,11 @@ async function fetchFoodTruckDiscoverCards() {
 async function fetchRestaurantDiscoverCards() {
     try {
         const categoriesRef = collection(db, "blogs");
+        const now = new Date();
         const foodTruckQuery = query(
             categoriesRef,
             where("category", "==", "restaurants"),
+            where("createdAt", "<=", now),
             orderBy("createdAt", "desc")
         );
         const snapshot = await getDocs(foodTruckQuery);
@@ -141,32 +157,63 @@ async function fetchRestaurantDiscoverCards() {
 
 async function loadPeopleFilmstrip() {
     const container = document.getElementById("filmstrip-track");
-    const snapshot = await getDocs(collection(db, "people"));
-    const people = [];
+    container.innerHTML = ""; // Clear existing content
   
-    snapshot.forEach(doc => people.push(doc.data()));
-    const looped = [...people, ...people]; // Duplicate for seamless loop
+    try {
+      const snapshot = await getDocs(collection(db, "people"));
+      const now = new Date();
+      const people = [];
   
-    looped.forEach(person => {
-      const tile = document.createElement("div");
-      tile.className = "filmstrip-item";
-      tile.innerHTML = `
-        <a href="https://people.aroundtheville.com/people/${person.id}"><img src="${person.image}" alt="${person.name}" loading="lazy" /></a>
-      `;
-      container.appendChild(tile);
-    });
+      snapshot.forEach(doc => {
+        const data = doc.data();
+        // Make sure 'id' is preserved
+        const person = { id: doc.id, ...data };
+  
+        // Convert Firestore Timestamp to JS Date if needed
+        const createdAtDate = person.createdAt?.toDate ? person.createdAt.toDate() : new Date(person.createdAt);
+  
+        // Include only if createdAt is in the past or now
+        if (createdAtDate <= now) {
+          people.push(person);
+        }
+      });
+  
+      const looped = [...people, ...people]; // Duplicate for seamless loop
+  
+      looped.forEach(person => {
+        const tile = document.createElement("div");
+        tile.className = "filmstrip-item";
+        tile.innerHTML = `
+          <a href="https://people.aroundtheville.com/people/${person.id}">
+            <img src="${person.image}" alt="${person.name}" loading="lazy" />
+          </a>
+        `;
+        container.appendChild(tile);
+      });
+    } catch (error) {
+      console.error("Error loading people filmstrip:", error);
+      container.innerHTML = "<p>Unable to load people at this time.</p>";
+    }
   }
+  
   document.addEventListener("DOMContentLoaded", loadPeopleFilmstrip);
+  
 
  
 // Function to fetch Instagram posts
+// Function to fetch Instagram-style posts from blogs and people collections
 async function fetchInstagramPosts() {
     try {
         let allPosts = [];
+        const now = new Date();
 
-        // Fetch posts from the "blogs" collection
+        // Fetch scheduled blog posts
         const blogsRef = collection(db, "blogs");
-        const blogsQuery = query(blogsRef, orderBy("createdAt", "desc")); // No limit here
+        const blogsQuery = query(
+            blogsRef,
+            where("createdAt", "<=", now),
+            orderBy("createdAt", "desc")
+        );
         const blogsSnapshot = await getDocs(blogsQuery);
 
         if (!blogsSnapshot.empty) {
@@ -176,9 +223,13 @@ async function fetchInstagramPosts() {
             });
         }
 
-        // Fetch posts from the "people" collection
+        // Fetch scheduled people posts
         const peopleRef = collection(db, "people");
-        const peopleQuery = query(peopleRef, orderBy("createdAt", "desc")); // No limit here
+        const peopleQuery = query(
+            peopleRef,
+            where("createdAt", "<=", now),
+            orderBy("createdAt", "desc")
+        );
         const peopleSnapshot = await getDocs(peopleQuery);
 
         if (!peopleSnapshot.empty) {
@@ -188,14 +239,12 @@ async function fetchInstagramPosts() {
             });
         }
 
-        // Combine and sort all posts by createdAt
+        // Sort and take top 6 posts
         allPosts.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
-
-        // Get the top 6 posts
         const topSixPosts = allPosts.slice(0, 6);
 
         if (topSixPosts.length === 0) {
-            console.log("No posts found in either 'blogs' or 'people' collection!");
+            console.log("No scheduled posts found in either collection.");
             return;
         }
 
@@ -207,12 +256,13 @@ async function fetchInstagramPosts() {
                 </div>
             `;
         });
-        document.querySelector(".feed-grid").innerHTML = feedHTML;
 
+        document.querySelector(".feed-grid").innerHTML = feedHTML;
     } catch (error) {
         console.error("Error fetching posts:", error);
     }
 }
+
 
 
 

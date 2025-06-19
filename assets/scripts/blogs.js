@@ -10,8 +10,17 @@ async function fetchBlogs() {
         const blogsRef = collection(db, "blogs");
         const querySnapshot = await getDocs(blogsRef);
         const blogs = [];
+        const now = new Date();
+
         querySnapshot.forEach(doc => {
-            blogs.push({ id: doc.id, ...doc.data() });
+            const blog = { id: doc.id, ...doc.data() };
+            // Convert Firestore Timestamp to JS Date if needed
+            const createdAtDate = blog.createdAt?.toDate ? blog.createdAt.toDate() : new Date(blog.createdAt);
+
+            // Only include if createdAt is not in the future
+            if (createdAtDate <= now) {
+                blogs.push(blog);
+            }
         });
 
         // Sort blogs by blog_number in descending order

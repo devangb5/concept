@@ -93,73 +93,91 @@
     <script type="module">
         // Import Firebase libraries
         import { db } from '/assets/scripts/firebaseConfig.js';
-        import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-firestore.js";
-
-
-        // Fetch and Display Blogs
+        import { collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-firestore.js";
+      
+        // Fetch and Display Blogs and People
         async function loadBlogs() {
-            try {
-        let allPosts = [];
-
-        // Fetch posts from the "blogs" collection
-        const blogsRef = collection(db, "blogs");
-        const blogsQuery = query(blogsRef, orderBy("createdAt", "desc"));
-        const blogsSnapshot = await getDocs(blogsQuery);
-
-        if (!blogsSnapshot.empty) {
-            blogsSnapshot.forEach(doc => {
+          try {
+            let allPosts = [];
+            const now = new Date();
+      
+            // Fetch posts from the "blogs" collection
+            const blogsRef = collection(db, "blogs");
+            const blogsQuery = query(blogsRef, orderBy("createdAt", "desc"));
+            const blogsSnapshot = await getDocs(blogsQuery);
+      
+            if (!blogsSnapshot.empty) {
+              blogsSnapshot.forEach(doc => {
                 const data = doc.data();
-                allPosts.push({ ...data, collection: 'blogs' });
-            });
-        }
-
-        // Fetch posts from the "people" collection
-        const peopleRef = collection(db, "people");
-        const peopleQuery = query(peopleRef, orderBy("createdAt", "desc"));
-        const peopleSnapshot = await getDocs(peopleQuery);
-
-        if (!peopleSnapshot.empty) {
-            peopleSnapshot.forEach(doc => {
-                const data = doc.data();
-                allPosts.push({ ...data, collection: 'people', id: doc.id }); // Store the document ID
-            });
-        }
-
-        // Combine and sort all posts by createdAt
-        allPosts.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
-
-        const container = document.getElementById('grid-container');
-        container.innerHTML = ''; // Clear previous content
-
-        if (allPosts.length === 0) {
-            console.log("No posts found in either 'blogs' or 'people' collection!");
-            return;
-        }
-
-        allPosts.forEach(post => {
-            const postElement = document.createElement('div');
-            postElement.className = 'post';
-            let link = "";
-            if (post.collection === 'blogs') {
-                link = `https://blogs.aroundtheville.com/blogs/${post.blog_number}`;
-            } else if (post.collection === 'people') {
-                link = `https://people.aroundtheville.com/people/${post.id}`; // Use the document ID here
+                // Filter out future posts based on createdAt
+                const createdAtDate = data.createdAt?.toDate ? data.createdAt.toDate() : new Date(data.createdAt);
+                if (createdAtDate <= now) {
+                  allPosts.push({ ...data, collection: 'blogs' });
+                }
+              });
             }
-            postElement.innerHTML = `
+      
+            // Fetch posts from the "people" collection
+            const peopleRef = collection(db, "people");
+            const peopleQuery = query(peopleRef, orderBy("createdAt", "desc"));
+            const peopleSnapshot = await getDocs(peopleQuery);
+      
+            if (!peopleSnapshot.empty) {
+              peopleSnapshot.forEach(doc => {
+                const data = doc.data();
+                const createdAtDate = data.createdAt?.toDate ? data.createdAt.toDate() : new Date(data.createdAt);
+                if (createdAtDate <= now) {
+                  allPosts.push({ ...data, collection: 'people', id: doc.id });
+                }
+              });
+            }
+      
+            // Combine and sort all posts by createdAt timestamp descending
+            allPosts.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
+      
+            const container = document.getElementById('grid-container');
+            container.innerHTML = ''; // Clear previous content
+      
+            if (allPosts.length === 0) {
+              console.log("No posts found in either 'blogs' or 'people' collection!");
+              container.innerHTML = "<p>No posts available.</p>";
+              return;
+            }
+      
+            allPosts.forEach(post => {
+              const postElement = document.createElement('div');
+              postElement.className = 'post';
+      
+              let link = "";
+              let altText = "";
+      
+              if (post.collection === 'blogs') {
+                link = `https://blogs.aroundtheville.com/blogs/${post.blog_number}`;
+                altText = post.title || "Blog post image";
+              } else if (post.collection === 'people') {
+                link = `https://people.aroundtheville.com/people/${post.id}`;
+                altText = post.name || "Person profile image";
+              }
+      
+              const imgSrc = post.image || "/default-image.jpg"; // fallback image if missing
+      
+              postElement.innerHTML = `
                 <a href="${link}" rel="noopener noreferrer">
-                    <img src="${post.image}" alt="${post.title}">
+                  <img src="${imgSrc}" alt="${altText}" loading="lazy" />
                 </a>
-            `;
-            container.appendChild(postElement);
-        });
-    } catch (error) {
-        console.error('Error fetching posts:', error);
-    }
-}
-
+              `;
+      
+              container.appendChild(postElement);
+            });
+          } catch (error) {
+            console.error('Error fetching posts:', error);
+          }
+        }
+      
         // Load blogs on page load
         loadBlogs();
-    </script>
+      </script>
+      
 </head>
 <body>
     <header>

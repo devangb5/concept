@@ -8,66 +8,68 @@ import { collection, getDocs } from "https://www.gstatic.com/firebasejs/9.17.2/f
 async function loadFeaturedAndRecentPeople() {
     const peopleCollection = collection(db, "people");
     const querySnapshot = await getDocs(peopleCollection);
+    const now = new Date();
     let people = [];
 
     querySnapshot.forEach(doc => {
-        people.push({ id: doc.id, ...doc.data() });
+        const data = doc.data();
+        const createdAt = data.createdAt?.toDate ? data.createdAt.toDate() : new Date(data.createdAt);
+        if (createdAt <= now) {
+            people.push({ id: doc.id, ...data });
+        }
     });
 
-    // Sort by timestamp (assuming you have a 'timestamp' field in your Firestore documents)
+    // Sort by timestamp descending
     let sortedPeople = people.sort((a, b) => b.timestamp - a.timestamp);
 
-    // Get the top 4 recent people to feature
+    // Get the top 4 recent people
     let featuredAndRecent = sortedPeople.slice(0, 4);
 
-    // Update the inner HTML to display featured people
+    // Update HTML
     document.querySelector('.featured-recent-grid').innerHTML = featuredAndRecent.map(person => `
-        <div class="featured-recent-card" >
-        <a href="https://people.aroundtheville.com/people/${person.id}">    
-        <img src="${person.image}" alt="${person.name}" class="person-image">
-        </a>
+        <div class="featured-recent-card">
+            <a href="https://people.aroundtheville.com/people/${person.id}">
+                <img src="${person.image}" alt="${person.name}" class="person-image">
+            </a>
         </div>
     `).join('');
 }
+
 // Flag to prevent fetching after reaching the bottom
 let hasFetchedRelatedArticles = false;
 
 // Function to fetch and display random related articles
 async function fetchRelatedArticles() {
-    // Prevent fetching if articles have already been displayed
-    if (hasFetchedRelatedArticles) {
-        return;
-    }
+    if (hasFetchedRelatedArticles) return;
 
     try {
-        // Fetch all blogs from the "blogs" collection
         const blogsRef = collection(db, "people");
         const querySnapshot = await getDocs(blogsRef);
+        const now = new Date();
 
-        // If no blogs are found
         if (querySnapshot.empty) {
             console.log("No blogs found.");
             return;
         }
 
-        // Create an array to hold the fetched articles
-        let allBlogs = [];
+        let allPeople = [];
         querySnapshot.forEach((doc) => {
-            allBlogs.push(doc.data());
+            const data = doc.data();
+            const createdAt = data.createdAt?.toDate ? data.createdAt.toDate() : new Date(data.createdAt);
+            if (createdAt <= now) {
+                allPeople.push({ id: doc.id, ...data });
+            }
         });
 
-        // Shuffle the array to randomize the order
-        allBlogs = shuffleArray(allBlogs);
+        // Shuffle and pick 3
+        allPeople = shuffleArray(allPeople);
+        const randomPeople = allPeople.slice(0, 3);
 
-        // Select the first 3 articles from the shuffled array
-        const randomBlogs = allBlogs.slice(0, 3);
-
-        // Prepare HTML content for the related articles
         let relatedArticlesHTML = "<h3>Related Articles</h3>";
-        randomBlogs.forEach(person => {
+        randomPeople.forEach(person => {
             relatedArticlesHTML += `
                 <div class="related-article">
-                <a href="https://people.aroundtheville.com/people/${person.id}">
+                    <a href="https://people.aroundtheville.com/people/${person.id}">
                         <img src="${person.image}" alt="${person.name}" class="related-article-image">
                         <p>${person.name}</p>
                     </a>
@@ -75,16 +77,14 @@ async function fetchRelatedArticles() {
             `;
         });
 
-        // Display the related articles in the "related-articles" container
         document.getElementById("related-articles").innerHTML = relatedArticlesHTML;
-
-        // Set flag to true to indicate articles have been fetched
         hasFetchedRelatedArticles = true;
 
     } catch (error) {
         console.error("Error fetching related articles:", error);
     }
 }
+
 
 
 // Function to shuffle an array (for randomizing the order)

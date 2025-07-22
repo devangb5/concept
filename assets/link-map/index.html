@@ -3,19 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Link Map</title>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TYCR7B2T5J"></script>
+    <title>Around The Ville Link Map</title> <script async src="https://www.googletagmanager.com/gtag/js?id=G-TYCR7B2T5J"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
       gtag('config', 'G-TYCR7B2T5J');
     </script>
+    
     <style>
         body {
             margin: 0;
-            font-family: Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif; /* Modern font stack */
             background-color: black;
+            color: white; /* Default text color for body */
         }
 
         header {
@@ -24,19 +25,21 @@
             align-items: center;
             background-color: black; 
             padding: 20px; 
+            padding-bottom: 10px; /* Reduced bottom padding */
         }
 
         .logo-link {
             display: flex;
             justify-content: center;
-            margin-bottom: 10px; 
+            margin-bottom: 15px; /* Increased margin for spacing */
         }
 
         .logo {
-            height: 200px; 
-            width: 200px; 
+            height: 180px; /* Slightly smaller logo for better mobile screen usage */
+            width: 180px; 
             border-radius: 50%; 
             object-fit: cover; 
+            border: 2px solid #555; /* Subtle border for definition */
         }
 
         .header-text {
@@ -46,38 +49,59 @@
         h1 {
             margin: 0;
             color: white; 
-            font-size: 1rem; 
+            font-size: 1.2rem; /* Slightly larger */
+            letter-spacing: 0.05em; /* Subtle letter spacing */
         }
 
         .description {
-            color: white; 
+            color: #ccc; /* Slightly lighter grey for description */
             margin: 5px 0;
-            font-size: 0.8rem; 
+            font-size: 0.9rem; /* Slightly larger */
         }
 
         .website-link {
-            color: white; 
-            text-decoration: underline;
-            font-size: 0.7rem; 
+            display: inline-block; /* Allows padding/margin */
+            color: white; /* A pleasant green for the link */
+            background-color: #222; /* Darker background for the link button */
+            text-decoration: none; /* Remove underline by default */
+            font-size: 0.85rem; /* Larger than before */
+            padding: 8px 15px; /* Button-like padding */
+            border-radius: 20px; /* Rounded button corners */
+            margin-top: 10px; /* Space from description */
+            border: 1px solid white; /* Border color matching text */
+            transition: background-color 0.3s ease, color 0.3s ease; /* Smooth hover effects */
+        }
+
+        .website-link:hover, .website-link:focus {
+            background-color: white; /* Green background on hover */
+            color: black; /* Dark text on hover */
         }
 
         h2 {
             color: grey;
-            font-size: 0.7rem;
+            font-size: 0.75rem; /* Slightly larger */
             text-align: center;
+            margin: 20px 15px 15px 15px; /* More margin */
+            line-height: 1.4; /* Better readability */
         }
 
         .grid-container {
             display: grid;
             grid-template-columns: repeat(3, 1fr); 
             gap: 0.5vh; 
+            padding: 0.5vh; /* Padding around the grid */
+            min-height: 200px; /* Ensure space for loading message */
+            align-items: start; /* Align items to the top in case of varying heights */
         }
 
         .post {
             position: relative;
             padding-bottom: 100%; 
             overflow: hidden;
-            background-color: #f0f0f0; 
+            background-color: #1a1a1a; /* Darker background for individual posts */
+            display: flex; /* For centering loading message/error */
+            justify-content: center;
+            align-items: center;
         }
 
         .post img {
@@ -88,15 +112,37 @@
             height: 100%;
             object-fit: cover; 
         }
+
+        /* Loading and Error Message Styling */
+        #loading-message, #error-message {
+            color: grey;
+            text-align: center;
+            padding: 20px;
+            grid-column: 1 / -1; /* Make it span all columns in the grid */
+            font-size: 0.9rem;
+            display: none; /* Hidden by default, shown by JS */
+        }
+        #loading-message { display: block; /* Show loading message initially */ } 
+        #error-message { color: #FF6347; /* Tomato red for errors */ } /* Hidden by default */
     </style>
-    <!-- Firebase App -->
+    
     <script type="module">
         // Import Firebase libraries
-        import { db } from '/assets/scripts/firebaseConfig.js';
+        // Ensure firebaseConfig.js path is correct relative to this HTML file
+        import { db } from '/assets/scripts/firebaseConfig.js'; 
         import { collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-firestore.js";
       
         // Fetch and Display Blogs and People
-        async function loadBlogs() {
+        async function loadPosts() { // Renamed function for clarity
+          const container = document.getElementById('grid-container');
+          const loadingMessage = document.getElementById('loading-message');
+          const errorMessage = document.createElement('p'); // Create error message element
+          errorMessage.id = 'error-message';
+          errorMessage.style.display = 'none'; // Hidden initially
+          container.appendChild(errorMessage); // Append to container
+
+          if (loadingMessage) loadingMessage.style.display = 'block'; // Show loading message
+
           try {
             let allPosts = [];
             const now = new Date();
@@ -109,10 +155,10 @@
             if (!blogsSnapshot.empty) {
               blogsSnapshot.forEach(doc => {
                 const data = doc.data();
-                // Filter out future posts based on createdAt
+                // Ensure createdAt is a Date object for comparison
                 const createdAtDate = data.createdAt?.toDate ? data.createdAt.toDate() : new Date(data.createdAt);
                 if (createdAtDate <= now) {
-                  allPosts.push({ ...data, collection: 'blogs' });
+                  allPosts.push({ ...data, collection: 'blogs', docId: doc.id }); // Store doc.id for people
                 }
               });
             }
@@ -127,20 +173,20 @@
                 const data = doc.data();
                 const createdAtDate = data.createdAt?.toDate ? data.createdAt.toDate() : new Date(data.createdAt);
                 if (createdAtDate <= now) {
-                  allPosts.push({ ...data, collection: 'people', id: doc.id });
+                  allPosts.push({ ...data, collection: 'people', docId: doc.id }); // Store doc.id
                 }
               });
             }
       
             // Combine and sort all posts by createdAt timestamp descending
+            // Use .seconds for Firebase Timestamps for accurate sorting
             allPosts.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
       
-            const container = document.getElementById('grid-container');
-            container.innerHTML = ''; // Clear previous content
+            container.innerHTML = ''; // Clear loading message and previous content
       
             if (allPosts.length === 0) {
+              container.innerHTML = "<p style='color: grey; text-align: center; grid-column: 1 / -1;'>No posts available. Check back soon!</p>";
               console.log("No posts found in either 'blogs' or 'people' collection!");
-              container.innerHTML = "<p>No posts available.</p>";
               return;
             }
       
@@ -150,48 +196,53 @@
       
               let link = "";
               let altText = "";
+              let imgSrc = post.image || "/default-image.jpg"; // fallback image if missing
       
               if (post.collection === 'blogs') {
                 link = `https://blogs.aroundtheville.com/blogs/${post.blog_number}`;
                 altText = post.title || "Blog post image";
               } else if (post.collection === 'people') {
-                link = `https://people.aroundtheville.com/people/${post.id}`;
+                // Use docId which was stored from doc.id
+                link = `https://people.aroundtheville.com/people/${post.docId}`; 
                 altText = post.name || "Person profile image";
               }
-      
-              const imgSrc = post.image || "/default-image.jpg"; // fallback image if missing
-      
+              
               postElement.innerHTML = `
-                <a href="${link}" rel="noopener noreferrer">
-                  <img src="${imgSrc}" alt="${altText}" loading="lazy" />
+                <a href="${link}" target="_blank" rel="noopener noreferrer"> <img src="${imgSrc}" alt="${altText}" loading="lazy" />
                 </a>
               `;
-      
               container.appendChild(postElement);
             });
           } catch (error) {
             console.error('Error fetching posts:', error);
+            if (errorMessage) {
+                errorMessage.textContent = "Error loading posts. Please try again later.";
+                errorMessage.style.display = 'block';
+            }
+            container.innerHTML = ''; // Clear any loading message if it's still there
+            container.appendChild(errorMessage); // Ensure error message is added
+          } finally {
+            if (loadingMessage) loadingMessage.style.display = 'none'; // Hide loading message
           }
         }
       
-        // Load blogs on page load
-        loadBlogs();
+        // Load posts on page load
+        loadPosts();
       </script>
-      
 </head>
 <body>
     <header>
-        <a href="https://www.instagram.com/around.the.ville/" rel="noopener noreferrer" class="logo-link">
-            <img src="logo_final.png" alt="Site Logo for Around The Ville" class="logo">
+        <a href="https://www.instagram.com/around.the.ville/" target="_blank" rel="noopener noreferrer" class="logo-link">
+            <img src="logo_final.png" alt="Around The Ville Logo" class="logo">
         </a>
         <div class="header-text">
             <h1>Around The Ville</h1>
-            <a href="https://aroundtheville.com" rel="noopener noreferrer" class="website-link">Visit our website</a>
+            <a href="https://aroundtheville.com" target="_blank" rel="noopener noreferrer" class="website-link">Visit our Website</a>
         </div>
     </header>
-    <h2>Click on the image to read the full article.</h2>
+    <h2>Click on an image to read the full article!</h2>
     <div class="grid-container" id="grid-container">
-        <!-- Dynamic content will load here -->
-    </div>
+        <p id="loading-message" style="grid-column: 1 / -1;">Loading posts...</p> 
+        </div>
 </body>
 </html>

@@ -20,7 +20,7 @@ async function loadFeaturedAndRecentPeople() {
     });
 
     // Sort by timestamp descending
-    let sortedPeople = people.sort((a, b) => b.timestamp - a.timestamp);
+    let sortedPeople = people.sort((a, b) =>  a.timestamp - b.timestamp);
 
     // Get the top 4 recent people
     let featuredAndRecent = sortedPeople.slice(0, 4);

@@ -47,9 +47,12 @@
     </div>
     <main id="blog-content" aria-labelledby="article-title">
         <h1 id="article-title">{{title}}</h1>
-        <img src="{{image}}" alt="{{title}}" class="blog-image">
+        <div class="blog-image-container">
+          {{image}}
+        </div>
         <div id="article-content">{{content}}</div> <!-- Content is now directly rendered on the server side -->
-    </main>
+      </main>
+      
     <!-- Share Article Section -->
     <section id="share-article">
         <h3>Share this article</h3>

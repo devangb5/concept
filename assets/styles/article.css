@@ -96,6 +96,14 @@ body.scrolled #blog-content h1::before {
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
 
+.blog-image-container{
+    width: 100%;
+    height: auto;
+    margin: 20px 0;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);  
+}
+
 /* Intro and first image */
 #blog-content .intro {
     font-size: 1.3rem;

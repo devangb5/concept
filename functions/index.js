@@ -30,7 +30,7 @@ app.use(express.json());
 let slideshowCount = 0; // for unique IDs
 
 /**
- * Generate HTML for a single image or a multiple images slideshow.
+ * Generate HTML for a single image or multiple images slideshow.
  * @param {string|string[]} imageData
  * @return {string} HTML string with images or slideshow
  */
@@ -53,7 +53,7 @@ function generateImageHTML(imageData) {
             (src, i) =>
               `<img class="slide" src="${src}" alt="Slide ${i + 1}" style="width:100%; border-radius:1rem; display: ${
             i === 0 ? "block" : "none"
-              }; max-height: 500px; object-fit: cover;">`,
+              }; object-fit: cover;">`,
         )
         .join("");
 
@@ -93,7 +93,7 @@ function generateImageHTML(imageData) {
             showSlide(currentIndex);
           });
 
-          // Removed automatic slideshow interval
+          // Automatic slideshow removed as requested
         })();
       </script>
     `;
@@ -111,9 +111,9 @@ function generateImageHTML(imageData) {
 function formatContentArray(contentArray = []) {
   return contentArray
       .map((item) => {
-        const textHTML = Array.isArray(item.text) ?
-         item.text.map((paragraph) => `<p>${paragraph}</p>`).join("") :
-          `<p>${item.text || ""}</p>`;
+        const textHTML = Array.isArray(item.text)?
+        item.text.map((paragraph) => `<p>${paragraph}</p>`).join(""):
+        `<p>${item.text || ""}</p>`;
         return `<h2>${item.heading || "Untitled Section"}</h2>${textHTML}`;
       })
       .join("");
@@ -155,6 +155,19 @@ async function fetchPersonData(personId) {
   return personSnapshot.data();
 }
 
+// Helper to extract first image url for meta tags
+/**
+ * Extract the first image URL from the image field.
+ * @param {string|string[]} imageData - Image URL string or array of image URLs.
+ * @return {string} The first image URL or a default image.
+ */
+function getFirstImageUrl(imageData) {
+  if (!imageData) return "default-image.jpg";
+  if (typeof imageData === "string") return imageData;
+  if (Array.isArray(imageData) && imageData.length > 0) return imageData[0];
+  return "default-image.jpg";
+}
+
 /**
  * Route to fetch and render a blog article.
  */
@@ -172,18 +185,18 @@ app.get("/blogs/:blog_number", async (req, res) => {
     const template = response.data;
 
     const imageHTML = generateImageHTML(blogData.image);
+    const firstImageUrl = getFirstImageUrl(blogData.image);
 
     let populatedTemplate = template
         .replace(/{{title}}/g, blogData.title || "Untitled")
-        .replace(
-            /{{description}}/g,
-            blogData.description || "No description available",
-        )
+        .replace(/{{description}}/g, blogData.description || "No description available")
         .replace(/{{image}}/g, imageHTML)
-        .replace(
-            /{{url}}/g,
-            `${req.protocol}://${req.get("host")}${req.originalUrl}`,
-        );
+        .replace(/{{url}}/g, `${req.protocol}://${req.get("host")}${req.originalUrl}`)
+        // Replace meta image tags explicitly
+        .replace(/<meta property="og:image" content='{{meta_image}}'>/g,
+            `<meta property="og:image" content='${firstImageUrl}'>`)
+        .replace(/<meta name="twitter:image" content='{{meta_image}}'>/g,
+            `<meta name="twitter:image" content='${firstImageUrl}'>`);
 
     const contentHTML = formatContentArray(blogData.content);
     populatedTemplate = populatedTemplate.replace(/{{content}}/g, contentHTML);
@@ -212,18 +225,18 @@ app.get("/people/:person_id", async (req, res) => {
     const template = response.data;
 
     const imageHTML = generateImageHTML(personData.image);
+    const firstImageUrl = getFirstImageUrl(personData.image);
 
     let populatedTemplate = template
         .replace(/{{name}}/g, personData.name || "Unnamed")
-        .replace(
-            /{{description}}/g,
-            personData.description || "No description available",
-        )
+        .replace(/{{description}}/g, personData.description || "No description available")
         .replace(/{{image}}/g, imageHTML)
-        .replace(
-            /{{url}}/g,
-            `${req.protocol}://${req.get("host")}${req.originalUrl}`,
-        );
+        .replace(/{{url}}/g, `${req.protocol}://${req.get("host")}${req.originalUrl}`)
+        // Replace meta image tags explicitly
+        .replace(/<meta property="og:image" content='{{meta_image}}'>/g,
+            `<meta property="og:image" content='${firstImageUrl}'>`)
+        .replace(/<meta name="twitter:image" content='{{meta_image}}'>/g,
+            `<meta name="twitter:image" content='${firstImageUrl}'>`);
 
     const contentHTML = formatContentArray(personData.content);
     populatedTemplate = populatedTemplate.replace(/{{content}}/g, contentHTML);

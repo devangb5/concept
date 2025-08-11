@@ -127,108 +127,108 @@
     </style>
     
     <script type="module">
-        // Import Firebase libraries
-        // Ensure firebaseConfig.js path is correct relative to this HTML file
-        import { db } from '/assets/scripts/firebaseConfig.js'; 
-        import { collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-firestore.js";
-      
-        // Fetch and Display Blogs and People
-        async function loadPosts() { // Renamed function for clarity
+      import { db } from '/assets/scripts/firebaseConfig.js'; 
+      import { collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-firestore.js";
+  
+      // Helper: Always return first image or default
+      function getFirstImageUrl(imageData) {
+          if (!imageData) return "/default-image.jpg";
+          if (typeof imageData === "string") return imageData;
+          if (Array.isArray(imageData) && imageData.length > 0) return imageData[0];
+          return "/default-image.jpg";
+      }
+  
+      async function loadPosts() {
           const container = document.getElementById('grid-container');
           const loadingMessage = document.getElementById('loading-message');
-          const errorMessage = document.createElement('p'); // Create error message element
+          const errorMessage = document.createElement('p');
           errorMessage.id = 'error-message';
-          errorMessage.style.display = 'none'; // Hidden initially
-          container.appendChild(errorMessage); // Append to container
-
-          if (loadingMessage) loadingMessage.style.display = 'block'; // Show loading message
-
+          errorMessage.style.display = 'none';
+          container.appendChild(errorMessage);
+  
+          if (loadingMessage) loadingMessage.style.display = 'block';
+  
           try {
-            let allPosts = [];
-            const now = new Date();
-      
-            // Fetch posts from the "blogs" collection
-            const blogsRef = collection(db, "blogs");
-            const blogsQuery = query(blogsRef, orderBy("createdAt", "desc"));
-            const blogsSnapshot = await getDocs(blogsQuery);
-      
-            if (!blogsSnapshot.empty) {
-              blogsSnapshot.forEach(doc => {
-                const data = doc.data();
-                // Ensure createdAt is a Date object for comparison
-                const createdAtDate = data.createdAt?.toDate ? data.createdAt.toDate() : new Date(data.createdAt);
-                if (createdAtDate <= now) {
-                  allPosts.push({ ...data, collection: 'blogs', docId: doc.id }); // Store doc.id for people
-                }
-              });
-            }
-      
-            // Fetch posts from the "people" collection
-            const peopleRef = collection(db, "people");
-            const peopleQuery = query(peopleRef, orderBy("createdAt", "desc"));
-            const peopleSnapshot = await getDocs(peopleQuery);
-      
-            if (!peopleSnapshot.empty) {
-              peopleSnapshot.forEach(doc => {
-                const data = doc.data();
-                const createdAtDate = data.createdAt?.toDate ? data.createdAt.toDate() : new Date(data.createdAt);
-                if (createdAtDate <= now) {
-                  allPosts.push({ ...data, collection: 'people', docId: doc.id }); // Store doc.id
-                }
-              });
-            }
-      
-            // Combine and sort all posts by createdAt timestamp descending
-            // Use .seconds for Firebase Timestamps for accurate sorting
-            allPosts.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
-      
-            container.innerHTML = ''; // Clear loading message and previous content
-      
-            if (allPosts.length === 0) {
-              container.innerHTML = "<p style='color: grey; text-align: center; grid-column: 1 / -1;'>No posts available. Check back soon!</p>";
-              console.log("No posts found in either 'blogs' or 'people' collection!");
-              return;
-            }
-      
-            allPosts.forEach(post => {
-              const postElement = document.createElement('div');
-              postElement.className = 'post';
-      
-              let link = "";
-              let altText = "";
-              let imgSrc = post.image || "/default-image.jpg"; // fallback image if missing
-      
-              if (post.collection === 'blogs') {
-                link = `https://blogs.aroundtheville.com/blogs/${post.blog_number}`;
-                altText = post.title || "Blog post image";
-              } else if (post.collection === 'people') {
-                // Use docId which was stored from doc.id
-                link = `https://people.aroundtheville.com/people/${post.docId}`; 
-                altText = post.name || "Person profile image";
+              let allPosts = [];
+              const now = new Date();
+  
+              // Fetch from blogs
+              const blogsRef = collection(db, "blogs");
+              const blogsQuery = query(blogsRef, orderBy("createdAt", "desc"));
+              const blogsSnapshot = await getDocs(blogsQuery);
+  
+              if (!blogsSnapshot.empty) {
+                  blogsSnapshot.forEach(doc => {
+                      const data = doc.data();
+                      const createdAtDate = data.createdAt?.toDate ? data.createdAt.toDate() : new Date(data.createdAt);
+                      if (createdAtDate <= now) {
+                          allPosts.push({ ...data, collection: 'blogs', docId: doc.id });
+                      }
+                  });
               }
-              
-              postElement.innerHTML = `
-                <a href="${link}" target="_blank" rel="noopener noreferrer"> <img src="${imgSrc}" alt="${altText}" loading="lazy" />
-                </a>
-              `;
-              container.appendChild(postElement);
-            });
+  
+              // Fetch from people
+              const peopleRef = collection(db, "people");
+              const peopleQuery = query(peopleRef, orderBy("createdAt", "desc"));
+              const peopleSnapshot = await getDocs(peopleQuery);
+  
+              if (!peopleSnapshot.empty) {
+                  peopleSnapshot.forEach(doc => {
+                      const data = doc.data();
+                      const createdAtDate = data.createdAt?.toDate ? data.createdAt.toDate() : new Date(data.createdAt);
+                      if (createdAtDate <= now) {
+                          allPosts.push({ ...data, collection: 'people', docId: doc.id });
+                      }
+                  });
+              }
+  
+              // Sort
+              allPosts.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
+              container.innerHTML = '';
+  
+              if (allPosts.length === 0) {
+                  container.innerHTML = "<p style='color: grey; text-align: center; grid-column: 1 / -1;'>No posts available. Check back soon!</p>";
+                  return;
+              }
+  
+              // Render
+              allPosts.forEach(post => {
+                  const postElement = document.createElement('div');
+                  postElement.className = 'post';
+  
+                  const imgSrc = getFirstImageUrl(post.image);
+                  let link = "";
+                  let altText = "";
+  
+                  if (post.collection === 'blogs') {
+                      link = `https://blogs.aroundtheville.com/blogs/${post.blog_number}`;
+                      altText = post.title || "Blog post image";
+                  } else if (post.collection === 'people') {
+                      link = `https://people.aroundtheville.com/people/${post.docId}`;
+                      altText = post.name || "Person profile image";
+                  }
+  
+                  postElement.innerHTML = `
+                      <a href="${link}" target="_blank" rel="noopener noreferrer">
+                          <img src="${imgSrc}" alt="${altText}" loading="lazy" />
+                      </a>
+                  `;
+                  container.appendChild(postElement);
+              });
           } catch (error) {
-            console.error('Error fetching posts:', error);
-            if (errorMessage) {
-                errorMessage.textContent = "Error loading posts. Please try again later.";
-                errorMessage.style.display = 'block';
-            }
-            container.innerHTML = ''; // Clear any loading message if it's still there
-            container.appendChild(errorMessage); // Ensure error message is added
+              console.error('Error fetching posts:', error);
+              errorMessage.textContent = "Error loading posts. Please try again later.";
+              errorMessage.style.display = 'block';
+              container.innerHTML = '';
+              container.appendChild(errorMessage);
           } finally {
-            if (loadingMessage) loadingMessage.style.display = 'none'; // Hide loading message
+              if (loadingMessage) loadingMessage.style.display = 'none';
           }
-        }
-      
-        // Load posts on page load
-        loadPosts();
-      </script>
+      }
+  
+      loadPosts();
+  </script>
+  
 </head>
 <body>
     <header>

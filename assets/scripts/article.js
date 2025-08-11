@@ -5,59 +5,63 @@ import { db } from './firebaseConfig.js';
 let hasFetchedRelatedArticles = false;
 
 // Function to fetch and display random related articles
-async function fetchRelatedArticles() {
-    // Prevent fetching if articles have already been displayed
+function getFirstImageUrl(imageData) {
+    if (!imageData) {
+      return "https://aroundtheville.com/default-image.jpg"; // default fallback
+    }
+    if (typeof imageData === "string") {
+      return imageData;
+    }
+    if (Array.isArray(imageData) && imageData.length > 0) {
+      return imageData[0];
+    }
+    return "https://aroundtheville.com/default-image.jpg"; // fallback
+  }
+  
+  async function fetchRelatedArticles() {
     if (hasFetchedRelatedArticles) {
-        return;
+      return;
     }
-
+  
     try {
-        // Fetch all blogs from the "blogs" collection
-        const blogsRef = collection(db, "blogs");
-        const querySnapshot = await getDocs(blogsRef);
-
-        // If no blogs are found
-        if (querySnapshot.empty) {
-            console.log("No blogs found.");
-            return;
-        }
-
-        // Create an array to hold the fetched articles
-        let allBlogs = [];
-        querySnapshot.forEach((doc) => {
-            allBlogs.push(doc.data());
-        });
-
-        // Shuffle the array to randomize the order
-        allBlogs = shuffleArray(allBlogs);
-
-        // Select the first 3 articles from the shuffled array
-        const randomBlogs = allBlogs.slice(0, 3);
-
-        // Prepare HTML content for the related articles
-        let relatedArticlesHTML = "<h3>Related Articles</h3>";
-        randomBlogs.forEach(blog => {
-            relatedArticlesHTML += `
-                <div class="related-article">
-                <a href="https://blogs.aroundtheville.com/blogs/${blog.blog_number}">
-                        <img src="${blog.image}" alt="${blog.title}" class="related-article-image">
-                        <p>${blog.title}</p>
-                    </a>
-                </div>
-            `;
-        });
-
-        // Display the related articles in the "related-articles" container
-        document.getElementById("related-articles").innerHTML = relatedArticlesHTML;
-
-        // Set flag to true to indicate articles have been fetched
-        hasFetchedRelatedArticles = true;
-
+      const blogsRef = collection(db, "blogs");
+      const querySnapshot = await getDocs(blogsRef);
+  
+      if (querySnapshot.empty) {
+        console.log("No blogs found.");
+        return;
+      }
+  
+      let allBlogs = [];
+      querySnapshot.forEach((doc) => {
+        allBlogs.push(doc.data());
+      });
+  
+      allBlogs = shuffleArray(allBlogs);
+  
+      const randomBlogs = allBlogs.slice(0, 3);
+  
+      let relatedArticlesHTML = "<h3>Related Articles</h3>";
+      randomBlogs.forEach(blog => {
+        const firstImage = getFirstImageUrl(blog.image);
+        relatedArticlesHTML += `
+          <div class="related-article">
+            <a href="https://blogs.aroundtheville.com/blogs/${blog.blog_number}">
+              <img src="${firstImage}" alt="${blog.title}" class="related-article-image">
+              <p>${blog.title}</p>
+            </a>
+          </div>
+        `;
+      });
+  
+      document.getElementById("related-articles").innerHTML = relatedArticlesHTML;
+      hasFetchedRelatedArticles = true;
+  
     } catch (error) {
-        console.error("Error fetching related articles:", error);
+      console.error("Error fetching related articles:", error);
     }
-}
-
+  }
+  
 // Function to shuffle an array (for randomizing the order)
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {

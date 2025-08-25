@@ -27,7 +27,7 @@ async function fetchRelatedArticles() {
     const blogsRef = collection(db, "blogs");
 
     // Query blogs where createdAt > now
-    const blogsQuery = query(blogsRef, where("createdAt", ">", now));
+    const blogsQuery = query(blogsRef, where("createdAt", "<=", now));
     const querySnapshot = await getDocs(blogsQuery);
 
     if (querySnapshot.empty) {

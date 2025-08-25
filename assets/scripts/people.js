@@ -61,57 +61,58 @@ function getFirstImageUrl(imageData) {
 let hasFetchedRelatedArticles = false;
 
 // Function to fetch and display random related articles
+import { collection, query, where, orderBy, limit, getDocs } from "firebase/firestore";
+
 async function fetchRelatedArticles() {
-    if (hasFetchedRelatedArticles) return;
-  
-    try {
-      const blogsRef = collection(db, "people"); // Assuming "people" is correct collection
-      const querySnapshot = await getDocs(blogsRef);
-      const now = new Date();
-  
-      if (querySnapshot.empty) {
-        console.log("No related articles found in the 'people' collection.");
-        return;
-      }
-  
-      let allPeople = [];
-      querySnapshot.forEach((doc) => {
-        const data = doc.data();
-        const createdAt = data.createdAt?.toDate ? data.createdAt.toDate() : new Date(data.createdAt);
-        if (createdAt <= now) {
-          allPeople.push({ id: doc.id, ...data });
-        }
-      });
-  
-      // Shuffle and pick 3
-      allPeople = shuffleArray(allPeople);
-      const randomPeople = allPeople.slice(0, 3);
-  
-      let relatedArticlesHTML = "<h3>Related Articles</h3>";
-      randomPeople.forEach(person => {
-        const firstImage = getFirstImageUrl(person.image);
-        relatedArticlesHTML += `
-          <div class="related-article">
-            <a href="https://people.aroundtheville.com/people/${person.id}" target="_blank" rel="noopener noreferrer">
-              <img src="${firstImage}" alt="${person.name || 'Related article image'}" class="related-article-image">
-              <p>${person.name || 'Untitled Article'}</p>
-            </a>
-          </div>
-        `;
-      });
-  
-      const relatedArticlesContainer = document.getElementById("related-articles");
-      if (relatedArticlesContainer) {
-        relatedArticlesContainer.innerHTML = relatedArticlesHTML;
-        hasFetchedRelatedArticles = true;
-      } else {
-        console.warn("Element with id 'related-articles' not found.");
-      }
-  
-    } catch (error) {
-      console.error("Error fetching related articles:", error);
-    }
+  if (hasFetchedRelatedArticles) {
+    return;
   }
+
+  try {
+    const blogsRef = collection(db, "people");
+    const now = new Date();
+
+    // Create a query to get the 3 most recent articles that have a createdAt date in the past
+    const q = query(
+      blogsRef,
+      where("createdAt", "<=", now),
+      orderBy("createdAt", "desc"),
+      limit(3)
+    );
+
+    const querySnapshot = await getDocs(q);
+
+    if (querySnapshot.empty) {
+      console.log("No related articles found that meet the criteria.");
+      return;
+    }
+
+    let relatedArticlesHTML = "<h3>Related Articles</h3>";
+    querySnapshot.forEach((doc) => {
+      const person = doc.data();
+      const firstImage = getFirstImageUrl(person.image);
+      relatedArticlesHTML += `
+        <div class="related-article">
+          <a href="https://people.aroundtheville.com/people/${doc.id}" target="_blank" rel="noopener noreferrer">
+            <img src="${firstImage}" alt="${person.name || 'Related article image'}" class="related-article-image">
+            <p>${person.name || 'Untitled Article'}</p>
+          </a>
+        </div>
+      `;
+    });
+
+    const relatedArticlesContainer = document.getElementById("related-articles");
+    if (relatedArticlesContainer) {
+      relatedArticlesContainer.innerHTML = relatedArticlesHTML;
+      hasFetchedRelatedArticles = true;
+    } else {
+      console.warn("Element with id 'related-articles' not found.");
+    }
+
+  } catch (error) {
+    console.error("Error fetching related articles:", error);
+  }
+}
 
 // Function to shuffle an array (for randomizing the order)
 function shuffleArray(array) {

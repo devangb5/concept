@@ -40,15 +40,19 @@ function displayBlogs(blogs) {
     if (!container) return;
 
     container.innerHTML = blogs.length > 0
-        ? blogs.map(blog => `
+        ? blogs.map(blog => {
+            // Check if blog.image is an array and get the first element
+            const imageUrl = Array.isArray(blog.image) ? blog.image[0] : blog.image;
+
+            return `
             <div class="blog-card">
-                <img src="${blog.image}" alt="${blog.title}" class="blog-image" />
+                <img src="${imageUrl}" alt="${blog.title}" class="blog-image" />
                 <h3 class="blog-title">${blog.title}</h3>
                 <p class="blog-description">${blog.description}</p>
                 <a href="https://blogs.aroundtheville.com/blogs/${blog.blog_number}" class="read-more">Read More</a>
-                
             </div>
-        `).join('')
+            `;
+        }).join('')
         : `<p class="no-results">No blogs found.</p>`;
 }
 

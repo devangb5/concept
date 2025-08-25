@@ -25,10 +25,20 @@ function getFirstImageUrl(imageData) {
   
     try {
       const blogsRef = collection(db, "blogs");
-      const querySnapshot = await getDocs(blogsRef);
+      const now = new Date(); // Or Firestore's Timestamp.now()
+  
+      // 1. Create a query that filters and sorts
+      const q = query(
+        blogsRef,
+        where("createdAt", "<=", now), // Only fetch blogs created on or before "now"
+        orderBy("createdAt", "desc"), // Sort by 'createdAt' in descending order (newest first)
+        limit(3) // Limit the results to the top 3
+      );
+  
+      const querySnapshot = await getDocs(q);
   
       if (querySnapshot.empty) {
-        console.log("No blogs found.");
+        console.log("No blogs found that meet the criteria.");
         return;
       }
   
@@ -37,9 +47,8 @@ function getFirstImageUrl(imageData) {
         allBlogs.push(doc.data());
       });
   
-      allBlogs = shuffleArray(allBlogs);
-  
-      const randomBlogs = allBlogs.slice(0, 3);
+      // Since the results are already ordered and limited, you don't need to shuffle and slice
+      const randomBlogs = allBlogs;
   
       let relatedArticlesHTML = "<h3>Related Articles</h3>";
       randomBlogs.forEach(blog => {

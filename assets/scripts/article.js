@@ -1,6 +1,19 @@
 import { collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-firestore.js";
 import { db } from './firebaseConfig.js';
 
+
+function getFirstImageUrl(imageData) {
+  if (!imageData) {
+    return "https://aroundtheville.com/default-image.jpg"; // default fallback
+  }
+  if (typeof imageData === "string") {
+    return imageData;
+  }
+  if (Array.isArray(imageData) && imageData.length > 0) {
+    return imageData[0];
+  }
+  return "https://aroundtheville.com/default-image.jpg"; // fallback
+}
 // Flag to prevent fetching after reaching the bottom
 let hasFetchedRelatedArticles = false;
 

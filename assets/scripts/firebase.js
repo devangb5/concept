@@ -6,46 +6,65 @@ import { collection, query, where, orderBy, limit, getDocs, addDoc } from "https
 
   
   // Function to fetch the latest published blog
-  async function fetchLatestBlog() {
-    try {
-      const blogsRef = collection(db, "blogs");
-      const now = new Date();
-  
-      // Only get blogs that are published (createdAt <= now)
-      const latestBlogQuery = query(
-        blogsRef,
-        where("createdAt", "<=", now),
-        orderBy("createdAt", "desc"),
-        limit(1)
-      );
-  
-      const querySnapshot = await getDocs(latestBlogQuery);
-  
-      if (querySnapshot.empty) {
-        console.log("No published blogs found!");
-        document.getElementById("latest-articles-grid").innerHTML = "<p>No blog posts available.</p>";
-        return;
-      }
-  
-      querySnapshot.forEach((doc) => {
-        const data = doc.data();
-        const firstImage = getFirstImageUrl(data.image);
-  
-        const latestBlogHTML = `
-          <div class="article-card">
-            <img src="${firstImage}" alt="${data.title}" class="article-image">
-            <h3>${data.title}</h3>
-            <p>${data.description}</p>
-            <a href="https://blogs.aroundtheville.com/blogs/${data.blog_number}" class="read-more">Read More</a>
-          </div>
-        `;
-        document.getElementById("latest-articles-grid").innerHTML = latestBlogHTML;
-      });
-    } catch (error) {
-      console.error("Error fetching the latest blog:", error);
-      document.getElementById("latest-articles-grid").innerHTML = "<p>Error loading blog post. Please try again later.</p>";
+  // Function to fetch the 3 latest published blogs with debugging
+async function fetchLatestBlog() {
+  try {
+    console.log("Starting fetchLatestBlog function...");
+
+    const blogsRef = collection(db, "blogs");
+    const now = new Date();
+    console.log("Current timestamp:", now.toISOString());
+
+    const latestBlogQuery = query(
+      blogsRef,
+      where("createdAt", "<=", now),
+      orderBy("createdAt", "desc"),
+      limit(3)
+    );
+    console.log("Firebase query created:", latestBlogQuery);
+
+    const querySnapshot = await getDocs(latestBlogQuery);
+    console.log("Query snapshot received. Number of documents found:", querySnapshot.size);
+
+    if (querySnapshot.empty) {
+      console.log("No published blogs found! Displaying fallback message.");
+      document.getElementById("latest-articles-grid").innerHTML = "<p>No blog posts available.</p>";
+      return;
     }
+
+    let articlesHTML = '';
+    const blogDataArray = [];
+
+    querySnapshot.forEach((doc) => {
+      const data = doc.data();
+      blogDataArray.push(data); // Store data for a clearer log
+      const firstImage = getFirstImageUrl(data.image);
+      
+      console.log(`Processing blog: ${data.title}`);
+      console.log("Blog data:", data);
+      console.log("Image URL:", firstImage);
+
+      articlesHTML += `
+        <div class="article-card">
+          <img src="${firstImage}" alt="${data.title}" class="article-image">
+          <h3>${data.title}</h3>
+          <p>${data.description}</p>
+          <a href="https://blogs.aroundtheville.com/blogs/${data.blog_number}" class="read-more">Read More</a>
+        </div>
+      `;
+    });
+
+    console.log("All blog data processed:", blogDataArray);
+    console.log("Generated HTML string:", articlesHTML);
+
+    document.getElementById("latest-articles-grid").innerHTML = articlesHTML;
+    console.log("innerHTML has been updated. Check the page for rendered content.");
+
+  } catch (error) {
+    console.error("Error fetching the latest blog:", error);
+    document.getElementById("latest-articles-grid").innerHTML = "<p>Error loading blog posts. Please try again later.</p>";
   }
+}
   
 
 

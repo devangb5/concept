@@ -170,32 +170,56 @@ h3 {
 #latest-blog {
     padding: 60px 20px;
     text-align: center;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    align-content: center;
-
-    
-    
 }
-
-
 
 #latest-blog p {
     text-align: justify;
-    
     font-size: 1.1rem;
-    color: #ccc; /* Light gray text for the paragraph */
-    
+    color: #ccc;
 }
 
 #latest-articles-grid {
-    display: flex; /* Use flexbox for better centering */
-    justify-content: center; /* Center horizontally */
-    align-items: center; /* Center vertically */
-    gap: 20px; /* Space between article cards */
-    padding: 0 20px;
-    max-width:500px
+    /* Use CSS Grid for a clean, responsive layout */
+    display: grid;
+    /* This will create three columns of equal width for screens that can fit them. */
+    /* On smaller screens, the cards will wrap automatically. */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px; /* Increase the gap for better spacing */
+    padding: 20px;
+    max-width: 1200px; /* Set a reasonable max-width for the entire grid */
+    margin: 0 auto; /* Center the grid container on the page */
+}
+
+/* Individual Article Card */
+.article-card {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    background-color: #2a2a2a;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.article-card .article-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover; /* Ensures the image covers the card area */
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.article-card h3 {
+    padding: 15px 15px 0;
+    color: #fff;
+}
+
+.article-card p {
+    padding: 0 15px;
+    color: #ccc;
+    font-size: 1rem;
+    flex-grow: 1; /* Pushes the 'Read More' button to the bottom */
 }
 
 /* Read More Button */
@@ -209,6 +233,7 @@ h3 {
     background-color: #333;
     margin: 15px;
     transition: background-color 0.3s ease;
+    text-align: center;
 }
 
 .read-more:hover {

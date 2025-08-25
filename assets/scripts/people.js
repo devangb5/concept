@@ -1,5 +1,5 @@
 import { db } from "./firebaseConfig.js";
-import { collection, getDocs } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-firestore.js";
+import { collection, getDocs, query, where, orderBy } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-firestore.js";
 
 function getFirstImageUrl(imageData) {
   if (!imageData) {
@@ -14,86 +14,90 @@ function getFirstImageUrl(imageData) {
   return "https://aroundtheville.com/default-image.jpg"; // fallback
 }
   
-  async function loadFeaturedAndRecentPeople() {
-    const peopleCollection = collection(db, "people");
-    try {
-      const querySnapshot = await getDocs(peopleCollection);
-      const now = new Date();
-      let people = [];
-  
-      querySnapshot.forEach(doc => {
-        const data = doc.data();
-        const createdAtDate = data.createdAt?.toDate ? data.createdAt.toDate() : new Date(data.createdAt);
-  
-        if (createdAtDate <= now) {
-          people.push({ id: doc.id, ...data, createdAtDate });
-        }
-      });
-  
-      // Sort newest first
-      let sortedPeople = people.sort((a, b) => b.createdAtDate.getTime() - a.createdAtDate.getTime());
-  
-      // Take top 4
-      let featuredAndRecent = sortedPeople.slice(0, 4);
-  
-      const featuredRecentGrid = document.querySelector('.featured-recent-grid');
-      if (featuredRecentGrid) {
-        featuredRecentGrid.innerHTML = featuredAndRecent.map(person => {
-          const firstImage = getFirstImageUrl(person.image);
-          return `
-            <div class="featured-recent-card">
-              <a href="https://people.aroundtheville.com/people/${person.id}" target="_blank" rel="noopener noreferrer">
-                <img src="${firstImage}" alt="${person.name || 'Person image'}" class="person-image">
-              </a>
-            </div>
-          `;
-        }).join('');
-      } else {
-        console.warn("Element with class 'featured-recent-grid' not found.");
-      }
-    } catch (error) {
-      console.error("Error loading featured and recent people:", error);
+async function loadFeaturedAndRecentPeople() {
+  const peopleCollection = collection(db, "people");
+  const now = new Date();
+
+  try {
+    // Query people where createdAt <= now and order by createdAt descending
+    const peopleQuery = query(
+      peopleCollection,
+      where("createdAt", "<=", now),
+      orderBy("createdAt", "desc")
+    );
+
+    const querySnapshot = await getDocs(peopleQuery);
+
+    let people = [];
+    querySnapshot.forEach(doc => {
+      const data = doc.data();
+      const createdAtDate = data.createdAt?.toDate ? data.createdAt.toDate() : new Date(data.createdAt);
+      people.push({ id: doc.id, ...data, createdAtDate });
+    });
+
+    // Take top 4
+    let featuredAndRecent = people.slice(0, 4);
+
+    const featuredRecentGrid = document.querySelector('.featured-recent-grid');
+    if (featuredRecentGrid) {
+      featuredRecentGrid.innerHTML = featuredAndRecent.map(person => {
+        const firstImage = getFirstImageUrl(person.image);
+        return `
+          <div class="featured-recent-card">
+            <a href="https://people.aroundtheville.com/people/${person.id}" target="_blank" rel="noopener noreferrer">
+              <img src="${firstImage}" alt="${person.name || 'Person image'}" class="person-image">
+            </a>
+          </div>
+        `;
+      }).join('');
+    } else {
+      console.warn("Element with class 'featured-recent-grid' not found.");
     }
+  } catch (error) {
+    console.error("Error loading featured and recent people:", error);
   }
-  
+}
 
 // Flag to prevent fetching after reaching the bottom
 let hasFetchedRelatedArticles = false;
 
 // Function to fetch and display random related articles
-import { collection, query, where, orderBy, limit, getDocs } from "firebase/firestore";
-
 async function fetchRelatedArticles() {
-  if (hasFetchedRelatedArticles) {
-    return;
-  }
+  if (hasFetchedRelatedArticles) return;
 
   try {
-    const blogsRef = collection(db, "people");
     const now = new Date();
+    const peopleRef = collection(db, "people");
 
-    // Create a query to get the 3 most recent articles that have a createdAt date in the past
-    const q = query(
-      blogsRef,
+    // Query only published people (createdAt <= now)
+    const peopleQuery = query(
+      peopleRef,
       where("createdAt", "<=", now),
-      orderBy("createdAt", "desc"),
-      limit(3)
+      orderBy("createdAt", "desc")
     );
 
-    const querySnapshot = await getDocs(q);
+    const querySnapshot = await getDocs(peopleQuery);
 
     if (querySnapshot.empty) {
-      console.log("No related articles found that meet the criteria.");
+      console.log("No related articles found in the 'people' collection.");
       return;
     }
 
-    let relatedArticlesHTML = "<h3>Related Articles</h3>";
+    let allPeople = [];
     querySnapshot.forEach((doc) => {
-      const person = doc.data();
+      allPeople.push({ id: doc.id, ...doc.data() });
+    });
+
+    // Shuffle and pick 3
+    allPeople = shuffleArray(allPeople);
+    const randomPeople = allPeople.slice(0, 3);
+
+    let relatedArticlesHTML = "<h3>Related Articles</h3>";
+    randomPeople.forEach(person => {
       const firstImage = getFirstImageUrl(person.image);
       relatedArticlesHTML += `
         <div class="related-article">
-          <a href="https://people.aroundtheville.com/people/${doc.id}" target="_blank" rel="noopener noreferrer">
+          <a href="https://people.aroundtheville.com/people/${person.id}" target="_blank" rel="noopener noreferrer">
             <img src="${firstImage}" alt="${person.name || 'Related article image'}" class="related-article-image">
             <p>${person.name || 'Untitled Article'}</p>
           </a>
@@ -113,6 +117,7 @@ async function fetchRelatedArticles() {
     console.error("Error fetching related articles:", error);
   }
 }
+
 
 // Function to shuffle an array (for randomizing the order)
 function shuffleArray(array) {

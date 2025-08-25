@@ -1,76 +1,55 @@
-import { collection, getDocs } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-firestore.js";
+import { collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-firestore.js";
 import { db } from './firebaseConfig.js';
 
 // Flag to prevent fetching after reaching the bottom
 let hasFetchedRelatedArticles = false;
 
-// Function to fetch and display random related articles
-function getFirstImageUrl(imageData) {
-    if (!imageData) {
-      return "https://aroundtheville.com/default-image.jpg"; // default fallback
-    }
-    if (typeof imageData === "string") {
-      return imageData;
-    }
-    if (Array.isArray(imageData) && imageData.length > 0) {
-      return imageData[0];
-    }
-    return "https://aroundtheville.com/default-image.jpg"; // fallback
+async function fetchRelatedArticles() {
+  if (hasFetchedRelatedArticles) {
+    return;
   }
-  
-  async function fetchRelatedArticles() {
-    if (hasFetchedRelatedArticles) {
+
+  try {
+    const now = new Date();
+    const blogsRef = collection(db, "blogs");
+
+    // Query blogs where createdAt > now
+    const blogsQuery = query(blogsRef, where("createdAt", ">", now));
+    const querySnapshot = await getDocs(blogsQuery);
+
+    if (querySnapshot.empty) {
+      console.log("No blogs found after current date.");
       return;
     }
-  
-    try {
-      const blogsRef = collection(db, "blogs");
-      const now = new Date(); // Or Firestore's Timestamp.now()
-  
-      // 1. Create a query that filters and sorts
-      const q = query(
-        blogsRef,
-        where("createdAt", "<=", now), // Only fetch blogs created on or before "now"
-        orderBy("createdAt", "desc"), // Sort by 'createdAt' in descending order (newest first)
-        limit(3) // Limit the results to the top 3
-      );
-  
-      const querySnapshot = await getDocs(q);
-  
-      if (querySnapshot.empty) {
-        console.log("No blogs found that meet the criteria.");
-        return;
-      }
-  
-      let allBlogs = [];
-      querySnapshot.forEach((doc) => {
-        allBlogs.push(doc.data());
-      });
-  
-      // Since the results are already ordered and limited, you don't need to shuffle and slice
-      const randomBlogs = allBlogs;
-  
-      let relatedArticlesHTML = "<h3>Related Articles</h3>";
-      randomBlogs.forEach(blog => {
-        const firstImage = getFirstImageUrl(blog.image);
-        relatedArticlesHTML += `
-          <div class="related-article">
-            <a href="https://blogs.aroundtheville.com/blogs/${blog.blog_number}">
-              <img src="${firstImage}" alt="${blog.title}" class="related-article-image">
-              <p>${blog.title}</p>
-            </a>
-          </div>
-        `;
-      });
-  
-      document.getElementById("related-articles").innerHTML = relatedArticlesHTML;
-      hasFetchedRelatedArticles = true;
-  
-    } catch (error) {
-      console.error("Error fetching related articles:", error);
-    }
+
+    let allBlogs = [];
+    querySnapshot.forEach((doc) => {
+      allBlogs.push(doc.data());
+    });
+
+    allBlogs = shuffleArray(allBlogs);
+    const randomBlogs = allBlogs.slice(0, 3);
+
+    let relatedArticlesHTML = "<h3>Related Articles</h3>";
+    randomBlogs.forEach(blog => {
+      const firstImage = getFirstImageUrl(blog.image);
+      relatedArticlesHTML += `
+        <div class="related-article">
+          <a href="https://blogs.aroundtheville.com/blogs/${blog.blog_number}">
+            <img src="${firstImage}" alt="${blog.title}" class="related-article-image">
+            <p>${blog.title}</p>
+          </a>
+        </div>
+      `;
+    });
+
+    document.getElementById("related-articles").innerHTML = relatedArticlesHTML;
+    hasFetchedRelatedArticles = true;
+
+  } catch (error) {
+    console.error("Error fetching related articles:", error);
   }
-  
+}
 // Function to shuffle an array (for randomizing the order)
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {

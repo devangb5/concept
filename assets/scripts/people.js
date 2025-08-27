@@ -36,7 +36,7 @@ async function loadFeaturedAndRecentPeople() {
     });
 
     // Take top 4
-    let featuredAndRecent = people.slice(0, 4);
+    let featuredAndRecent = people;
 
     const featuredRecentGrid = document.querySelector('.featured-recent-grid');
     if (featuredRecentGrid) {

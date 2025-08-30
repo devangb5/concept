@@ -248,8 +248,6 @@ app.get("/people/:person_id", async (req, res) => {
   }
 });
 
-exports.app = functions.https.onRequest(app);
-
 /**
  * Route to serve a server-rendered link map page
  */
@@ -513,7 +511,7 @@ ${recentBlog ? `
   }
 });
 
-
+exports.app = functions.https.onRequest(app);
 // Start the server locally if running directly
 const PORT = process.env.PORT || 5500;
 if (require.main === module) {

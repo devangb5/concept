@@ -32,6 +32,10 @@
       {
         "source": "/assets/link-map",
         "function": "app"
+      },
+      {
+        "source": "**",
+        "destination": "/index.html"
       }
     ],
     "ignore": [

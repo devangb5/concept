@@ -12,19 +12,24 @@
 
         async function redirect() {
             try {
-                const currentPath = window.location.pathname; // Path from the URL
-                const fullUrl = `https://${window.location.hostname}${currentPath}`; // Full URL
+                const currentPath = window.location.pathname;
 
+                // Skip redirect if URL contains /link-map
+                if (currentPath.startsWith("/link-map")) {
+                    console.log("Link-map path detected, skipping redirect.");
+                    return;
+                }
+
+                const fullUrl = `https://${window.location.hostname}${currentPath}`;
                 console.log("Attempting to redirect for URL:", fullUrl);
 
-                // Query Firestore for the old link
                 const blogsRef = collection(db, "blogs");
-                const q = query(blogsRef, where("link", "==", fullUrl)); // Match the old URL
+                const q = query(blogsRef, where("link", "==", fullUrl));
                 const querySnapshot = await getDocs(q);
 
                 if (!querySnapshot.empty) {
-                    const doc = querySnapshot.docs[0].data(); // Retrieve the document data
-                    const blogNumber = doc.blog_number; // Extract blog_number
+                    const doc = querySnapshot.docs[0].data();
+                    const blogNumber = doc.blog_number;
 
                     if (blogNumber) {
                         console.log("Redirecting to new link for blog:", blogNumber);
@@ -37,7 +42,6 @@
                     console.warn("No matching blog found for:", fullUrl);
                 }
 
-                // Fallback redirect
                 console.log("Redirecting to home page...");
                 window.location.replace('https://aroundtheville.com/');
             } catch (error) {

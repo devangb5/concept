@@ -22,7 +22,7 @@
     "public": ".",
     "rewrites": [
       {
-        "source": "/assets/link-map/**",
+        "source": "/assets/link-map",
         "function": "app"
       },
       {

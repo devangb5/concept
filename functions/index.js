@@ -382,13 +382,18 @@ h1 {
 /* Recent Blog Card */
 .recent {
   margin: 20px auto;
-  max-width: 400px;
+  max-width: 250px;
   text-align: center;
 }
 .recent-grid {
   margin: 20px auto;
   
   text-align: center;
+}
+.recent-grid h2 {
+  font-size: 1rem;
+  color: #aaa;
+  margin-bottom: 15px;
 }
 .recent h2 {
   font-size: 1rem;
